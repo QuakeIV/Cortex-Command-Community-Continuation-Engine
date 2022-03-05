@@ -48,13 +48,13 @@ If you want to use an IDE other than Visual Studio, you will have to build using
 The Linux build uses the meson build system, and builds against system libraries.
 
 ## Dependencies
-
+You need to install the development (they may be suffixed with `-dev` or `-devel`) versions of the following libraries:
 * `g++>=8.1` (needs to support c++17 filesystem)
 * `allegro4`
 * `loadpng`
 * `flac`
 * `luajit`
-* `lua5.2`
+* `lua5.2` (may be `lua52` on some systems)
 * `minizip`
 * `lz4>=1.9.0`
 * `libpng`
