@@ -174,7 +174,7 @@ base_exclude_files = [
 ]
 
 if get_option('install_data')
-install_subdir(get_option('cccpdatadir'),
+install_subdir(get_option('c4_data_dir'),
                exclude_directories:['.git', '.github', 'Metagames.rte', 'Scenes.rte'],
                exclude_files:base_exclude_files,
                install_dir:get_option('data_install_dir'),
