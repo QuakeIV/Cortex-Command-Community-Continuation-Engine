@@ -222,7 +222,7 @@ namespace RTE {
 
 		std::string metaNotice = {
 			"- A T T E N T I O N -\n\n"
-			"Please note that Conquest mode is very INCOMPLETE and flawed, and the Cortex Command Community Project team will be remaking it from the ground-up in future. "
+			"Please note that Conquest mode is very INCOMPLETE and flawed, and the Cortex Command Community Continuation team will be remaking it from the ground-up in future. "
 			"For now though, it's fully playable, and you can absolutely enjoy playing it with the A.I. and/or up to three friends. Alternatively, check out Void Wanderers on cccp.mod.io!\n\n"
 			"Also, if you have not yet played Cortex Command, we recommend you first try the tutorial:"
 		};

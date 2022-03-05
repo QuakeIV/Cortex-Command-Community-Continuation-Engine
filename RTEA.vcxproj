@@ -46,7 +46,7 @@
     <WindowsTargetPlatformVersion Condition="'$(VisualStudioVersion)'=='15.0'">10.0.17763.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(VisualStudioVersion)'!='15.0'">10.0</WindowsTargetPlatformVersion>
     <IntDir>_Bin\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>..\Cortex-Command-Community-Project-Data\</OutDir>
+    <OutDir>..\Cortex-Command-Community-Continuation-Data\</OutDir>
     <GenerateManifest>true</GenerateManifest>
     <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
