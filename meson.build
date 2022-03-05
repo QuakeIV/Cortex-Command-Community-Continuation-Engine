@@ -10,16 +10,25 @@ if host_machine.system() in ['linux','osx']
     dependency('flac'),
     dependency('minizip'),
     dependency('luajit'),
-    dependency('lua52'),
+#    dependency('lua52', required : false),
     dependency('threads'),
     dependency('liblz4'),
     dependency('libpng'),
     dependency('boost'), #needed for luabind
   ]
+  # Add a safety net on weird linux distros that store lua in a different way
+  luadep = dependency('lua52', required : false)
+  if not luadep.found()
+    luadep = dependency('lua5.2')
+  endif
+  deps += luadep
+
   if host_machine.system() == 'linux'
     deps += dependency('x11')
   endif
 endif
+
+
 
 elfname = 'CortexCommand'
 compiler = meson.get_compiler('cpp')
@@ -28,6 +37,7 @@ link_args=[]
 extra_args=[]
 preprocessor_flags = []
 suffix=''
+
 
 if compiler.get_argument_syntax()== 'gcc' # used for gcc compatible compilers
   # Build against system libraries on linux
