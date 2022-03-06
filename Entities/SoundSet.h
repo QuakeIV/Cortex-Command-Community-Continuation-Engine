@@ -5,6 +5,7 @@
 #include "ContentFile.h"
 #include "LuaMan.h"
 
+
 namespace RTE {
 
 	/// <summary>
@@ -33,8 +34,14 @@ namespace RTE {
 			ContentFile SoundFile;
 			FMOD::Sound *SoundObject;
 			Vector Offset = Vector();
-			float MinimumAudibleDistance = 0.0F;
-			float AttenuationStartDistance = -1.0F;
+			float MinimumAudibleDistance;
+
+			int Priority; //!< The mixing priority of this SoundData's sounds. Higher values are more likely to be heard.
+			bool AffectedByGlobalPitch; //!< Whether this SoundData's sounds should be able to be altered by global pitch changes.
+
+			float Pitch; //!< The current natural pitch of this SoundContainer's or SoundSet's sounds.
+			float PitchVariation; //!< The randomized pitch variation of this SoundContainer's or SoundSet's sounds. 1 means the sound will vary a full octave both ways.
+			float Volume; //!< The current natural volume of this SoundContainer's or SoundSet's sounds.
 		};
 
 #pragma region Creation

@@ -77,6 +77,7 @@ namespace RTE {
 		};
 
 		std::string propValue = reader.ReadPropValue();
+		// Allow to skip specifying the ContentFile bit in the ini
 		if (propValue != "Sound" && propValue != "ContentFile") {
 			readSoundFromPath(propValue);
 			return soundData;

@@ -86,23 +86,31 @@ namespace RTE {
 			}
 		} else if (propName == "Immobile") {
 			reader >> m_Immobile;
+			reader >> m_SoundSettings.Immobile;
 		} else if (propName == "AttenuationStartDistance") {
 			reader >> m_AttenuationStartDistance;
+			reader >> m_SoundSettings.AttenuationStartDistance;
 		} else if (propName == "LoopSetting") {
 			reader >> m_Loops;
 		} else if (propName == "Priority") {
 			reader >> m_Priority;
+			reader >> m_SoundSettings.Priority;
 			if (m_Priority < 0 || m_Priority > 256) { reader.ReportError("SoundContainer priority must be between 256 (lowest priority) and 0 (highest priority)."); }
 		} else if (propName == "AffectedByGlobalPitch") {
 			reader >> m_AffectedByGlobalPitch;
+			reader >> m_SoundSettings.AffectedByGlobalPitch;
 		} else if (propName == "Position") {
 			reader >> m_Pos;
+			reader >> m_SoundSettings.Pos;
 		} else if (propName == "Volume") {
 			reader >> m_Volume;
+			reader >> m_SoundSettings.Volume;
 		} else if (propName == "Pitch") {
 			reader >> m_Pitch;
+			reader >> m_SoundSettings.Pitch;
 		} else if (propName == "PitchVariation") {
 			reader >> m_PitchVariation;
+			reader >> m_SoundSettings.PitchVariation;
 		} else {
 			return Entity::ReadProperty(propName, reader);
 		}
