@@ -5,6 +5,11 @@
 #include "SoundSet.h"
 #include "AudioMan.h"
 
+/** Rough overview
+  *  The SoundContainer stores SoundSets along with default settings for those sets, as well as handling
+  *  the playback and control over those sets
+**/
+
 namespace RTE {
 	class Vector;
 
@@ -338,6 +343,10 @@ namespace RTE {
 		static Entity::ClassInfo m_sClass; //!< ClassInfo for this class.
 		static const std::unordered_map<std::string, SoundOverlapMode> c_SoundOverlapModeMap; //!< A map of strings to SoundOverlapModes to support string parsing for the SoundOverlapMode enum. Populated in the implementing cpp file.
 
+		/*
+			TODO: This is screaming, pleading with you: "Refactor me!". There's
+			probably a better way to do this. With ONE CONTAINER TYPE instead of TWO.
+		*/
 		SoundSet m_TopLevelSoundSet; //The top level SoundSet that handles all SoundData and sub SoundSets in this SoundContainer.
 
 		std::unordered_set<int> m_PlayingChannels; //!< The channels this SoundContainer is currently using.

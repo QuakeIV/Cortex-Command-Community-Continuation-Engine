@@ -61,14 +61,18 @@ namespace RTE {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	int SoundContainer::ReadProperty(const std::string_view &propName, Reader &reader) {
+		// Get top-level sounds
 		if (propName == "AddSound") {
 			m_TopLevelSoundSet.AddSoundData(SoundSet::ReadAndGetSoundData(reader));
+		// Add a soundset
 		} else if (propName == "AddSoundSet") {
 			SoundSet soundSetToAdd;
 			reader >> soundSetToAdd;
 			m_TopLevelSoundSet.AddSoundSet(soundSetToAdd);
+		// Set soundselectioncycle mode
 		} else if (propName == "SoundSelectionCycleMode" || propName == "CycleMode") {
 			m_TopLevelSoundSet.SetSoundSelectionCycleMode(SoundSet::ReadSoundSelectionCycleMode(reader));
+		// Set soundoverlap mode
 		} else if (propName == "SoundOverlapMode") {
 			std::string soundOverlapModeString = reader.ReadPropValue();
 			if (c_SoundOverlapModeMap.find(soundOverlapModeString) != c_SoundOverlapModeMap.end()) {
