@@ -193,7 +193,7 @@ install_rpath = prefix/get_option('fmod_dir')
 # Target Definitions
 c4elf = executable(
   # Source options
-  elfname, ['main.cpp', sources],
+  elfname, ['Main.cpp', sources],
   include_directories : [
     source_ind_dirs,
     external_inc_dirs
