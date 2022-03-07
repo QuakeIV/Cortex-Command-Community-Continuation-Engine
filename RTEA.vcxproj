@@ -543,6 +543,7 @@
     <ClInclude Include="Entities\PEmitter.h" />
     <ClInclude Include="Entities\Round.h" />
     <ClInclude Include="Entities\SoundSet.h" />
+    <ClInclude Include="Entities\SoundSettings.h" />
     <ClInclude Include="GUI\GUIInterface.h" />
     <ClInclude Include="GUI\GUIReader.h" />
     <ClInclude Include="GUI\GUISound.h" />
