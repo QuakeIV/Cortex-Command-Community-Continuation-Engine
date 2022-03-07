@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "SoundSet.h"
 #include "AudioMan.h"
+#include "SoundSettings.h"
 
 /** Rough overview
   *  The SoundContainer stores SoundSets along with default settings for those sets, as well as handling
@@ -197,25 +198,25 @@ namespace RTE {
 		/// Gets the current playback priority.
 		/// </summary>
 		/// <returns>The playback priority.</returns>
-		int GetPriority() const { return m_Priority; }
+		int GetPriority() const { return m_TopLevelSoundSet.GetPriority(); }
 
 		/// <summary>
 		/// Sets the current playback priority. Higher priority (lower value) will make this more likely to make it into mixing on playback. Does not affect currently playing sounds.
 		/// </summary>
 		/// <param name="priority">The new priority. See AudioMan::PRIORITY_* enumeration.</param>
-		void SetPriority(int priority) { m_Priority = std::clamp(priority, 0, 256); }
+		void SetPriority(int priority) { m_TopLevelSoundSet.SetPriorty(priority); }
 
 		/// <summary>
 		/// Gets whether the sounds in this SoundContainer are affected by global pitch changes or not.
 		/// </summary>
 		/// <returns>Whether or not the sounds in this SoundContainer are affected by global pitch changes.</returns>
-		bool IsAffectedByGlobalPitch() const { return m_AffectedByGlobalPitch; }
+		bool IsAffectedByGlobalPitch() const { return m_TopLevelSoundSet.IsAffectedByGlobalPitch(); }
 
 		/// <summary>
 		/// Sets whether the sounds in this SoundContainer are affected by global pitch changes or not. Does not affect currently playing sounds.
 		/// </summary>
 		/// <param name="affectedByGlobalPitch">The new affected by global pitch setting.</param>
-		void SetAffectedByGlobalPitch(bool affectedByGlobalPitch) { m_AffectedByGlobalPitch = affectedByGlobalPitch; }
+		void SetAffectedByGlobalPitch(bool affectedByGlobalPitch) { m_TopLevelSoundSet.SetAffectedByGlobalPitch(affectedByGlobalPitch); }
 
 		/// <summary>
 		/// Gets the position at which this SoundContainer's sound will be played. Note that its individual sounds can be offset from this.
@@ -230,41 +231,47 @@ namespace RTE {
 		/// <returns>Whether this SoundContainer's attenuation setting was successful.</returns>
 		void SetPosition(const Vector &newPosition) { if (!m_Immobile && newPosition != m_Pos) { m_Pos = newPosition; if (IsBeingPlayed()) { g_AudioMan.ChangeSoundContainerPlayingChannelsPosition(this); } } }
 
+		// ////////////////////////////////////////
+		// Needed for lua binding and rev-compat //
+		// vvvvv                           vvvvv //
+
 		/// <summary>
 		/// Gets the volume the sounds in this SoundContainer are played at. Note that this does not factor volume changes due to the SoundContainer's position.
 		/// </summary>
 		/// <returns>The volume the sounds in this SoundContainer are played at.</returns>
-		float GetVolume() const { return m_Volume; }
+		float GetVolume() const { return m_TopLevelSoundSet.GetVolume(); }
 
 		/// <summary>
 		/// Sets the volume sounds in this SoundContainer should be played at. Note that this does not factor volume changes due to the SoundContainer's position. Does not affect currently playing sounds.
 		/// </summary>
 		/// <param name="newVolume">The new volume sounds in this SoundContainer should be played at. Limited between 0 and 10.</param>
-		void SetVolume(float newVolume) { newVolume = std::clamp(newVolume, 0.0F, 10.0F); if (IsBeingPlayed()) { g_AudioMan.ChangeSoundContainerPlayingChannelsVolume(this, newVolume); } m_Volume = newVolume; }
+		void SetVolume(float newVolume) { m_TopLevelSoundSet.SetVolume(newVolume); if (IsBeingPlayed()) { g_AudioMan.ChangeSoundContainerPlayingChannelsVolume(this, newVolume); } m_TopLevelSoundSet.SetVolume(newVolume); }
 
 		/// <summary>
 		/// Gets the pitch the sounds in this SoundContainer are played at. Note that this does not factor in global pitch.
 		/// </summary>
 		/// <returns>The pitch the sounds in this SoundContainer are played at.</returns>
-		float GetPitch() const { return m_Pitch; }
+		float GetPitch() const { return m_TopLevelSoundSet.GetPitch(); }
 
 		/// <summary>
 		/// Sets the pitch sounds in this SoundContainer should be played at and updates any playing instances accordingly.
 		/// </summary>
 		/// <param name="newPitch">The new pitch sounds in this SoundContainer should be played at. Limited between 0.125 and 8 (8 octaves up or down).</param>
-		void SetPitch(float newPitch) { m_Pitch = std::clamp(newPitch, 0.125F, 8.0F); if (IsBeingPlayed()) { g_AudioMan.ChangeSoundContainerPlayingChannelsPitch(this); } }
+		void SetPitch(float newPitch) { m_TopLevelSoundSet.SetPitch(newPitch); if (IsBeingPlayed()) { g_AudioMan.ChangeSoundContainerPlayingChannelsPitch(this); } }
 
 		/// <summary>
 		/// Gets the pitch variation the sounds in this SoundContainer are played at.
 		/// </summary>
 		/// <returns>The pitch variation the sounds in this SoundContainer are played at.</returns>
-		float GetPitchVariation() const { return m_PitchVariation; }
+		float GetPitchVariation() const { return m_TopLevelSoundSet.GetPitchVariation(); }
 
 		/// <summary>
 		/// Sets the pitch variation the sounds in this SoundContainer are played at.
 		/// </summary>
 		/// <param name="newValue">The pitch variation the sounds in this SoundContainer are played at.</param>
-		void SetPitchVariation(float newValue) { m_PitchVariation = newValue; }
+		void SetPitchVariation(float newValue) { m_TopLevelSoundSet.SetPitchVariation(newValue); }
+
+
 #pragma endregion
 
 #pragma region Playback Controls
@@ -343,10 +350,6 @@ namespace RTE {
 		static Entity::ClassInfo m_sClass; //!< ClassInfo for this class.
 		static const std::unordered_map<std::string, SoundOverlapMode> c_SoundOverlapModeMap; //!< A map of strings to SoundOverlapModes to support string parsing for the SoundOverlapMode enum. Populated in the implementing cpp file.
 
-		/*
-			TODO: This is screaming, pleading with you: "Refactor me!". There's
-			probably a better way to do this. With ONE CONTAINER TYPE instead of TWO.
-		*/
 		SoundSet m_TopLevelSoundSet; //The top level SoundSet that handles all SoundData and sub SoundSets in this SoundContainer.
 
 		std::unordered_set<int> m_PlayingChannels; //!< The channels this SoundContainer is currently using.
@@ -357,13 +360,16 @@ namespace RTE {
 		int m_Loops; //!< Number of loops (repeats) the SoundContainer's sounds should play when played. 0 means it plays once, -1 means it plays until stopped.
 		bool m_SoundPropertiesUpToDate = false; //!< Whether this SoundContainer's sounds' modes and properties are up to date. Used primarily to handle discrepancies that can occur when loading from ini if the line ordering isn't ideal.
 		
-		int m_Priority; //!< The mixing priority of this SoundContainer's sounds. Higher values are more likely to be heard.
-		bool m_AffectedByGlobalPitch; //!< Whether this SoundContainer's sounds should be able to be altered by global pitch changes.
+//		int m_Priority; //!< The mixing priority of this SoundContainer's sounds. Higher values are more likely to be heard.
+//		bool m_AffectedByGlobalPitch; //!< Whether this SoundContainer's sounds should be able to be altered by global pitch changes.
 		
 		Vector m_Pos; //!< The current position of this SoundContainer's sounds.
-		float m_Pitch; //!< The current natural pitch of this SoundContainer's sounds.
-		float m_PitchVariation; //!< The randomized pitch variation of this SoundContainer's sounds. 1 means the sound will vary a full octave both ways.
-		float m_Volume; //!< The current natural volume of this SoundContainer's sounds.
+//		float m_Pitch; //!< The current natural pitch of this SoundContainer's sounds.
+//		float m_PitchVariation; //!< The randomized pitch variation of this SoundContainer's sounds. 1 means the sound will vary a full octave both ways.
+//		float m_Volume; //!< The current natural volume of this SoundContainer's sounds.
+
+
+//		SoundSettings m_SoundSettings;
 
 		/// <summary>
 		/// Clears all the member variables of this SoundContainer, effectively resetting the members of this abstraction level only.

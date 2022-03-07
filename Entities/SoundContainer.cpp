@@ -24,13 +24,13 @@ namespace RTE {
 		m_Loops = 0;
 		m_SoundPropertiesUpToDate = false;
 
-		m_Priority = AudioMan::PRIORITY_NORMAL;
-		m_AffectedByGlobalPitch = true;
+		SetPriority(AudioMan::PRIORITY_NORMAL);
+		SetAffectedByGlobalPitch(true);
 
 		m_Pos = Vector();
-		m_Volume = 1.0F;
-		m_Pitch = 1.0F;
-		m_PitchVariation = 0;
+		SetVolume(1.0F);
+		SetPitch(1.0F);
+		SetPitchVariation(0);
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,13 +47,13 @@ namespace RTE {
 		m_AttenuationStartDistance = reference.m_AttenuationStartDistance;
 		m_Loops = reference.m_Loops;
 
-		m_Priority = reference.m_Priority;
-		m_AffectedByGlobalPitch = reference.m_AffectedByGlobalPitch;
+		SetPriority(reference.GetPriority());
+		SetAffectedByGlobalPitch(reference.IsAffectedByGlobalPitch());
 
 		m_Pos = reference.m_Pos;
-		m_Volume = reference.m_Volume;
-		m_Pitch = reference.m_Pitch;
-		m_PitchVariation = reference.m_PitchVariation;
+		SetVolume(reference.GetVolume());
+		SetPitch(reference.GetPitch());
+		SetPitchVariation(reference.GetPitchVariation());
 
 		return 0;
 	}
@@ -86,31 +86,34 @@ namespace RTE {
 			}
 		} else if (propName == "Immobile") {
 			reader >> m_Immobile;
-			reader >> m_SoundSettings.Immobile;
+//			reader >> m_TopLevelSoundSet..Immobile;
 		} else if (propName == "AttenuationStartDistance") {
 			reader >> m_AttenuationStartDistance;
-			reader >> m_SoundSettings.AttenuationStartDistance;
 		} else if (propName == "LoopSetting") {
 			reader >> m_Loops;
 		} else if (propName == "Priority") {
-			reader >> m_Priority;
-			reader >> m_SoundSettings.Priority;
-			if (m_Priority < 0 || m_Priority > 256) { reader.ReportError("SoundContainer priority must be between 256 (lowest priority) and 0 (highest priority)."); }
+			int pri;
+			reader >> pri;
+			if (pri < 0 || pri > 256) { reader.ReportError("SoundContainer priority must be between 256 (lowest priority) and 0 (highest priority)."); }
+			SetPriority(pri);
 		} else if (propName == "AffectedByGlobalPitch") {
-			reader >> m_AffectedByGlobalPitch;
-			reader >> m_SoundSettings.AffectedByGlobalPitch;
+			bool affectedgp;
+			reader >> affectedgp;
+			SetAffectedByGlobalPitch(affectedgp);
 		} else if (propName == "Position") {
 			reader >> m_Pos;
-			reader >> m_SoundSettings.Pos;
 		} else if (propName == "Volume") {
-			reader >> m_Volume;
-			reader >> m_SoundSettings.Volume;
+			float vol;
+			reader >> vol;
+			SetVolume(vol);
 		} else if (propName == "Pitch") {
-			reader >> m_Pitch;
-			reader >> m_SoundSettings.Pitch;
+			float pitch;
+			reader >> pitch;
+			SetPitch(pitch);
 		} else if (propName == "PitchVariation") {
-			reader >> m_PitchVariation;
-			reader >> m_SoundSettings.PitchVariation;
+			float pitchvar;
+			reader >> pitchvar;
+			SetPitchVariation(pitchvar);
 		} else {
 			return Entity::ReadProperty(propName, reader);
 		}
@@ -144,18 +147,18 @@ namespace RTE {
 		writer << m_Loops;
 
 		writer.NewProperty("Priority");
-		writer << m_Priority;
+		writer << GetPriority();
 		writer.NewProperty("AffectedByGlobalPitch");
-		writer << m_AffectedByGlobalPitch;
+		writer << m_TopLevelSoundSet.IsAffectedByGlobalPitch();
 
 		writer.NewProperty("Pos");
 		writer << m_Pos;
 		writer.NewProperty("Volume");
-		writer << m_Volume;
+		writer << GetVolume();
 		writer.NewProperty("Pitch");
-		writer << m_Pitch;
+		writer << GetPitch();
 		writer.NewProperty("PitchVariation");
-		writer << m_PitchVariation;
+		writer << GetPitchVariation();
 
 		return 0;
 	}

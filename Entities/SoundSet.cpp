@@ -46,7 +46,10 @@ namespace RTE {
 		if (propName == "SoundSelectionCycleMode") {
 			SetSoundSelectionCycleMode(ReadSoundSelectionCycleMode(reader));
 		} else if (propName == "AddSound") {
-			AddSoundData(ReadAndGetSoundData(reader));
+			std::pair<SoundSet::SoundData, SoundSettings> spec = ReadAndGetSoundSpecs(reader);
+			AddSoundData(spec.first);
+			m_SoundSettings = spec.second;
+			//AddSoundData(ReadAndGetSoundData(reader));
 		} else if (propName == "AddSoundSet") {
 			SoundSet soundSetToAdd;
 			reader >> soundSetToAdd;
@@ -55,6 +58,67 @@ namespace RTE {
 			return Serializable::ReadProperty(propName, reader);
 		}
 		return 0;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	std::pair<SoundSet::SoundData, SoundSettings> SoundSet::ReadAndGetSoundSpecs(Reader &reader) {
+		std::pair<SoundSet::SoundData, SoundSettings> spec;
+		/// <summary>
+		/// Internal lambda function to load an audio file by path in as a ContentFile, which in turn loads it into FMOD, then returns SoundData for it in the outParam outSoundData.
+		/// </summary>
+		/// <param name="soundPath">The path to the sound file.</param>
+		auto readSoundFromPath = [&spec, &reader](const std::string &soundPath) {
+			ContentFile soundFile(soundPath.c_str());
+			soundFile.SetFormattedReaderPosition("in file " + reader.GetCurrentFilePath() + " on line " + reader.GetCurrentFileLine());
+			FMOD::Sound *soundObject = soundFile.GetAsSound();
+			if (g_AudioMan.IsAudioEnabled() && !soundObject) { reader.ReportError(std::string("Failed to load the sound from the file")); }
+
+			spec.first.SoundFile = soundFile;
+			spec.first.SoundObject = soundObject;
+		};
+
+		std::string propValue = reader.ReadPropValue();
+		// Allow to skip specifying the ContentFile bit in the ini
+		if (propValue != "Sound" && propValue != "ContentFile") {
+			readSoundFromPath(propValue);
+			return spec;
+		}
+
+		while (reader.NextProperty()) {
+			std::string soundSubPropertyName = reader.ReadPropName();
+			if (soundSubPropertyName == "FilePath" || soundSubPropertyName == "Path") {
+				readSoundFromPath(reader.ReadPropValue());
+			} else if (soundSubPropertyName == "Offset") {
+				reader >> spec.first.Offset;
+			} else if (soundSubPropertyName == "MinimumAudibleDistance") {
+				reader >> spec.first.MinimumAudibleDistance;
+			} else if (soundSubPropertyName == "AttenuationStartDistance") {
+				reader >> spec.first.AttenuationStartDistance;
+			} else if (soundSubPropertyName == "Volume") {
+				float vol;
+				reader >> vol;
+				spec.second.SetVolume(vol);
+			} else if (soundSubPropertyName == "Priority") {
+				int pri;
+				reader >> pri;
+				spec.second.SetPriority(pri);
+			} else if (soundSubPropertyName == "AffectedByGlobalPitch") {
+				bool state;
+				reader >> state;
+				spec.second.SetAffectedByGlobalPitch(state);
+			} else if (soundSubPropertyName == "PitchVariation") {
+				float pitchvar;
+				reader >> pitchvar;
+				spec.second.SetPitchVariation(pitchvar);
+			} else if (soundSubPropertyName == "Pitch") {
+				float pitch;
+				reader >> pitch;
+				spec.second.SetPitch(pitch);
+			}
+		}
+
+		return spec;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,6 +206,17 @@ namespace RTE {
 			writer.NewProperty("AttenuationStartDistance");
 			writer << soundData.AttenuationStartDistance;
 
+			writer.NewProperty("Volume");
+			writer << m_SoundSettings.GetVolume();
+			writer.NewProperty("Priority");
+			writer << m_SoundSettings.GetPriority();
+			writer.NewProperty("AffectedByGlobalPitch");
+			writer << m_SoundSettings.IsAffectedByGlobalPitch();
+			writer.NewProperty("PitchVariation");
+			writer << m_SoundSettings.GetPitchVariation();
+			writer.NewProperty("Pitch");
+			writer << m_SoundSettings.GetPitch();
+
 			writer.ObjectEnd();
 		}
 
@@ -219,6 +294,23 @@ namespace RTE {
 			}
 		}
 	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void SoundSet::GetFlattenedSoundSpecs(std::vector<std::pair<SoundData*, SoundSettings*>> &flattenedSoundData, bool onlyGetSelectedSoundData)
+	{
+		if (!onlyGetSelectedSoundData || m_SoundSelectionCycleMode == SoundSelectionCycleMode::ALL) {
+			for (SoundData &soundData : m_SoundData) { flattenedSoundData.push_back(std::make_pair(&soundData, &m_SoundSettings)); }
+			for (SoundSet &subSoundSet : m_SubSoundSets) { subSoundSet.GetFlattenedSoundSpecs(flattenedSoundData, onlyGetSelectedSoundData); }
+		} else {
+			if (m_CurrentSelection.first == false) {
+				flattenedSoundData.push_back(std::make_pair(&m_SoundData[m_CurrentSelection.second], &m_SoundSettings));
+			} else {
+				m_SubSoundSets[m_CurrentSelection.second].GetFlattenedSoundSpecs(flattenedSoundData, onlyGetSelectedSoundData);
+			}
+		}
+	}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
