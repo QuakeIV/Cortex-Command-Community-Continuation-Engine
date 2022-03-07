@@ -195,7 +195,7 @@ c4elf = executable(
   # Source options
   elfname, ['Main.cpp', sources],
   include_directories : [
-    source_ind_dirs,
+    source_inc_dirs,
     external_inc_dirs
   ],
   cpp_pch : pch,
