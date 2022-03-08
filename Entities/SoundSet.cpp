@@ -43,17 +43,41 @@ namespace RTE {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	int SoundSet::ReadProperty(const std::string_view &propName, Reader &reader) {
+		float minadist = 0.0F;
+		float attendist = -1.0F;
 		if (propName == "SoundSelectionCycleMode") {
 			SetSoundSelectionCycleMode(ReadSoundSelectionCycleMode(reader));
 		} else if (propName == "AddSound") {
-			std::pair<SoundSet::SoundData, SoundSettings> spec = ReadAndGetSoundSpecs(reader);
-			AddSoundData(spec.first);
-			m_SoundSettings = spec.second;
-			//AddSoundData(ReadAndGetSoundData(reader));
+			//soundData = ReadAndGetSoundData(reader, minadist, attendist);
+			AddSoundData(ReadAndGetSoundData(reader));
 		} else if (propName == "AddSoundSet") {
 			SoundSet soundSetToAdd;
 			reader >> soundSetToAdd;
 			AddSoundSet(soundSetToAdd);
+		} else if (propName == "Volume") {
+			float vol;
+			reader >> vol;
+			SetVolume(vol);
+		} else if (propName == "Priority") {
+			int pri;
+			reader >> pri;
+			SetPriority(pri);
+		} else if (propName == "AffectedByGlobalPitch") {
+			bool state;
+			reader >> state;
+			SetAffectedByGlobalPitch(state);
+		} else if (propName == "PitchVariation") {
+			float pitchvar;
+			reader >> pitchvar;
+			SetPitchVariation(pitchvar);
+		} else if (propName == "Pitch") {
+			float pitch;
+			reader >> pitch;
+			SetPitch(pitch);
+		} else if (propName == "MinimumAudibleDistance") {
+			reader >> minadist;
+		} else if (propName == "AttenuationStartDistance") {
+			reader >> attendist;
 		} else {
 			return Serializable::ReadProperty(propName, reader);
 		}
@@ -62,69 +86,10 @@ namespace RTE {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	std::pair<SoundSet::SoundData, SoundSettings> SoundSet::ReadAndGetSoundSpecs(Reader &reader) {
-		std::pair<SoundSet::SoundData, SoundSettings> spec;
-		/// <summary>
-		/// Internal lambda function to load an audio file by path in as a ContentFile, which in turn loads it into FMOD, then returns SoundData for it in the outParam outSoundData.
-		/// </summary>
-		/// <param name="soundPath">The path to the sound file.</param>
-		auto readSoundFromPath = [&spec, &reader](const std::string &soundPath) {
-			ContentFile soundFile(soundPath.c_str());
-			soundFile.SetFormattedReaderPosition("in file " + reader.GetCurrentFilePath() + " on line " + reader.GetCurrentFileLine());
-			FMOD::Sound *soundObject = soundFile.GetAsSound();
-			if (g_AudioMan.IsAudioEnabled() && !soundObject) { reader.ReportError(std::string("Failed to load the sound from the file")); }
-
-			spec.first.SoundFile = soundFile;
-			spec.first.SoundObject = soundObject;
-		};
-
-		std::string propValue = reader.ReadPropValue();
-		// Allow to skip specifying the ContentFile bit in the ini
-		if (propValue != "Sound" && propValue != "ContentFile") {
-			readSoundFromPath(propValue);
-			return spec;
-		}
-
-		while (reader.NextProperty()) {
-			std::string soundSubPropertyName = reader.ReadPropName();
-			if (soundSubPropertyName == "FilePath" || soundSubPropertyName == "Path") {
-				readSoundFromPath(reader.ReadPropValue());
-			} else if (soundSubPropertyName == "Offset") {
-				reader >> spec.first.Offset;
-			} else if (soundSubPropertyName == "MinimumAudibleDistance") {
-				reader >> spec.first.MinimumAudibleDistance;
-			} else if (soundSubPropertyName == "AttenuationStartDistance") {
-				reader >> spec.first.AttenuationStartDistance;
-			} else if (soundSubPropertyName == "Volume") {
-				float vol;
-				reader >> vol;
-				spec.second.SetVolume(vol);
-			} else if (soundSubPropertyName == "Priority") {
-				int pri;
-				reader >> pri;
-				spec.second.SetPriority(pri);
-			} else if (soundSubPropertyName == "AffectedByGlobalPitch") {
-				bool state;
-				reader >> state;
-				spec.second.SetAffectedByGlobalPitch(state);
-			} else if (soundSubPropertyName == "PitchVariation") {
-				float pitchvar;
-				reader >> pitchvar;
-				spec.second.SetPitchVariation(pitchvar);
-			} else if (soundSubPropertyName == "Pitch") {
-				float pitch;
-				reader >> pitch;
-				spec.second.SetPitch(pitch);
-			}
-		}
-
-		return spec;
-	}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	SoundSet::SoundData SoundSet::ReadAndGetSoundData(Reader &reader) {
+	SoundSet::SoundData SoundSet::ReadAndGetSoundData(Reader &reader, float defminAudibleDist, float defattenStartDist) {
 		SoundSet::SoundData soundData;
+		soundData.MinimumAudibleDistance = defminAudibleDist;
+		soundData.AttenuationStartDistance = defattenStartDist;
 
 		/// <summary>
 		/// Internal lambda function to load an audio file by path in as a ContentFile, which in turn loads it into FMOD, then returns SoundData for it in the outParam outSoundData.

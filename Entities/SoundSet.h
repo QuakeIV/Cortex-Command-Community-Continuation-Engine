@@ -72,9 +72,7 @@ namespace RTE {
 		/// </summary>
 		/// <param name="reader">A Reader lined up to the value of the property to be read.</param>
 		/// <returns>SoundData for the newly read sound.</returns>
-		static SoundData ReadAndGetSoundData(Reader &reader);
-
-		static std::pair<SoundData, SoundSettings> ReadAndGetSoundSpecs(Reader &reader);
+		static SoundData ReadAndGetSoundData(Reader &reader, float defminAudibleDist = 0.0F, float defattenStartDist = -1.0F);
 
 		/// <summary>
 		/// Handles turning a SoundCelectionCycleMode from its user-friendly name in INI to its enum value, using the static SoundSelectionCycleMap.
@@ -205,7 +203,7 @@ namespace RTE {
 		void SetPitchVariation(const float pitchvar) { m_SoundSettings.SetPitchVariation(pitchvar); }
 		float GetPitchVariation() const { return m_SoundSettings.GetPitchVariation(); }
 
-		void SetPriorty(const int newpri) { m_SoundSettings.SetPriority(newpri); }
+		void SetPriority(const int newpri) { m_SoundSettings.SetPriority(newpri); }
 		int GetPriority() const { return m_SoundSettings.GetPriority(); }
 
 

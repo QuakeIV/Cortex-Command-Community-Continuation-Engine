@@ -204,7 +204,7 @@ namespace RTE {
 		/// Sets the current playback priority. Higher priority (lower value) will make this more likely to make it into mixing on playback. Does not affect currently playing sounds.
 		/// </summary>
 		/// <param name="priority">The new priority. See AudioMan::PRIORITY_* enumeration.</param>
-		void SetPriority(int priority) { m_TopLevelSoundSet.SetPriorty(priority); }
+		void SetPriority(int priority) { m_TopLevelSoundSet.SetPriority(priority); }
 
 		/// <summary>
 		/// Gets whether the sounds in this SoundContainer are affected by global pitch changes or not.
