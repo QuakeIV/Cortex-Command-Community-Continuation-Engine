@@ -24,7 +24,7 @@ namespace RTE {
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	// TODO: Set SoundSettings to sane defaults akin to how SoundContainer Was set here
 	int SoundSet::Create(const SoundSet &reference) {
 		m_SoundSelectionCycleMode = reference.m_SoundSelectionCycleMode;
 		m_CurrentSelection = reference.m_CurrentSelection;
