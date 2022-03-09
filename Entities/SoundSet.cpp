@@ -36,6 +36,12 @@ namespace RTE {
 			soundSet.Create(referenceSoundSet);
 			m_SubSoundSets.push_back(soundSet);
 		}
+		
+		SetPriority(AudioMan::PRIORITY_NORMAL);
+		SetAffectedByGlobalPitch(true);
+		SetVolume(1.0F);
+		SetPitch(1.0F);
+		SetPitchVariation(0);
 
 		return 0;
 	}

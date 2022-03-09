@@ -537,18 +537,20 @@ namespace RTE {
 		std::vector<std::pair<SoundSet::SoundData *, SoundSettings*>> selectedSoundSpecs;
 		soundContainer->GetTopLevelSoundSet().GetFlattenedSoundSpecs(selectedSoundSpecs, true);
 
-		std::vector<const SoundSet::SoundData *> selectedSoundData;
-		soundContainer->GetTopLevelSoundSet().GetFlattenedSoundData(selectedSoundData, true);
+//		std::vector<const SoundSet::SoundData *> selectedSoundData;
+//		soundContainer->GetTopLevelSoundSet().GetFlattenedSoundData(selectedSoundData, true);
 
 		// Configure our settings
-		// SHomehow this is becoming a POINTER to a std::pair. that's the problem!
 		for (std::pair<SoundSet::SoundData*, SoundSettings*> soundSpecs : selectedSoundSpecs) {
+//			printf("playing with AttenuationStartDist: %f\n", soundSpecs.first->AttenuationStartDistance);
+//			printf("playing with MinimumAudiobleDist: %f\n", soundSpecs.first->MinimumAudibleDistance);
 			result = (result == FMOD_OK) ? m_AudioSystem->playSound(soundSpecs.first->SoundObject, channelGroupToPlayIn, true, &channel) : result;
 			result = (result == FMOD_OK) ? channel->getIndex(&channelIndex) : result;
 
 			result = (result == FMOD_OK) ? channel->setUserData(soundContainer) : result;
 			result = (result == FMOD_OK) ? channel->setCallback(SoundChannelEndedCallback) : result;
 			result = (result == FMOD_OK) ? channel->setPriority(soundSpecs.second->GetPriority()) : result;
+//			result = (result == FMOD_OK) ? channel->setPriority(soundContainer->GetPriority()) : result;
 
 			// Calculate the pitch
 			float pitchVariationFactor = 1.0F + std::abs(soundSpecs.second->GetPitchVariation());

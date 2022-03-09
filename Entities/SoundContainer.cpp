@@ -92,6 +92,7 @@ namespace RTE {
 		} else if (propName == "LoopSetting") {
 			reader >> m_Loops;
 		} else if (propName == "Priority") {
+//			reader >> m_Priority;
 			int pri;
 			reader >> pri;
 			if (pri < 0 || pri > 256) { reader.ReportError("SoundContainer priority must be between 256 (lowest priority) and 0 (highest priority)."); }

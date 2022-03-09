@@ -199,12 +199,14 @@ namespace RTE {
 		/// </summary>
 		/// <returns>The playback priority.</returns>
 		int GetPriority() const { return m_TopLevelSoundSet.GetPriority(); }
+//		int GetPriority() const { return m_Priority; }
 
 		/// <summary>
 		/// Sets the current playback priority. Higher priority (lower value) will make this more likely to make it into mixing on playback. Does not affect currently playing sounds.
 		/// </summary>
 		/// <param name="priority">The new priority. See AudioMan::PRIORITY_* enumeration.</param>
 		void SetPriority(int priority) { m_TopLevelSoundSet.SetPriority(priority); }
+//		void SetPriority(int priority) { m_Priority = priority; }
 
 		/// <summary>
 		/// Gets whether the sounds in this SoundContainer are affected by global pitch changes or not.
