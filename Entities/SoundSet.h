@@ -192,26 +192,82 @@ namespace RTE {
 		/// <returns>The vector of SubSoundSets for this SoundSet.</returns>
 		std::vector<SoundSet> & GetSubSoundSets() { return m_SubSoundSets; }
 
-		/// This autism is because of const correctness and hopefully lua-binding later.
-		//TODO: None of these update audio engine to do anything. That might be needed for lua support later
-		void SetVolume(const float vol) { m_SoundSettings.SetVolume(vol); }
+		//TODO: [LUA] None of these are exposed to lua yet
+		/// This autism is because of const correctness.
+
+#pragma endregion
+
+#pragma region SoundSettings getters and setters
+		/**
+		 * @brief Set the Volume of this SoundSet
+		 * 
+		 * @param newVolume
+		 */
+		void SetVolume(const float newVolume) { m_SoundSettings.SetVolume(newVolume); }
+
+		/**
+		 * @brief Get the Volume of this SoundSet
+		 * 
+		 * @return float
+		 */
 		float GetVolume() const { return m_SoundSettings.GetVolume(); }
 
+		/**
+		 * @brief Set the Pitch of this SoundSet
+		 * 
+		 * @param newPitch
+		 */
 		void SetPitch(const float newPitch) { m_SoundSettings.SetPitch(newPitch); }
+
+		/**
+		 * @brief Get the Pitch of this SoundSet
+		 * 
+		 * @return float 
+		 */
 		float GetPitch() const { return m_SoundSettings.GetPitch(); }
 
-		void SetPitchVariation(const float pitchvar) { m_SoundSettings.SetPitchVariation(pitchvar); }
+		/**
+		 * @brief Set the Pitch Variation of this SoundSet
+		 * 
+		 * @param newPitchVariation
+		 */
+		void SetPitchVariation(const float newPitchVariation) { m_SoundSettings.SetPitchVariation(newPitchVariation); }
+
+		/**
+		 * @brief Get the Pitch Variation of this SoundSet
+		 * 
+		 * @return float 
+		 */
 		float GetPitchVariation() const { return m_SoundSettings.GetPitchVariation(); }
 
-		void SetPriority(const int newpri) { m_SoundSettings.SetPriority(newpri); }
+		/**
+		 * @brief Set the Priority of this SoundSet
+		 * 
+		 * @param newPriority 
+		 */
+		void SetPriority(const int newPriority) { m_SoundSettings.SetPriority(newPriority); }
+
+		/**
+		 * @brief Get the Priority of this SoundSet
+		 * 
+		 * @return int 
+		 */
 		int GetPriority() const { return m_SoundSettings.GetPriority(); }
 
-
+		/**
+		 * @brief Set the Affected By Global Pitch state of this SoundSet
+		 * 
+		 * @param state
+		 */
 		void SetAffectedByGlobalPitch(const bool state) { m_SoundSettings.SetAffectedByGlobalPitch(state); }
+
+		/**
+		 * @brief Is this SoundSet affected by the global pitch or not
+		 * 
+		 * @return true 
+		 * @return false 
+		 */
 		bool IsAffectedByGlobalPitch() const { return m_SoundSettings.IsAffectedByGlobalPitch(); }
-
-
-
 #pragma endregion
 
 #pragma region Miscellaneous
