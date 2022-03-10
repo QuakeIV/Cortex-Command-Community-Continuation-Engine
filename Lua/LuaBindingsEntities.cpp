@@ -885,7 +885,7 @@ namespace RTE {
 
 	LuaBindingRegisterFunctionDefinitionForType(EntityLuaBindings, MovableObject) {
 		return AbstractTypeLuaClassDefinition(MovableObject, SceneObject)
-
+		.property("WentToOrbit", &MovableObject::GetWentToOrbit)
 		.property("Material", &MovableObject::GetMaterial)
 		.property("Mass", &MovableObject::GetMass, &MovableObject::SetMass)
 		.property("Pos", &MovableObject::GetPos, &MovableObject::SetPos)

@@ -1810,6 +1810,8 @@ enum MOType
     /// <returns>Whether this MO's RootParent can GetHitByMOs and is currently traveling.</returns>
     bool GetTraveling() const { return GetRootParent()->m_IsTraveling; }
 
+	bool GetWentToOrbit() const { return m_WentToOrbit; }
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
 
@@ -1856,6 +1858,7 @@ protected:
 //                  identical to an already existing one.
 // Arguments:       A MovableObject object which is passed in by reference.
 
+	bool m_WentToOrbit;
 
     // Member variables
     static Entity::ClassInfo m_sClass;

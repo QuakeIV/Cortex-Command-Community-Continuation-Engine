@@ -20,6 +20,8 @@
 #include "Atom.h"
 #include "Actor.h"
 
+#include "Scene.h"
+
 namespace RTE {
 
 AbstractClassInfo(MovableObject, SceneObject);
@@ -975,9 +977,18 @@ void MovableObject::PostTravel()
     if (m_Lifetime && m_AgeTimer.GetElapsedSimTimeMS() > m_Lifetime)
         m_ToDelete = true;
 
+	// Check if we left the map vertically. m_Y is up = -axis, So we need to invert the height
+	if (m_Pos.m_Y < -g_SceneMan.GetScene()->GetHeight())
+		m_WentToOrbit = true;
+	else
+		m_WentToOrbit = false;
+
     // Check for stupid positions and velocities, but critical stuff can't go too fast
-    if (!g_SceneMan.IsWithinBounds(m_Pos.m_X, m_Pos.m_Y, 100))
+    if (!g_SceneMan.IsWithinBounds(m_Pos.m_X, m_Pos.m_Y, 100)){
+
         m_ToDelete = true;
+	}
+
 
     // Fix speeds that are too high
     FixTooFast();
