@@ -537,6 +537,9 @@
     <ClInclude Include="Lua\LuaAdapters.h">
       <Filter>Lua</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\SoundSettings.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="System\Box.cpp">

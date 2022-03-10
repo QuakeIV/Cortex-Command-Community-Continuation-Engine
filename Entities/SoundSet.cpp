@@ -24,7 +24,7 @@ namespace RTE {
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	// TODO: Set SoundSettings to sane defaults akin to how SoundContainer Was set here
 	int SoundSet::Create(const SoundSet &reference) {
 		m_SoundSelectionCycleMode = reference.m_SoundSelectionCycleMode;
 		m_CurrentSelection = reference.m_CurrentSelection;
@@ -36,6 +36,12 @@ namespace RTE {
 			soundSet.Create(referenceSoundSet);
 			m_SubSoundSets.push_back(soundSet);
 		}
+		
+		SetPriority(AudioMan::PRIORITY_NORMAL);
+		SetAffectedByGlobalPitch(true);
+		SetVolume(1.0F);
+		SetPitch(1.0F);
+		SetPitchVariation(0);
 
 		return 0;
 	}
@@ -43,14 +49,41 @@ namespace RTE {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	int SoundSet::ReadProperty(const std::string_view &propName, Reader &reader) {
+		float minadist = 0.0F;
+		float attendist = -1.0F;
 		if (propName == "SoundSelectionCycleMode") {
 			SetSoundSelectionCycleMode(ReadSoundSelectionCycleMode(reader));
 		} else if (propName == "AddSound") {
+			//soundData = ReadAndGetSoundData(reader, minadist, attendist);
 			AddSoundData(ReadAndGetSoundData(reader));
 		} else if (propName == "AddSoundSet") {
 			SoundSet soundSetToAdd;
 			reader >> soundSetToAdd;
 			AddSoundSet(soundSetToAdd);
+		} else if (propName == "Volume") {
+			float vol;
+			reader >> vol;
+			SetVolume(vol);
+		} else if (propName == "Priority") {
+			int pri;
+			reader >> pri;
+			SetPriority(pri);
+		} else if (propName == "AffectedByGlobalPitch") {
+			bool state;
+			reader >> state;
+			SetAffectedByGlobalPitch(state);
+		} else if (propName == "PitchVariation") {
+			float pitchvar;
+			reader >> pitchvar;
+			SetPitchVariation(pitchvar);
+		} else if (propName == "Pitch") {
+			float pitch;
+			reader >> pitch;
+			SetPitch(pitch);
+		} else if (propName == "MinimumAudibleDistance") {
+			reader >> minadist;
+		} else if (propName == "AttenuationStartDistance") {
+			reader >> attendist;
 		} else {
 			return Serializable::ReadProperty(propName, reader);
 		}
@@ -59,8 +92,10 @@ namespace RTE {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	SoundSet::SoundData SoundSet::ReadAndGetSoundData(Reader &reader) {
+	SoundSet::SoundData SoundSet::ReadAndGetSoundData(Reader &reader, float defminAudibleDist, float defattenStartDist) {
 		SoundSet::SoundData soundData;
+		soundData.MinimumAudibleDistance = defminAudibleDist;
+		soundData.AttenuationStartDistance = defattenStartDist;
 
 		/// <summary>
 		/// Internal lambda function to load an audio file by path in as a ContentFile, which in turn loads it into FMOD, then returns SoundData for it in the outParam outSoundData.
@@ -77,6 +112,7 @@ namespace RTE {
 		};
 
 		std::string propValue = reader.ReadPropValue();
+		// Allow to skip specifying the ContentFile bit in the ini
 		if (propValue != "Sound" && propValue != "ContentFile") {
 			readSoundFromPath(propValue);
 			return soundData;
@@ -140,6 +176,17 @@ namespace RTE {
 			writer << soundData.MinimumAudibleDistance;
 			writer.NewProperty("AttenuationStartDistance");
 			writer << soundData.AttenuationStartDistance;
+
+			writer.NewProperty("Volume");
+			writer << m_SoundSettings.GetVolume();
+			writer.NewProperty("Priority");
+			writer << m_SoundSettings.GetPriority();
+			writer.NewProperty("AffectedByGlobalPitch");
+			writer << m_SoundSettings.IsAffectedByGlobalPitch();
+			writer.NewProperty("PitchVariation");
+			writer << m_SoundSettings.GetPitchVariation();
+			writer.NewProperty("Pitch");
+			writer << m_SoundSettings.GetPitch();
 
 			writer.ObjectEnd();
 		}
@@ -218,6 +265,23 @@ namespace RTE {
 			}
 		}
 	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void SoundSet::GetFlattenedSoundSpecs(std::vector<std::pair<SoundData*, SoundSettings*>> &flattenedSoundData, bool onlyGetSelectedSoundData)
+	{
+		if (!onlyGetSelectedSoundData || m_SoundSelectionCycleMode == SoundSelectionCycleMode::ALL) {
+			for (SoundData &soundData : m_SoundData) { flattenedSoundData.push_back(std::make_pair(&soundData, &m_SoundSettings)); }
+			for (SoundSet &subSoundSet : m_SubSoundSets) { subSoundSet.GetFlattenedSoundSpecs(flattenedSoundData, onlyGetSelectedSoundData); }
+		} else {
+			if (m_CurrentSelection.first == false) {
+				flattenedSoundData.push_back(std::make_pair(&m_SoundData[m_CurrentSelection.second], &m_SoundSettings));
+			} else {
+				m_SubSoundSets[m_CurrentSelection.second].GetFlattenedSoundSpecs(flattenedSoundData, onlyGetSelectedSoundData);
+			}
+		}
+	}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

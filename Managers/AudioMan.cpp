@@ -6,6 +6,7 @@
 #include "ActivityMan.h"
 #include "SoundContainer.h"
 #include "GUISound.h"
+#include "SoundSettings.h"
 
 namespace RTE {
 
@@ -470,6 +471,8 @@ namespace RTE {
 					if (result != FMOD_OK) {
 						continue;
 					}
+
+					// TODO: We need to flatten our sounddata and send the right stuff here
 					NetworkSoundData soundData;
 					soundData.State = state;
 					soundData.SoundFileHash = soundContainer->GetSoundDataForSound(sound)->SoundFile.GetHash();
@@ -528,26 +531,41 @@ namespace RTE {
 		FMOD::ChannelGroup *channelGroupToPlayIn = soundContainer->IsImmobile() ? m_ImmobileSoundChannelGroup : m_MobileSoundChannelGroup;
 		FMOD::Channel *channel;
 		int channelIndex;
-		std::vector<const SoundSet::SoundData *> selectedSoundData;
-		soundContainer->GetTopLevelSoundSet().GetFlattenedSoundData(selectedSoundData, true);
-		float pitchVariationFactor = 1.0F + std::abs(soundContainer->GetPitchVariation());
-		for (const SoundSet::SoundData *soundData : selectedSoundData) {
-			result = (result == FMOD_OK) ? m_AudioSystem->playSound(soundData->SoundObject, channelGroupToPlayIn, true, &channel) : result;
+
+		// Figure out our sound data for this playback
+
+		std::vector<std::pair<SoundSet::SoundData *, SoundSettings*>> selectedSoundSpecs;
+		soundContainer->GetTopLevelSoundSet().GetFlattenedSoundSpecs(selectedSoundSpecs, true);
+
+//		std::vector<const SoundSet::SoundData *> selectedSoundData;
+//		soundContainer->GetTopLevelSoundSet().GetFlattenedSoundData(selectedSoundData, true);
+
+		// Configure our settings
+		for (std::pair<SoundSet::SoundData*, SoundSettings*> soundSpecs : selectedSoundSpecs) {
+//			printf("playing with AttenuationStartDist: %f\n", soundSpecs.first->AttenuationStartDistance);
+//			printf("playing with MinimumAudiobleDist: %f\n", soundSpecs.first->MinimumAudibleDistance);
+			result = (result == FMOD_OK) ? m_AudioSystem->playSound(soundSpecs.first->SoundObject, channelGroupToPlayIn, true, &channel) : result;
 			result = (result == FMOD_OK) ? channel->getIndex(&channelIndex) : result;
 
 			result = (result == FMOD_OK) ? channel->setUserData(soundContainer) : result;
 			result = (result == FMOD_OK) ? channel->setCallback(SoundChannelEndedCallback) : result;
-			result = (result == FMOD_OK) ? channel->setPriority(soundContainer->GetPriority()) : result;
+			result = (result == FMOD_OK) ? channel->setPriority(soundSpecs.second->GetPriority()) : result;
+//			result = (result == FMOD_OK) ? channel->setPriority(soundContainer->GetPriority()) : result;
+
+			// Calculate the pitch
+			float pitchVariationFactor = 1.0F + std::abs(soundSpecs.second->GetPitchVariation());
 			float pitchVariationMultiplier = pitchVariationFactor == 1.0F ? 1.0F : RandomNum(1.0F / pitchVariationFactor, 1.0F * pitchVariationFactor);
-			result = (result == FMOD_OK) ? channel->setPitch(soundContainer->GetPitch() * pitchVariationMultiplier) : result;
+
+			// Map the sound settings to FMOD's channel settings
+			result = (result == FMOD_OK) ? channel->setPitch(soundSpecs.second->GetPitch() * pitchVariationMultiplier) : result;
 			if (soundContainer->IsImmobile()) {
 				result = (result == FMOD_OK) ? channel->set3DLevel(0.0F) : result;
-				result = (result == FMOD_OK) ? channel->setVolume(soundContainer->GetVolume()) : result;
+				result = (result == FMOD_OK) ? channel->setVolume(soundSpecs.second->GetVolume()) : result;
 			} else {
-				m_SoundChannelMinimumAudibleDistances.insert({ channelIndex, soundData->MinimumAudibleDistance });
+				m_SoundChannelMinimumAudibleDistances.insert({ channelIndex, soundSpecs.first->MinimumAudibleDistance });
 				result = (result == FMOD_OK) ? channel->set3DLevel(m_SoundPanningEffectStrength) : result;
 
-				FMOD_VECTOR soundContainerPosition = GetAsFMODVector(soundContainer->GetPosition() + soundData->Offset);
+				FMOD_VECTOR soundContainerPosition = GetAsFMODVector(soundContainer->GetPosition() + soundSpecs.first->Offset);
 				UpdatePositionalEffectsForSoundChannel(channel, &soundContainerPosition);
 			}
 
