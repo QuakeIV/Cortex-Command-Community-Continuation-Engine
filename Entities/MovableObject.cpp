@@ -482,6 +482,8 @@ int MovableObject::Save(Writer &writer) const
 
 void MovableObject::Destroy(bool notInherited) {
     if (ObjectScriptsInitialized()) {
+        if (m_WentToOrbit)
+            RunScriptedFunctionInAppropriateScripts("WentToOrbit");
         RunScriptedFunctionInAppropriateScripts("Destroy");
         g_LuaMan.RunScriptString(m_ScriptObjectName + " = nil;");
     }
@@ -978,14 +980,26 @@ void MovableObject::PostTravel()
         m_ToDelete = true;
 
 	// Check if we left the map vertically. m_Y is up = -axis, So we need to invert the height
-	if (m_Pos.m_Y < -g_SceneMan.GetScene()->GetHeight())
-		m_WentToOrbit = true;
-	else
-		m_WentToOrbit = false;
+	//printf("Our y: %d\nMap Y: %d\n\n", m_Pos.m_Y, -g_SceneMan.GetScene()->GetHeight());
+	//if (m_Pos.m_Y < -g_SceneMan.GetScene()->GetHeight())
+	if (m_Pos.m_Y < -1000)
+		if (!m_WentToOrbit) m_WentToOrbit = true;
+
+//	else
+//		m_WentToOrbit = false;
+
+	// Check if we left the map horizontally before even trying this
+	/*
+	if (g_SceneMan.GetScene()->WrapsX())
+	{
+		if (m_Pos.m_X < 0 && m_Pos.m_X > g_SceneMan.GetScene()->GetWidth())
+			m_LeftSides = true;
+		else
+			m_LeftSides = false;
+	}*/
 
     // Check for stupid positions and velocities, but critical stuff can't go too fast
     if (!g_SceneMan.IsWithinBounds(m_Pos.m_X, m_Pos.m_Y, 100)){
-
         m_ToDelete = true;
 	}
 
