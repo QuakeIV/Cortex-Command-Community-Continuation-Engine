@@ -482,8 +482,6 @@ int MovableObject::Save(Writer &writer) const
 
 void MovableObject::Destroy(bool notInherited) {
     if (ObjectScriptsInitialized()) {
-        if (m_WentToOrbit)
-            RunScriptedFunctionInAppropriateScripts("WentToOrbit");
         RunScriptedFunctionInAppropriateScripts("Destroy");
         g_LuaMan.RunScriptString(m_ScriptObjectName + " = nil;");
     }
