@@ -1025,6 +1025,8 @@ namespace RTE {
 	LuaBindingRegisterFunctionDefinitionForType(EntityLuaBindings, Scene) {
 		return ConcreteTypeLuaClassDefinition(Scene, Entity)
 
+		.property("OrbitHeight", &Scene::GetOrbitHeight)
+
 		.property("Location", &Scene::GetLocation, &Scene::SetLocation)
 		//.property("Terrain", &Scene::GetTerrain)
 		.property("Dimensions", &Scene::GetDimensions)
