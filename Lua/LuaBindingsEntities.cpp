@@ -40,6 +40,7 @@ namespace RTE {
 		.property("MaxEngineAngle", &ACDropShip::GetMaxEngineAngle, &ACDropShip::SetMaxEngineAngle)
 		.property("LateralControlSpeed", &ACDropShip::GetLateralControlSpeed, &ACDropShip::SetLateralControlSpeed)
 		.property("LateralControl", &ACDropShip::GetLateralControl)
+		.property("GroundDeliveryDistance", &ACDropShip::GetGroundDeliveryDistance, &ACDropShip::SetGroundDeliveryDistance)
 
 		.def("DetectObstacle", &ACDropShip::DetectObstacle)
 		.def("GetAltitude", &ACDropShip::GetAltitude);

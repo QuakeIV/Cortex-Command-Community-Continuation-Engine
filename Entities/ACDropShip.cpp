@@ -44,6 +44,7 @@ void ACDropShip::Clear()
 	m_LateralControlSpeed = 6.0f;
 	m_AutoStabilize = 1;
 	m_MaxEngineAngle = 20.0f;
+	m_GroundDeliveryDistance = -1.0f;
 }
 
 
@@ -60,6 +61,9 @@ int ACDropShip::Create()
     // Save the AtomGroup read in by MOSRotating, as we are going to make it
     // into a composite group, and want to have the base body stored for reference.
     m_pBodyAG = dynamic_cast<AtomGroup *>(m_pAtomGroup->Clone());
+	
+	// Idk if this is needed here or not
+	m_GroundDeliveryDistance = -1.0f;
 
     return 0;
 }
@@ -98,6 +102,8 @@ int ACDropShip::Create(const ACDropShip &reference) {
 
 	m_MaxEngineAngle = reference.m_MaxEngineAngle;
 
+	m_GroundDeliveryDistance = reference.m_MaxEngineAngle;
+
 	return 0;
 }
 
@@ -131,6 +137,8 @@ int ACDropShip::ReadProperty(const std::string_view &propName, Reader &reader) {
         reader >> m_MaxEngineAngle;
     } else if (propName == "LateralControlSpeed") {
         reader >> m_LateralControlSpeed;
+	} else if (propName == "GroundDeliveryDistance") {
+		reader >> m_GroundDeliveryDistance;
     } else {
         return ACraft::ReadProperty(propName, reader);
     }
