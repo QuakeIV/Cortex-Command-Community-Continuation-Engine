@@ -44,7 +44,7 @@ void ACDropShip::Clear()
 	m_LateralControlSpeed = 6.0f;
 	m_AutoStabilize = 1;
 	m_MaxEngineAngle = 20.0f;
-	m_GroundDeliveryDistance = GetRadius() * 2;
+	m_GroundDeliveryDistance = -1;
 }
 
 
@@ -458,6 +458,11 @@ void ACDropShip::UpdateAI()
 
 void ACDropShip::Update()
 {
+	// This has to be done HERE because the dropship doesn't know its radius at creation.
+	if (m_GroundDeliveryDistance = -1)
+		m_GroundDeliveryDistance = GetRadius() * 1.4;
+
+
 	/////////////////////////////////
 	// Controller update and handling
 
