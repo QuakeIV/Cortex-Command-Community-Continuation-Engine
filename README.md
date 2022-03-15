@@ -4,7 +4,7 @@
 [![Linux Build](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/meson.yml/badge.svg)](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/meson.yml) [![Windows Build](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/msbuild.yml/badge.svg)](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/msbuild.yml)
 
 This is a community-driven effort to continue the development of Cortex Command.
-Stay up to date in our [Discord channel](https://discord.gg/K9UsbW7u).
+Stay up to date in our [Discord channel](https://discord.gg/tTR6xcgYDE).
 
 ***
 
