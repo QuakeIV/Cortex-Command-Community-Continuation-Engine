@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 <details><summary><b>Added</b></summary>
+- Configurable chance for a gib to not spawn
+- Configurable drop height for dropships
+- Lua property to see if an MO has left the scene via the top
+- Enhanced SoundSets to have their own audio settings instead of only
+	SoundContainers
 </details>
 
 <details><summary><b>Changed</b></summary>
