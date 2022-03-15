@@ -991,6 +991,12 @@ void MOSRotating::CreateGibsWhenGibbing(const Vector &impactImpulse, MovableObje
         if (gibSettingsObject.GetCount() == 0) {
             continue;
         }
+
+		// Check if this gib should spawn via chance
+		if ( RandomNum(0, 99) > gibSettingsObject.GetSpawnChance())
+			continue;
+
+
         MovableObject *gibParticleClone = dynamic_cast<MovableObject *>(gibSettingsObject.GetParticlePreset()->Clone());
 
 		int count = gibSettingsObject.GetCount();
