@@ -890,6 +890,7 @@ namespace RTE {
 		.property("LeftBySides", &MovableObject::GetLeftSides)
 		.property("Material", &MovableObject::GetMaterial)
 		.property("Mass", &MovableObject::GetMass, &MovableObject::SetMass)
+		.property("TerrainMass", &MovableObject::GetTerrainHitMass, &MovableObject::SetTerrainHitMass)
 		.property("Pos", &MovableObject::GetPos, &MovableObject::SetPos)
 		.property("Vel", &MovableObject::GetVel, &MovableObject::SetVel)
 		.property("PrevPos", &MovableObject::GetPrevPos)

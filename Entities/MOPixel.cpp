@@ -34,7 +34,7 @@ namespace RTE {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	int MOPixel::Create(Color color, const float mass, const Vector &position, const Vector &velocity, Atom *atom, const unsigned long lifetime) {
+	int MOPixel::Create(Color color, const float mass, const float hitTerMass, const Vector &position, const Vector &velocity, Atom *atom, const unsigned long lifetime) {
 		m_Color = color;
 		m_Atom = atom;
 		m_Atom->SetOwner(this);
@@ -42,7 +42,7 @@ namespace RTE {
 		if (m_MinLethalRange < m_MaxLethalRange) { m_LethalRange *= RandomNum(m_MinLethalRange, m_MaxLethalRange); }
 		m_LethalSharpness = m_Sharpness * 0.5F;
 
-		return MovableObject::Create(mass, position, velocity, lifetime);
+		return MovableObject::Create(mass, hitTerMass, position, velocity, lifetime);
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

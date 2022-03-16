@@ -93,11 +93,12 @@ int MOSprite::Create()
 int MOSprite::Create(ContentFile spriteFile,
                      const int frameCount,
                      const float mass,
+					 const float terHitMass,
                      const Vector &position,
                      const Vector &velocity,
                      const unsigned long lifetime)
 {
-    MovableObject::Create(mass, position, velocity, 0, 0, lifetime);
+    MovableObject::Create(mass, terHitMass, position, velocity, 0, 0, lifetime);
 
     m_SpriteFile = spriteFile;
     m_FrameCount = frameCount;

@@ -99,7 +99,7 @@ ClassInfoGetters;
 // Return value:    An error return value signaling sucess or any particular failure.
 //                  Anything below 0 is an error signal.
 
-	int Create(ContentFile spriteFile, const int frameCount = 1, const float mass = 1, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), const unsigned long lifetime = 0);
+	int Create(ContentFile spriteFile, const int frameCount = 1, const float mass = 1, const float hitTerMass = 1, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), const unsigned long lifetime = 0);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +176,8 @@ ClassInfoGetters;
     /// </summary>
     /// <returns>The mass of this MOSRotating and all of its Attachables and wounds in Kilograms (kg).</returns>
     float GetMass() const override { return MovableObject::GetMass() + m_AttachableAndWoundMass; }
+
+	float GetTerrainHitMass() const override { return m_TerrainHitMass + m_AttachableAndWoundTerrainMass; }
 
     /// <summary>
     /// Updates the total mass of Attachables and wounds for this MOSRotating, intended to be used when Attachables' masses get modified. Simply subtracts the old mass and adds the new one.
@@ -959,6 +961,7 @@ protected:
     const Attachable *m_RadiusAffectingAttachable; //!< A pointer to the Attachable that is currently affecting the radius. Used for some efficiency benefits.
     float m_FarthestAttachableDistanceAndRadius; //!< The distance + radius of the radius affecting Attachable.
     float m_AttachableAndWoundMass; //!< The mass of all Attachables and wounds on this MOSRotating. Used in combination with its actual mass and any other affecting factors to get its total mass.
+	float m_AttachableAndWoundTerrainMass; //< Same, but for terrain weight
     // The list of Gib:s this will create when gibbed
     std::list<Gib> m_Gibs;
     // The amount of impulse force required to gib this, in kg * (m/s). 0 means no limit

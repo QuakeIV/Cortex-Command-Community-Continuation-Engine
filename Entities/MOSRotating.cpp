@@ -69,6 +69,7 @@ void MOSRotating::Clear()
     m_RadiusAffectingAttachable = nullptr;
     m_FarthestAttachableDistanceAndRadius = 0.0F;
     m_AttachableAndWoundMass = 0.0F;
+	m_AttachableAndWoundTerrainMass = 0.0F;
     m_Gibs.clear();
     m_GibImpulseLimit = 0;
     m_GibWoundLimit = 0;
@@ -193,11 +194,12 @@ int MOSRotating::Create()
 int MOSRotating::Create(ContentFile spriteFile,
                         const int frameCount,
                         const float mass,
+						const float hitTerMass,
                         const Vector &position,
                         const Vector &velocity,
                         const unsigned long lifetime)
 {
-    MOSprite::Create(spriteFile, frameCount, mass, position, velocity, lifetime);
+    MOSprite::Create(spriteFile, frameCount, mass, hitTerMass, position, velocity, lifetime);
     return 0;
 }
 
@@ -475,6 +477,7 @@ void MOSRotating::AddWound(AEmitter *woundToAdd, const Vector &parentOffsetToSet
             woundToAdd->SetIsWound(true);
             if (woundToAdd->HasNoSetDamageMultiplier()) { woundToAdd->SetDamageMultiplier(1.0F); }
             m_AttachableAndWoundMass += woundToAdd->GetMass();
+			m_AttachableAndWoundTerrainMass += woundToAdd->GetTerrainHitMass();
             m_Wounds.push_back(woundToAdd);
         }
     }
@@ -512,6 +515,7 @@ float MOSRotating::RemoveWounds(int numberOfWoundsToRemove, bool includePositive
         float woundDamage = m_Wounds.front()->GetBurstDamage();
         AEmitter *wound = m_Wounds.front();
         m_AttachableAndWoundMass -= wound->GetMass();
+		m_AttachableAndWoundTerrainMass -= wound->GetTerrainHitMass();
         m_Wounds.pop_front();
         delete wound;
         return woundDamage;
@@ -1518,6 +1522,7 @@ void MOSRotating::Update() {
         if (wound->IsSetToDelete() || (wound->GetLifetime() > 0 && wound->GetAge() > wound->GetLifetime())) {
             m_Wounds.remove(wound);
             m_AttachableAndWoundMass -= wound->GetMass();
+			m_AttachableAndWoundTerrainMass -= wound->GetTerrainHitMass();
             delete wound;
         } else {
             Vector totalImpulseForce;
@@ -1611,6 +1616,7 @@ void MOSRotating::AddAttachable(Attachable *attachable, const Vector& parentOffs
         attachable->SetParentOffset(parentOffsetToSet);
         attachable->SetParent(this);
         m_AttachableAndWoundMass += attachable->GetMass();
+		m_AttachableAndWoundTerrainMass += attachable->GetTerrainHitMass();
         HandlePotentialRadiusAffectingAttachable(attachable);
         m_Attachables.push_back(attachable);
 	}
@@ -1637,6 +1643,7 @@ Attachable * MOSRotating::RemoveAttachable(Attachable *attachable, bool addToMov
     if (!m_Attachables.empty()) { m_Attachables.remove(attachable); }
     attachable->SetParent(nullptr);
     m_AttachableAndWoundMass -= attachable->GetMass();
+	m_AttachableAndWoundTerrainMass -= attachable->GetTerrainHitMass();
 
     std::unordered_map<unsigned long, std::function<void(MOSRotating *, Attachable *)>>::iterator hardcodedAttachableMapEntry = m_HardcodedAttachableUniqueIDsAndSetters.find(attachable->GetUniqueID());
     if (hardcodedAttachableMapEntry != m_HardcodedAttachableUniqueIDsAndSetters.end()) {

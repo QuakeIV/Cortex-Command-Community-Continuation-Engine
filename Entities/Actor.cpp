@@ -1509,6 +1509,7 @@ void Actor::Update()
 */
             MOPixel *pixelMO = new MOPixel(AuMat->GetColor(),
                                            AuMat->GetPixelDensity(),
+										   AuMat->GetPixelDensity(), // TODO: Should this be Terrain version of mass? - Wazu
                                            Vector(m_Pos.m_X, m_Pos.m_Y - 10),
                                            Vector(4.0F * RandomNormalNum(), RandomNum(-5.0F, -7.0F)),
                                            new Atom(Vector(), AuMat->GetIndex(), 0, AuMat->GetColor(), 2),
