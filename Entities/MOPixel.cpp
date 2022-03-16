@@ -170,6 +170,7 @@ namespace RTE {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	// TODO: Maybe jostle the HitData one a bit or even skip if it does match instead so we don't need to assert? - Wazu
 	bool MOPixel::CollideAtPoint(HitData &hd) {
 		RTEAssert(hd.HitPoint.GetFloored() == m_Pos.GetFloored(), "Collision mismatch in MOPixel::CollideAtPoint!");
 		RTEAssert(hd.Body[HITOR], "Valid MO not passed into MOPixel::CollideAtPoint!");
