@@ -276,7 +276,7 @@ enum MOType
 
 	virtual float GetTerrainHitMass() const { return m_TerrainHitMass; }
 	virtual void SetTerrainHitMass(const float newTerrainHitMass) { m_TerrainMassSet = true; m_TerrainHitMass = newTerrainHitMass; }
-
+	bool TerrainHitMassSet() const { return m_TerrainMassSet; }
 	/// <summary>
 	/// Gets the previous position vector of this MovableObject, prior to this frame.
 	/// </summary>

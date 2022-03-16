@@ -160,7 +160,7 @@ int MovableObject::Create(const float mass,
                           bool getHitByMOs)
 {
     m_Mass = mass;
-	m_TerrainHitMass = terHitMass;
+	m_TerrainHitMass = mass;
 	m_TerrainMassSet = false;
     m_Pos = position;
     m_Vel = velocity;
@@ -283,6 +283,7 @@ int MovableObject::ReadProperty(const std::string_view &propName, Reader &reader
 {
 	if (propName == "Mass") {
 		reader >> m_Mass;
+		if (!m_TerrainMassSet) m_TerrainHitMass = m_Mass;
 	} else if (propName == "TerrainMass") {
 		reader >> m_TerrainHitMass;
 		m_TerrainMassSet = true;

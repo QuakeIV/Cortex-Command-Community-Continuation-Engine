@@ -177,7 +177,7 @@ ClassInfoGetters;
     /// <returns>The mass of this MOSRotating and all of its Attachables and wounds in Kilograms (kg).</returns>
     float GetMass() const override { return MovableObject::GetMass() + m_AttachableAndWoundMass; }
 
-	float GetTerrainHitMass() const override { return m_TerrainHitMass + m_AttachableAndWoundTerrainMass; }
+	float GetTerrainHitMass() const override { if (m_TerrainMassSet) return m_TerrainHitMass + m_AttachableAndWoundTerrainMass; else return GetMass(); }
 
     /// <summary>
     /// Updates the total mass of Attachables and wounds for this MOSRotating, intended to be used when Attachables' masses get modified. Simply subtracts the old mass and adds the new one.
