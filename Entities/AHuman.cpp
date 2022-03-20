@@ -3678,6 +3678,12 @@ void AHuman::Update()
             float BGArmProg = m_Paths[BGROUND][CLIMB].GetRegularProgress();
 
 			// TODO: Figure out what this comment means, and then rephrase it better!
+			
+			// Fine, I got you - Wazu
+			// When moving the BGArmProg using a somewhat negative value makes sense since it will have a
+			// negative progress when it hits a segment at first ( think individual process on a ladder rung being each
+			// starting segment ).
+
             // Slightly negative BGArmProg makes sense because any progress on the starting segments are reported as negative,
             // and there's many starting segments on properly formed climbing paths
 			if (climbing) {
@@ -3711,7 +3717,7 @@ void AHuman::Update()
                 m_Paths[FGROUND][CLIMB].Terminate();
                 m_Paths[BGROUND][CLIMB].Terminate();
 			// TODO: Consider incrementing 1.1F or even checking if the actor is missing legs instead of disabling? - Wazu
-			}// else if (m_StrideTimer.IsPastSimMS(static_cast<double>(m_Paths[FGROUND][WALK].GetTotalPathTime() * 1.1F))) {
+			} //else if (m_StrideTimer.IsPastSimMS(static_cast<double>(m_Paths[FGROUND][WALK].GetTotalPathTime() * 1.1F))) {
 				// Reset the walking stride if it's taking longer than it should.
                 //m_StrideStart = true;
                 //m_Paths[FGROUND][WALK].Terminate();
