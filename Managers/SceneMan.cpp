@@ -1069,6 +1069,7 @@ int SceneMan::RemoveOrphans(int posX, int posY,
 			float tempMin = tempMax / 2.0F;
             MOPixel *pixelMO = new MOPixel(spawnColor,
                                            spawnMat->GetPixelDensity(),
+                                           spawnMat->GetPixelDensity(),// TODO: Should this be terrain hit mass instead ? - Wazu
                                            Vector(posX, posY),
                                            Vector(-RandomNum(tempMin, tempMax),
                                                   -RandomNum(tempMin, tempMax)),
@@ -1276,6 +1277,7 @@ bool SceneMan::TryPenetrate(int posX,
 				float tempMinY = tempMaxY / 2.0F;
                 MOPixel *pixelMO = new MOPixel(spawnColor,
                                                spawnMat->GetPixelDensity(),
+                                               spawnMat->GetPixelDensity(), // TODO: Should this be terrain hit mass instead ? - Wazu
                                                Vector(posX, posY),
                                                Vector(-RandomNum(tempMinX, tempMaxX),
                                                       -RandomNum(tempMinY, tempMaxY)),
@@ -1349,7 +1351,8 @@ bool SceneMan::TryPenetrate(int posX,
 								sprayVel.SetXY(sprayMag* RandomNormalNum() * 0.5F, (-sprayMag * 0.5F) + (-sprayMag * RandomNum(0.0F, 0.5F)));
 
                                 // Create the new spray pixel
-								pixelMO = new MOPixel(spawnColor, spawnMat->GetPixelDensity(), Vector(posX, testY), sprayVel, new Atom(Vector(), spawnMat->GetIndex(), 0, spawnColor, 2), 0);
+								// TODO: Should this be terrain hit mass instead ? - Wazu
+								pixelMO = new MOPixel(spawnColor, spawnMat->GetPixelDensity(), spawnMat->GetPixelDensity(), Vector(posX, testY), sprayVel, new Atom(Vector(), spawnMat->GetIndex(), 0, spawnColor, 2), 0);
 
                                 // Let it loose into the world
                                 pixelMO->SetToHitMOs(spawnMat->GetIndex() == c_GoldMaterialID);

@@ -4,6 +4,8 @@
 #include "Vector.h"
 #include "ContentFile.h"
 #include "LuaMan.h"
+#include "SoundSettings.h"
+
 
 namespace RTE {
 
@@ -70,7 +72,7 @@ namespace RTE {
 		/// </summary>
 		/// <param name="reader">A Reader lined up to the value of the property to be read.</param>
 		/// <returns>SoundData for the newly read sound.</returns>
-		static SoundData ReadAndGetSoundData(Reader &reader);
+		static SoundData ReadAndGetSoundData(Reader &reader, float defminAudibleDist = 0.0F, float defattenStartDist = -1.0F);
 
 		/// <summary>
 		/// Handles turning a SoundCelectionCycleMode from its user-friendly name in INI to its enum value, using the static SoundSelectionCycleMap.
@@ -181,11 +183,91 @@ namespace RTE {
 		/// <param name="onlyGetSelectedSoundData">Whether to only get SoundData that is currently selected, or to get all SoundData in this SoundSet.</param>
 		void GetFlattenedSoundData(std::vector<const SoundData *> &flattenedSoundData, bool onlyGetSelectedSoundData) const;
 
+
+		/* TODO: Figure out why this freaks out when we const it up */
+		void GetFlattenedSoundSpecs(std::vector<std::pair<SoundData*, SoundSettings*>> &flattenedSoundData, bool onlyGetSelectedSoundData);
 		/// <summary>
 		/// Gets the vector of SubSoundSets for this SoundSet.
 		/// </summary>
 		/// <returns>The vector of SubSoundSets for this SoundSet.</returns>
 		std::vector<SoundSet> & GetSubSoundSets() { return m_SubSoundSets; }
+
+		//TODO: [LUA] None of these are exposed to lua yet
+		/// This autism is because of const correctness.
+
+#pragma endregion
+
+#pragma region SoundSettings getters and setters
+		/**
+		 * @brief Set the Volume of this SoundSet
+		 * 
+		 * @param newVolume
+		 */
+		void SetVolume(const float newVolume) { m_SoundSettings.SetVolume(newVolume); }
+
+		/**
+		 * @brief Get the Volume of this SoundSet
+		 * 
+		 * @return float
+		 */
+		float GetVolume() const { return m_SoundSettings.GetVolume(); }
+
+		/**
+		 * @brief Set the Pitch of this SoundSet
+		 * 
+		 * @param newPitch
+		 */
+		void SetPitch(const float newPitch) { m_SoundSettings.SetPitch(newPitch); }
+
+		/**
+		 * @brief Get the Pitch of this SoundSet
+		 * 
+		 * @return float 
+		 */
+		float GetPitch() const { return m_SoundSettings.GetPitch(); }
+
+		/**
+		 * @brief Set the Pitch Variation of this SoundSet
+		 * 
+		 * @param newPitchVariation
+		 */
+		void SetPitchVariation(const float newPitchVariation) { m_SoundSettings.SetPitchVariation(newPitchVariation); }
+
+		/**
+		 * @brief Get the Pitch Variation of this SoundSet
+		 * 
+		 * @return float 
+		 */
+		float GetPitchVariation() const { return m_SoundSettings.GetPitchVariation(); }
+
+		/**
+		 * @brief Set the Priority of this SoundSet
+		 * 
+		 * @param newPriority 
+		 */
+		void SetPriority(const int newPriority) { m_SoundSettings.SetPriority(newPriority); }
+
+		/**
+		 * @brief Get the Priority of this SoundSet
+		 * 
+		 * @return int 
+		 */
+		int GetPriority() const { return m_SoundSettings.GetPriority(); }
+
+		/**
+		 * @brief Set the Affected By Global Pitch state of this SoundSet
+		 * 
+		 * @param state
+		 */
+		void SetAffectedByGlobalPitch(const bool state) { m_SoundSettings.SetAffectedByGlobalPitch(state); }
+
+		/**
+		 * @brief Is this SoundSet affected by the global pitch or not
+		 * 
+		 * @return true 
+		 * @return false 
+		 */
+		bool IsAffectedByGlobalPitch() const { return m_SoundSettings.IsAffectedByGlobalPitch(); }
 #pragma endregion
 
 #pragma region Miscellaneous
@@ -214,6 +296,9 @@ namespace RTE {
 
 		std::vector<SoundData> m_SoundData; //!< The SoundData available for selection in this SoundSet.
 		std::vector<SoundSet> m_SubSoundSets; //!< The sub SoundSets available for selection in this SoundSet.
+
+		SoundSettings m_SoundSettings;
+
 
 		/// <summary>
 		/// Clears all the member variables of this SoundSet, effectively resetting the members of this abstraction level only.

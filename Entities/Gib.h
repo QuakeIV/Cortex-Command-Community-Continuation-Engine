@@ -111,6 +111,9 @@ namespace RTE {
 		/// </summary>
 		/// <returns>The spread mode of this Gib.</returns>
 		SpreadMode GetSpreadMode() const { return m_SpreadMode; }
+
+
+		int GetSpawnChance() const { return m_SpawnChance; }
 #pragma endregion
 
 	protected:
@@ -124,6 +127,8 @@ namespace RTE {
 		float m_LifeVariation; //!< The per-Gib variation in Lifetime, in percentage of the existing Lifetime of the gib.
 		bool m_InheritsVel; //!< Whether this Gib should inherit the velocity of the exploding parent or not.
 		bool m_IgnoresTeamHits; //!< Whether this Gib should ignore hits with the team of the exploding parent or not.
+
+		int m_SpawnChance; //!< Chance for this gib to spawn
 		SpreadMode m_SpreadMode; //!< Determines what kind of logic is used when applying velocity to the GibParticle objects.
 
 	private:

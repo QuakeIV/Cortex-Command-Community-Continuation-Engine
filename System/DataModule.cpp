@@ -373,7 +373,7 @@ namespace RTE {
 
 	// TODO: This method is almost identical to GetEntityPreset, except it doesn't return a const Entity *.
 	// Investigate if the latter needs to return const (based on what's using it) and if not, get rid of this and replace its uses. At the very least, consider renaming this
-	// See https://github.com/cortex-command-community/Cortex-Command-Community-Project-Source/issues/87
+	// See https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/87
 	Entity * DataModule::GetEntityIfExactType(const std::string &exactType, const std::string &presetName) {
 		if (exactType.empty() || presetName == "None" || presetName.empty()) {
 			return nullptr;

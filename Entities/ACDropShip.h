@@ -297,6 +297,9 @@ ClassInfoGetters;
 	float GetLateralControl() const { return m_LateralControl; }
 
 
+	float GetGroundDeliveryDistance() const { return m_GroundDeliveryDistance; }
+	void SetGroundDeliveryDistance(const float newGroundDeliveryDistance) { m_GroundDeliveryDistance = newGroundDeliveryDistance; }
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
 
@@ -313,6 +316,9 @@ protected:
     AEmitter *m_pLThruster;
     AEmitter *m_pURThruster;
     AEmitter *m_pULThruster;
+
+	// Drop height for the lua ai
+	float m_GroundDeliveryDistance;
 
     // Hatch doors
     Attachable *m_pRHatch;
