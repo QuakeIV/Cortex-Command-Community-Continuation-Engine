@@ -456,7 +456,7 @@ namespace RTE {
 		bool m_IsOriginalPreset; //!< Whether this is to be added to the PresetMan as an original preset instance.
 		int m_DefinedInModule; //!< The DataModule ID that this was successfully added to at some point. -1 if not added to anything yet.
 
-		//TODO Consider replacing this with an unordered_set. See https://github.com/cortex-command-community/Cortex-Command-Community-Project-Source/issues/88
+		//TODO Consider replacing this with an unordered_set. See https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/88
 		std::list<std::string> m_Groups; //!< List of all tags associated with this. The groups are used to categorize and organize Entities.
 		std::string m_LastGroupSearch; //!< Last group search string, for more efficient response on multiple tries for the same group name.
 		bool m_LastGroupResult; //!< Last group search result, for more efficient response on multiple tries for the same group name.

@@ -20,6 +20,8 @@
 #include "Atom.h"
 #include "Actor.h"
 
+#include "Scene.h"
+
 namespace RTE {
 
 AbstractClassInfo(MovableObject, SceneObject);
@@ -36,6 +38,8 @@ void MovableObject::Clear()
 {
     m_MOType = TypeGeneric;
     m_Mass = 0;
+	m_TerrainHitMass = 0;
+	m_TerrainMassSet = false;
     m_Vel.Reset();
     m_PrevPos.Reset();
     m_PrevVel.Reset();
@@ -146,6 +150,7 @@ int MovableObject::Create()
 // Description:     Makes the MovableObject object ready for use.
 
 int MovableObject::Create(const float mass,
+                          const float terHitMass,
                           const Vector &position,
                           const Vector &velocity,
                           float rotAngle,
@@ -155,6 +160,8 @@ int MovableObject::Create(const float mass,
                           bool getHitByMOs)
 {
     m_Mass = mass;
+	m_TerrainHitMass = mass;
+	m_TerrainMassSet = false;
     m_Pos = position;
     m_Vel = velocity;
     m_AgeTimer.Reset();
@@ -187,6 +194,8 @@ int MovableObject::Create(const MovableObject &reference)
 
     m_MOType = reference.m_MOType;
     m_Mass = reference.m_Mass;
+	m_TerrainHitMass = reference.m_TerrainHitMass;
+	m_TerrainMassSet = reference.m_TerrainMassSet;
     m_Pos = reference.m_Pos;
     m_Vel = reference.m_Vel;
     m_Scale = reference.m_Scale;
@@ -274,6 +283,10 @@ int MovableObject::ReadProperty(const std::string_view &propName, Reader &reader
 {
 	if (propName == "Mass") {
 		reader >> m_Mass;
+		if (!m_TerrainMassSet) m_TerrainHitMass = m_Mass;
+	} else if (propName == "TerrainMass") {
+		reader >> m_TerrainHitMass;
+		m_TerrainMassSet = true;
 	} else if (propName == "Velocity")
 		reader >> m_Vel;
 	else if (propName == "Scale")
@@ -975,9 +988,30 @@ void MovableObject::PostTravel()
     if (m_Lifetime && m_AgeTimer.GetElapsedSimTimeMS() > m_Lifetime)
         m_ToDelete = true;
 
+	// Check if we left the map vertically. m_Y is up = -axis, So we need to invert the height
+	//printf("Our y: %d\nMap Y: %d\n\n", m_Pos.m_Y, -g_SceneMan.GetScene()->GetHeight());
+	//if (m_Pos.m_Y < -g_SceneMan.GetScene()->GetHeight())
+	if (m_Pos.m_Y < -1000)
+		if (!m_WentToOrbit) m_WentToOrbit = true;
+
+//	else
+//		m_WentToOrbit = false;
+
+	// Check if we left the map horizontally before even trying this
+	/*
+	if (g_SceneMan.GetScene()->WrapsX())
+	{
+		if (m_Pos.m_X < 0 && m_Pos.m_X > g_SceneMan.GetScene()->GetWidth())
+			m_LeftSides = true;
+		else
+			m_LeftSides = false;
+	}*/
+
     // Check for stupid positions and velocities, but critical stuff can't go too fast
-    if (!g_SceneMan.IsWithinBounds(m_Pos.m_X, m_Pos.m_Y, 100))
+    if (!g_SceneMan.IsWithinBounds(m_Pos.m_X, m_Pos.m_Y, 100)){
         m_ToDelete = true;
+	}
+
 
     // Fix speeds that are too high
     FixTooFast();

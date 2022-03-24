@@ -285,13 +285,13 @@ namespace RTE {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	float AtomGroup::Travel(float travelTime, bool callOnBounce, bool callOnSink, bool scenePreLocked) {
-		return Travel(m_OwnerMOSR->m_Pos, m_OwnerMOSR->m_Vel, m_OwnerMOSR->m_Rotation, m_OwnerMOSR->m_AngularVel, m_OwnerMOSR->m_DidWrap, m_OwnerMOSR->m_TravelImpulse, m_OwnerMOSR->GetMass(), travelTime, callOnBounce, callOnSink, scenePreLocked);
+		return Travel(m_OwnerMOSR->m_Pos, m_OwnerMOSR->m_Vel, m_OwnerMOSR->m_Rotation, m_OwnerMOSR->m_AngularVel, m_OwnerMOSR->m_DidWrap, m_OwnerMOSR->m_TravelImpulse, m_OwnerMOSR->GetMass(), m_OwnerMOSR->GetTerrainHitMass(), travelTime, callOnBounce, callOnSink, scenePreLocked);
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// TODO: Break down and rework this trainwreck.
-	float AtomGroup::Travel(Vector &position, Vector &velocity, Matrix &rotation, float &angularVel, bool &didWrap, Vector &totalImpulse, float mass, float travelTime, bool callOnBounce, bool callOnSink, bool scenePreLocked) {
+	float AtomGroup::Travel(Vector &position, Vector &velocity, Matrix &rotation, float &angularVel, bool &didWrap, Vector &totalImpulse, float mass, float hitTerMass, float travelTime, bool callOnBounce, bool callOnSink, bool scenePreLocked) {
 		RTEAssert(m_OwnerMOSR, "Tried to travel an AtomGroup that has no parent!");
 
 		m_MomentOfInertia = GetMomentOfInertia();
@@ -509,7 +509,7 @@ namespace RTE {
 				do {
 					somethingPenetrated = false;
 
-					const float massDistribution = mass / static_cast<float>(hitTerrAtoms.size() * (m_Resolution ? m_Resolution : 1));
+					const float massDistribution = hitTerMass / static_cast<float>(hitTerrAtoms.size() * (m_Resolution ? m_Resolution : 1));
 					const float momentInertiaDistribution = m_MomentOfInertia / static_cast<float>(hitTerrAtoms.size() * (m_Resolution ? m_Resolution : 1));
 
 					// Determine which of the colliding Atoms will penetrate the terrain.
@@ -596,9 +596,9 @@ namespace RTE {
 						if (g_SceneMan.TryPenetrate(penetratingAtom->GetCurrentPos().GetFloorIntX(), penetratingAtom->GetCurrentPos().GetFloorIntY(), hitData.PreImpulse[HITOR], hitData.HitVel[HITOR], retardation, 1.0F, 1/*(*penetratingAtom)->GetNumPenetrations()*/)) {
 							// Recalculate these here without the distributed mass and MI.
 							const float radMag = hitData.HitRadius[HITOR].GetMagnitude();
-							hitData.HitDenominator = (1.0F / mass) + ((radMag * radMag) / m_MomentOfInertia);
+							hitData.HitDenominator = (1.0F / hitTerMass) + ((radMag * radMag) / m_MomentOfInertia);
 							hitData.PreImpulse[HITOR] = hitData.HitVel[HITOR] / hitData.HitDenominator;
-							hitData.TotalMass[HITOR] = mass;
+							hitData.TotalMass[HITOR] = hitTerMass;
 							hitData.MomInertia[HITOR] = m_MomentOfInertia;
 							hitData.ImpulseFactor[HITOR] = hitFactor;
 							// Finally calculate the hit response impulse.
@@ -747,6 +747,8 @@ namespace RTE {
 		int hitCount = 0;
 		float timeLeft = travelTime;
 		float mass = (m_OwnerMOSR->GetMass() != 0 ? m_OwnerMOSR->GetMass() : 0.0001F);
+		float hitTerMass = (m_OwnerMOSR->GetTerrainHitMass() != 0 ? m_OwnerMOSR->GetTerrainHitMass() : 0.0001F);
+		//					if (hitTerMass != mass) printf("hitTerMas set - %f != %f\n", hitTerMass, mass);
 		float retardation;
 		bool halted = false;
 
@@ -1045,7 +1047,7 @@ namespace RTE {
 				do {
 					somethingPenetrated = false;
 
-					massDist = mass / static_cast<float>(hitTerrAtoms.size() * (m_Resolution ? m_Resolution : 1));
+					massDist = hitTerMass / static_cast<float>(hitTerrAtoms.size() * (m_Resolution ? m_Resolution : 1));
 
 					for (std::deque<std::pair<Atom *, Vector>>::iterator atomItr = hitTerrAtoms.begin(); atomItr != hitTerrAtoms.end(); ) {
 						if (g_SceneMan.WillPenetrate(intPos[X] + (*atomItr).second.GetFloorIntX(), intPos[Y] + (*atomItr).second.GetFloorIntY(), forceVel, massDist)) {
@@ -1144,7 +1146,7 @@ namespace RTE {
 					// Call the call-on-sink function, if requested.
 					//if (m_OwnerMOSR && callOnSink) { halted = m_OwnerMOSR->OnSink(position); }
 
-					massDist = mass / static_cast<float>(penetratingAtoms.size() * (m_Resolution ? m_Resolution : 1));
+					massDist = hitTerMass / static_cast<float>(penetratingAtoms.size() * (m_Resolution ? m_Resolution : 1));
 
 					// Apply the collision response effects.
 					for (const std::pair<Atom *, Vector> &penetratingAtomsEntry : penetratingAtoms) {
@@ -1233,6 +1235,7 @@ namespace RTE {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	// Why does this take mass if it never uses it? - Wazu
 	void AtomGroup::FlailAsLimb(const Vector &ownerPos, const Vector &jointOffset, const float limbRadius, const Vector &velocity, const float angularVel, const float mass, const float travelTime) {
 		RTEAssert(m_OwnerMOSR, "Tried to flail an AtomGroup that has no parent!");
 

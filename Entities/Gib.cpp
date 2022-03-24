@@ -18,6 +18,7 @@ namespace RTE {
 		m_LifeVariation = 0.1F;
 		m_InheritsVel = true;
 		m_IgnoresTeamHits = false;
+		m_SpawnChance = 100;
 		m_SpreadMode = SpreadMode::SpreadRandom;
 	}
 
@@ -34,6 +35,7 @@ namespace RTE {
 		m_InheritsVel = reference.m_InheritsVel;
 		m_IgnoresTeamHits = reference.m_IgnoresTeamHits;
 		m_SpreadMode = reference.m_SpreadMode;
+		m_SpawnChance = reference.m_SpawnChance;
 
 		return 0;
 	}
@@ -62,6 +64,10 @@ namespace RTE {
 			reader >> m_IgnoresTeamHits;
 		} else if (propName == "SpreadMode") {
 			m_SpreadMode = static_cast<SpreadMode>(std::stoi(reader.ReadPropValue()));
+		} else if (propName == "SpawnChance") {
+			reader >> m_SpawnChance;
+			if (m_SpawnChance > 100 || m_SpawnChance < 1)
+				RTEAssert(m_GibParticle, "Spawn chance can only be a number within 1 and 100!");
 		} else {
 			return Serializable::ReadProperty(propName, reader);
 		}

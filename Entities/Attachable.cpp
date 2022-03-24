@@ -385,6 +385,8 @@ namespace RTE {
 		if (newMass != currentMass) {
 			float previousMassForUpdatingParent = m_Parent ? currentMass : 0.0F;
 			MovableObject::SetMass(newMass);
+			if (!MovableObject::TerrainHitMassSet()) // Update terrain mass if needed
+				MovableObject::SetTerrainHitMass(newMass);
 			if (m_Parent) { m_Parent->UpdateAttachableAndWoundMass(previousMassForUpdatingParent, GetMass()); }
 		}
 	}

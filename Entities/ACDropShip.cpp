@@ -44,6 +44,7 @@ void ACDropShip::Clear()
 	m_LateralControlSpeed = 6.0f;
 	m_AutoStabilize = 1;
 	m_MaxEngineAngle = 20.0f;
+	m_GroundDeliveryDistance = -1;
 }
 
 
@@ -98,6 +99,8 @@ int ACDropShip::Create(const ACDropShip &reference) {
 
 	m_MaxEngineAngle = reference.m_MaxEngineAngle;
 
+	m_GroundDeliveryDistance = reference.m_MaxEngineAngle;
+
 	return 0;
 }
 
@@ -131,6 +134,8 @@ int ACDropShip::ReadProperty(const std::string_view &propName, Reader &reader) {
         reader >> m_MaxEngineAngle;
     } else if (propName == "LateralControlSpeed") {
         reader >> m_LateralControlSpeed;
+	} else if (propName == "GroundDeliveryDistance") {
+		reader >> m_GroundDeliveryDistance;
     } else {
         return ACraft::ReadProperty(propName, reader);
     }
@@ -453,6 +458,11 @@ void ACDropShip::UpdateAI()
 
 void ACDropShip::Update()
 {
+	// This has to be done HERE because the dropship doesn't know its radius at creation.
+	if (m_GroundDeliveryDistance = -1)
+		m_GroundDeliveryDistance = GetRadius() * 1.4;
+
+
 	/////////////////////////////////
 	// Controller update and handling
 

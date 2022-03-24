@@ -40,6 +40,7 @@ namespace RTE {
 		.property("MaxEngineAngle", &ACDropShip::GetMaxEngineAngle, &ACDropShip::SetMaxEngineAngle)
 		.property("LateralControlSpeed", &ACDropShip::GetLateralControlSpeed, &ACDropShip::SetLateralControlSpeed)
 		.property("LateralControl", &ACDropShip::GetLateralControl)
+		.property("GroundDeliveryDistance", &ACDropShip::GetGroundDeliveryDistance, &ACDropShip::SetGroundDeliveryDistance)
 
 		.def("DetectObstacle", &ACDropShip::DetectObstacle)
 		.def("GetAltitude", &ACDropShip::GetAltitude);
@@ -885,9 +886,12 @@ namespace RTE {
 
 	LuaBindingRegisterFunctionDefinitionForType(EntityLuaBindings, MovableObject) {
 		return AbstractTypeLuaClassDefinition(MovableObject, SceneObject)
-
+		.property("WentToOrbit", &MovableObject::GetWentToOrbit)
+		.property("LeftBySides", &MovableObject::GetLeftSides)
 		.property("Material", &MovableObject::GetMaterial)
 		.property("Mass", &MovableObject::GetMass, &MovableObject::SetMass)
+		.property("TerrainMass", &MovableObject::GetTerrainHitMass, &MovableObject::SetTerrainHitMass)
+		.property("IsTerrainMassSet", &MovableObject::TerrainHitMassSet)
 		.property("Pos", &MovableObject::GetPos, &MovableObject::SetPos)
 		.property("Vel", &MovableObject::GetVel, &MovableObject::SetVel)
 		.property("PrevPos", &MovableObject::GetPrevPos)
@@ -928,6 +932,7 @@ namespace RTE {
 		.property("HitWhatParticleUniqueID", &MovableObject::HitWhatParticleUniqueID)
 		.property("ApplyWoundDamageOnCollision", &MovableObject::GetApplyWoundDamageOnCollision, &MovableObject::SetApplyWoundDamageOnCollision)
 		.property("ApplyWoundBurstDamageOnCollision", &MovableObject::GetApplyWoundBurstDamageOnCollision, &MovableObject::SetApplyWoundBurstDamageOnCollision)
+
 
 		.def("GetParent", (MOSRotating * (MovableObject::*)())&MovableObject::GetParent)
 		.def("GetParent", (const MOSRotating * (MovableObject::*)() const)&MovableObject::GetParent)
@@ -1023,6 +1028,8 @@ namespace RTE {
 
 	LuaBindingRegisterFunctionDefinitionForType(EntityLuaBindings, Scene) {
 		return ConcreteTypeLuaClassDefinition(Scene, Entity)
+
+		.property("OrbitHeight", &Scene::GetOrbitHeight)
 
 		.property("Location", &Scene::GetLocation, &Scene::SetLocation)
 		//.property("Terrain", &Scene::GetTerrain)

@@ -53,7 +53,7 @@ namespace RTE {
 		int Create(const AtomGroup &reference, bool onlyCopyOwnerAtoms);
 
 		/// <summary>
-		/// Creates an AtomGroup after the silhouette shape of a passed in MOSRotating by dotting the outline of the sprite with Atoms. 
+		/// Creates an AtomGroup after the silhouette shape of a passed in MOSRotating by dotting the outline of the sprite with Atoms.
 		/// The passed in MOSRotating will also be made the owner of this AtomGroup! Ownership of the MOSRotating is NOT transferred!
 		/// </summary>
 		/// <param name="ownerMOSRotating">A pointer to a MOSRotating whose outline will be approximated by Atoms of this AtomGroup, and that will be set as the owner of this AtomGroup.</param>
@@ -247,9 +247,9 @@ namespace RTE {
 		/// <param name="scenePreLocked">Whether the Scene has been pre-locked or not.</param>
 		/// <returns>The amount of time remaining of the travelTime passed in, in seconds. This may only possibly be a non-zero if callOnBounce or callOnSink are true.</returns>
 		/// <remarks>
-		/// Pseudocode explaining how this works can be found at: https://github.com/cortex-command-community/Cortex-Command-Community-Project-Source/wiki/Notes-on-AtomGroup::Travel.
+		/// Pseudocode explaining how this works can be found at: https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/wiki/Notes-on-AtomGroup::Travel.
 		/// </remarks>
-		float Travel(Vector &position, Vector &velocity, Matrix &rotation, float &angularVel, bool &didWrap, Vector &totalImpulse, float mass, float travelTime, bool callOnBounce = false, bool callOnSink = false, bool scenePreLocked = false);
+		float Travel(Vector &position, Vector &velocity, Matrix &rotation, float &angularVel, bool &didWrap, Vector &totalImpulse, float mass, float hitTerMass, float travelTime, bool callOnBounce = false, bool callOnSink = false, bool scenePreLocked = false);
 
 		/// <summary>
 		/// Makes this AtomGroup travel without rotation and react with the scene by pushing against it.

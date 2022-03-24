@@ -36,12 +36,13 @@ namespace RTE {
 		/// <param name="spriteFile">A pointer to ContentFile that represents the bitmap file that will be used to create the Sprite.</param>
 		/// <param name="frameCount">The number of frames in the Sprite's animation.</param>
 		/// <param name="mass">A float specifying the object's mass in Kilograms (kg).</param>
+		/// <param name="terHitMass">A float specifying the object's mass in Kilograms against terrain (kg).</param>
 		/// <param name="position">A Vector specifying the initial position.</param>
 		/// <param name="velocity">A Vector specifying the initial velocity.</param>
 		/// <param name="lifetime">The amount of time in ms this MOSParticle will exist. 0 means unlimited.</param>
 		/// <returns>An error return value signaling success or any particular failure. Anything below 0 is an error signal.</returns>
-		int Create(ContentFile spriteFile, const int frameCount = 1, const float mass = 1, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), const unsigned long lifetime = 0) {
-			MOSprite::Create(spriteFile, frameCount, mass, position, velocity, lifetime);
+		int Create(ContentFile spriteFile, const int frameCount = 1, const float mass = 1, const float terHitMass = 1, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), const unsigned long lifetime = 0) {
+			MOSprite::Create(spriteFile, frameCount, mass, terHitMass, position, velocity, lifetime);
 			return 0;
 		}
 

@@ -1022,6 +1022,7 @@ deque<MOPixel *> SLTerrain::EraseSilhouette(BITMAP *pSprite,
                     // Create the MOPixel based off the Terrain data.
                     pPixel = new MOPixel(colorPixel,
                                          spawnMat->GetPixelDensity(),
+										 spawnMat->GetPixelDensity(), // TODO: Should this be terrain hit mass instead ? - Wazu
                                          Vector(terrX, terrY),
                                          Vector(),
                                          new Atom(Vector(), spawnMat->GetIndex(), 0, colorPixel, 2),
