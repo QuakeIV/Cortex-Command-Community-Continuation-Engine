@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 <details><summary><b>Added</b></summary>
+- Separate mass value for terrain collision to prevent heavy actors from
+	sinking into the ground
 - Configurable chance for a gib to not spawn
 - Configurable drop height for dropships
 - Lua property to see if an MO has left the scene via the top
@@ -14,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 </details>
 
 <details><summary><b>Changed</b></summary>
+- Buffed jetpacks to be actual jet packs. Also added jumppacks which
+	are better for heavier, short jumps
+- Changed activity property to be in line with the rest and maintain
+	compatibility in both cases
 - Updated branding for the forkening
 - Changed version number for the forkening
 - Replaced sound and music assets with older Pawnishoovy versions
