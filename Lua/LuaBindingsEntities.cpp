@@ -890,6 +890,8 @@ namespace RTE {
 		.property("LeftBySides", &MovableObject::GetLeftSides)
 		.property("Material", &MovableObject::GetMaterial)
 		.property("Mass", &MovableObject::GetMass, &MovableObject::SetMass)
+		.property("TerrainMass", &MovableObject::GetTerrainHitMass, &MovableObject::SetTerrainHitMass)
+		.property("IsTerrainMassSet", &MovableObject::TerrainHitMassSet)
 		.property("Pos", &MovableObject::GetPos, &MovableObject::SetPos)
 		.property("Vel", &MovableObject::GetVel, &MovableObject::SetVel)
 		.property("PrevPos", &MovableObject::GetPrevPos)
@@ -930,6 +932,7 @@ namespace RTE {
 		.property("HitWhatParticleUniqueID", &MovableObject::HitWhatParticleUniqueID)
 		.property("ApplyWoundDamageOnCollision", &MovableObject::GetApplyWoundDamageOnCollision, &MovableObject::SetApplyWoundDamageOnCollision)
 		.property("ApplyWoundBurstDamageOnCollision", &MovableObject::GetApplyWoundBurstDamageOnCollision, &MovableObject::SetApplyWoundBurstDamageOnCollision)
+
 
 		.def("GetParent", (MOSRotating * (MovableObject::*)())&MovableObject::GetParent)
 		.def("GetParent", (const MOSRotating * (MovableObject::*)() const)&MovableObject::GetParent)

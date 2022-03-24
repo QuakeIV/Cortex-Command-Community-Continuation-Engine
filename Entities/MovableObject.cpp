@@ -38,6 +38,8 @@ void MovableObject::Clear()
 {
     m_MOType = TypeGeneric;
     m_Mass = 0;
+	m_TerrainHitMass = 0;
+	m_TerrainMassSet = false;
     m_Vel.Reset();
     m_PrevPos.Reset();
     m_PrevVel.Reset();
@@ -148,6 +150,7 @@ int MovableObject::Create()
 // Description:     Makes the MovableObject object ready for use.
 
 int MovableObject::Create(const float mass,
+                          const float terHitMass,
                           const Vector &position,
                           const Vector &velocity,
                           float rotAngle,
@@ -157,6 +160,8 @@ int MovableObject::Create(const float mass,
                           bool getHitByMOs)
 {
     m_Mass = mass;
+	m_TerrainHitMass = mass;
+	m_TerrainMassSet = false;
     m_Pos = position;
     m_Vel = velocity;
     m_AgeTimer.Reset();
@@ -189,6 +194,8 @@ int MovableObject::Create(const MovableObject &reference)
 
     m_MOType = reference.m_MOType;
     m_Mass = reference.m_Mass;
+	m_TerrainHitMass = reference.m_TerrainHitMass;
+	m_TerrainMassSet = reference.m_TerrainMassSet;
     m_Pos = reference.m_Pos;
     m_Vel = reference.m_Vel;
     m_Scale = reference.m_Scale;
@@ -276,6 +283,10 @@ int MovableObject::ReadProperty(const std::string_view &propName, Reader &reader
 {
 	if (propName == "Mass") {
 		reader >> m_Mass;
+		if (!m_TerrainMassSet) m_TerrainHitMass = m_Mass;
+	} else if (propName == "TerrainMass") {
+		reader >> m_TerrainHitMass;
+		m_TerrainMassSet = true;
 	} else if (propName == "Velocity")
 		reader >> m_Vel;
 	else if (propName == "Scale")

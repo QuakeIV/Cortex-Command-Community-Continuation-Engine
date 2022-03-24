@@ -121,7 +121,7 @@ enum MOType
 // Return value:    An error return value signaling sucess or any particular failure.
 //                  Anything below 0 is an error signal.
 
-	int Create(float mass, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), float rotAngle = 0, float angleVel = 0, unsigned long lifetime = 0, bool hitMOs = true, bool getHitByMOs = false);
+	int Create(float mass, float terHitMass, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), float rotAngle = 0, float angleVel = 0, unsigned long lifetime = 0, bool hitMOs = true, bool getHitByMOs = false);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -274,6 +274,9 @@ enum MOType
     virtual float GetMass() const { return m_Mass; }
 
 
+	virtual float GetTerrainHitMass() const { return m_TerrainHitMass; }
+	virtual void SetTerrainHitMass(const float newTerrainHitMass) { m_TerrainMassSet = true; m_TerrainHitMass = newTerrainHitMass; }
+	bool TerrainHitMassSet() const { return m_TerrainMassSet; }
 	/// <summary>
 	/// Gets the previous position vector of this MovableObject, prior to this frame.
 	/// </summary>
@@ -686,7 +689,7 @@ enum MOType
 // Arguments:       A float specifying the new mass value in Kilograms (kg).
 // Return value:    None.
 
-    virtual void SetMass(const float newMass) { m_Mass = newMass; }
+    virtual void SetMass(const float newMass) { if (!m_TerrainMassSet) { m_TerrainHitMass = newMass; } m_Mass = newMass; }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -1870,6 +1873,8 @@ protected:
     // The type of MO this is, either Actor, Item, or Particle
     int m_MOType;
     float m_Mass; // In metric kilograms (kg).
+	float m_TerrainHitMass; // Mass for terrain impacts in kg
+	bool m_TerrainMassSet; // Used to maintain setmass reverse compatibility from lua
     Vector m_Vel; // In meters per second (m/s).
     Vector m_PrevPos; // Previous frame's position.
     Vector m_PrevVel; // Previous frame's velocity.

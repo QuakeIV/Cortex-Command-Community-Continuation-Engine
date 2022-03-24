@@ -249,7 +249,7 @@ namespace RTE {
 		/// <remarks>
 		/// Pseudocode explaining how this works can be found at: https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/wiki/Notes-on-AtomGroup::Travel.
 		/// </remarks>
-		float Travel(Vector &position, Vector &velocity, Matrix &rotation, float &angularVel, bool &didWrap, Vector &totalImpulse, float mass, float travelTime, bool callOnBounce = false, bool callOnSink = false, bool scenePreLocked = false);
+		float Travel(Vector &position, Vector &velocity, Matrix &rotation, float &angularVel, bool &didWrap, Vector &totalImpulse, float mass, float hitTerMass, float travelTime, bool callOnBounce = false, bool callOnSink = false, bool scenePreLocked = false);
 
 		/// <summary>
 		/// Makes this AtomGroup travel without rotation and react with the scene by pushing against it.

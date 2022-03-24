@@ -91,7 +91,7 @@ public:
 // Return value:    An error return value signaling sucess or any particular failure.
 //                  Anything below 0 is an error signal.
 
-	int Create(ContentFile spriteFile, const int frameCount = 1, const float mass = 1, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), const unsigned long lifetime = 0);
+	int Create(ContentFile spriteFile, const int frameCount = 1, const float mass = 1, const float terHitMass = 1, const Vector &position = Vector(0, 0), const Vector &velocity = Vector(0, 0), const unsigned long lifetime = 0);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////

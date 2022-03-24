@@ -29,11 +29,12 @@ namespace RTE {
 		/// </summary>
 		/// <param name="color">A Color object specifying the color of this MOPixel.</param>
 		/// <param name="mass">A float specifying the object's mass in Kilograms (kg).</param>
+		/// <param name="mass">A float specifying the object's mass in Kilograms (kg) against terrain.</param>
 		/// <param name="position">A Vector specifying the initial position.</param>
 		/// <param name="velocity">A Vector specifying the initial velocity.</param>
 		/// <param name="atom">An Atom that will collide with the terrain.</param>
 		/// <param name="lifetime">The amount of time in ms this MOPixel will exist. 0 means unlimited.</param>
-		MOPixel(Color color, const float mass, const Vector &position, const Vector &velocity, Atom *atom, const unsigned long lifetime = 0) { Clear(); Create(color, mass, position, velocity, atom, lifetime); }
+		MOPixel(Color color, const float mass, const float hitTerMass, const Vector &position, const Vector &velocity, Atom *atom, const unsigned long lifetime = 0) { Clear(); Create(color, mass, hitTerMass, position, velocity, atom, lifetime); }
 
 		/// <summary>
 		/// Makes the MOPixel object ready for use.
@@ -46,12 +47,13 @@ namespace RTE {
 		/// </summary>
 		/// <param name="color">A Color object specifying the color of this MOPixel.</param>
 		/// <param name="mass">A float specifying the object's mass in Kilograms (kg).</param>
+		/// <param name="mass">A float specifying the object's mass in Kilograms (kg) against terrain.</param>
 		/// <param name="position">A Vector specifying the initial position.</param>
 		/// <param name="velocity">A Vector specifying the initial velocity.</param>
 		/// <param name="atom">An Atom that will collide with the terrain.</param>
 		/// <param name="lifetime">The amount of time in ms this MOPixel will exist. 0 means unlimited.</param>
 		/// <returns>An error return value signaling success or any particular failure. Anything below 0 is an error signal.</returns>
-		int Create(Color color, const float mass, const Vector &position, const Vector &velocity, Atom *atom, const unsigned long lifetime = 0);
+		int Create(Color color, const float mass, const float hitTerMass, const Vector &position, const Vector &velocity, Atom *atom, const unsigned long lifetime = 0);
 
 		/// <summary>
 		/// Creates a MOPixel to be identical to another, by deep copy.
