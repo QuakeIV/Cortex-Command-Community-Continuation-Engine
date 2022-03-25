@@ -10,7 +10,7 @@ namespace RTE {
 #pragma endregion
 
 #pragma region Game Version
-	static constexpr const char *c_GameVersion = "The Forkening 1.0.0-pre";
+	static constexpr const char *c_GameVersion = "C4 Version 1";
 #pragma endregion
 
 #pragma region Physics Constants
