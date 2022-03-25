@@ -5,6 +5,24 @@ All notable changes to this continuation will be documented in this file.
 ## [Unreleased]
 <details><summary><b>Added</b></summary>
 
+</details>
+
+<details><summary><b>Changed</b></summary>
+
+</details>
+
+<details><summary><b>Fixed</b></summary>
+
+</details>
+
+<details><summary><b>Removed</b></summary>
+</details>
+
+***
+
+## [C4 Version 1] - 2022/03/25
+<details><summary><b>Added</b></summary>
+
 - There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
 	make your heavy actors not sink into the ground so much. Note the following: this defaults to Mass if not defined, and changing MO.Mass through lua
 	will change TerrainMass along with it ONLY if it has not been otherwise defined (i.e. it is still at the default value equal to Mass). Otherwise you must
