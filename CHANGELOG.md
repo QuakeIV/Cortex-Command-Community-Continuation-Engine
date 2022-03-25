@@ -1,28 +1,32 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to this continuation will be documented in this file.
 
 ## [Unreleased]
 <details><summary><b>Added</b></summary>
-- Separate mass value for terrain collision to prevent heavy actors from
-	sinking into the ground
-- Configurable chance for a gib to not spawn
-- Configurable drop height for dropships
-- Lua property to see if an MO has left the scene via the top
-- Enhanced SoundSets to have their own audio settings instead of only
-	SoundContainers
+- There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
+	make your heavy actors not sink into the ground so much. Note the following: this defaults to Mass if not defined, and changing MO.Mass through lua
+	will change TerrainMass along with it ONLY if it has not been otherwise defined (i.e. it is still at the default value equal to Mass). Otherwise you must
+	keep track of it separately.
+	
+- You can configure the chance of a gib to spawn using `SpawnChance` from 1 to 100.
+
+- Dropships can have their ground delivery distance configured through `GroundDeliveryDistance` in pixels. This defaults to a value based on the craft's sprite Radius,
+	which should be comfortable even if GroundDeliveryDistance isn't defined.
+
+- New lua read-only property, `WentToOrbit`. Will be true if the entity went into orbit (left the map vertically) that very frame, false otherwise. This can be checked on e.g. Destroy().
+
+- All SoundSets and SubSoundSets can now have their own audio settings such as MinimumAudibleDistance, Volume etc. instead of just base SoundContainers.
+	If no specific setting is given for a SoundSet, it will use the SoundContainer's value, or a default if none at all was set. Offset works as before.
+	
 </details>
 
 <details><summary><b>Changed</b></summary>
-- Buffed jetpacks to be actual jet packs. Also added jumppacks which
-	are better for heavier, short jumps
-- Changed activity property to be in line with the rest and maintain
-	compatibility in both cases
+- Buffed jetpacks to be actual jet packs. Added unused Jump Pack, which is stronger but shorter in usetime, for modders/future content to use.
+- Changed activity script paths to accept ScriptPath instead of only ScriptFile. ScriptFile is still supported for backwards compatibility.
 - Updated branding for the forkening
 - Changed version number for the forkening
-- Replaced sound and music assets with older Pawnishoovy versions
+- Replaced sound assets with older Pawnis versions
 </details>
 
 <details><summary><b>Fixed</b></summary>
