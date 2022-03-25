@@ -1,6 +1,6 @@
 project(
   'C4', ['cpp', 'c'],
-  version : '1.0.0-pre',
+  version : 'rel-1',
   default_options : ['cpp_std=c++17', 'buildtype=release'],
   meson_version : '>=0.53'
 )
