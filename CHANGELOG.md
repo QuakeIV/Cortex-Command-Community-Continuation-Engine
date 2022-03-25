@@ -37,7 +37,9 @@ All notable changes to this continuation will be documented in this file.
 </details>
 
 <details><summary><b>Fixed</b></summary>
+
 - Added lua5.2 fallback for odd linux distros
+
 </details>
 
 <details><summary><b>Removed</b></summary>
