@@ -20,14 +20,14 @@ All notable changes to this continuation will be documented in this file.
 
 ***
 
-## [C4 Version 1] - 2022/03/25
+## [C4 Version 1][c4v1] - 2022/03/25
 <details><summary><b>Added</b></summary>
 
 - There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
 	make your heavy actors not sink into the ground so much. Note the following: this defaults to Mass if not defined, and changing MO.Mass through lua
 	will change TerrainMass along with it ONLY if it has not been otherwise defined (i.e. it is still at the default value equal to Mass). Otherwise you must
 	keep track of it separately.
-	
+
 - You can configure the chance of a gib to spawn using `SpawnChance` from 1 to 100.
 
 - Dropships can have their ground delivery distance configured through `GroundDeliveryDistance` in pixels. This defaults to a value based on the craft's sprite Radius,
@@ -37,7 +37,7 @@ All notable changes to this continuation will be documented in this file.
 
 - All SoundSets and SubSoundSets can now have their own audio settings such as MinimumAudibleDistance, Volume etc. instead of just base SoundContainers.
 	If no specific setting is given for a SoundSet, it will use the SoundContainer's value, or a default if none at all was set. Offset works as before.
-	
+
 </details>
 
 <details><summary><b>Changed</b></summary>
