@@ -4,6 +4,7 @@ All notable changes to this continuation will be documented in this file.
 
 ## [Unreleased]
 <details><summary><b>Added</b></summary>
+
 - There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
 	make your heavy actors not sink into the ground so much. Note the following: this defaults to Mass if not defined, and changing MO.Mass through lua
 	will change TerrainMass along with it ONLY if it has not been otherwise defined (i.e. it is still at the default value equal to Mass). Otherwise you must
@@ -22,11 +23,17 @@ All notable changes to this continuation will be documented in this file.
 </details>
 
 <details><summary><b>Changed</b></summary>
+
 - Buffed jetpacks to be actual jet packs. Added unused Jump Pack, which is stronger but shorter in usetime, for modders/future content to use.
+
 - Changed activity script paths to accept ScriptPath instead of only ScriptFile. ScriptFile is still supported for backwards compatibility.
+
 - Updated branding for the forkening
+
 - Changed version number for the forkening
+
 - Replaced sound assets with older Pawnis versions
+
 </details>
 
 <details><summary><b>Fixed</b></summary>
