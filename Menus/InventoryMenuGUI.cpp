@@ -384,12 +384,11 @@ namespace RTE {
 
 		switch (m_MenuMode) {
 			case MenuMode::Carousel:
-				// Check this separately since it could be true while the next check is false, thus causing a CTD
 				if (!m_InventoryActor || m_InventoryActor->IsInventoryEmpty()) {
 					return;
 				}
-
-				if (m_InventoryActorEquippedItems.empty() && m_EnabledState != EnabledState::Disabling)) {
+				// Logically this should no longer be needed
+				if (!m_InventoryActor || (m_InventoryActor->IsInventoryEmpty() && m_InventoryActorEquippedItems.empty() && m_EnabledState != EnabledState::Disabling)) {
 					return;
 				}
 				drawPos -= Vector(0, c_CarouselMenuVerticalOffset + c_CarouselBoxMaxSize.GetY() * 0.5F);
