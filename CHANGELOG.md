@@ -3,20 +3,20 @@
 All notable changes to this continuation will be documented in this file.
 
 ## [Unreleased]
-<details><summary><b>Added</b></summary>
+<b>Added</b>
 
-</details>
+<b>Changed</b>
 
-<details><summary><b>Changed</b></summary>
+<b>Fixed</b>
+	- CTD crash when pie menu is open on entity that's about to be destroy
+	- Fix Skirmish defense to spawn enemies
+	- Fix Tutorial enemies not having weapons (bandaid though - somethings up
+		with adding actors to scenes getting casted and losing inventory
+		somewhere)
+	- Fix Keepieuppie to let you spawn the rocklet
 
-</details>
 
-<details><summary><b>Fixed</b></summary>
-
-</details>
-
-<details><summary><b>Removed</b></summary>
-</details>
+<b>Removed</b>
 
 ***
 
