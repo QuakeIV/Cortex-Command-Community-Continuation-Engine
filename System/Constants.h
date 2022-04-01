@@ -10,7 +10,7 @@ namespace RTE {
 #pragma endregion
 
 #pragma region Game Version
-	static constexpr const char *c_GameVersion = "C4 Version 1";
+	static constexpr const char *c_GameVersion = "C4 Version 1.1: Functional Inventory's Return";
 #pragma endregion
 
 #pragma region Physics Constants
