@@ -9,7 +9,11 @@ Stay up to date in our [Discord channel](https://discord.gg/tTR6xcgYDE).
 ***
 
 # How to Play the Game
-If you just want to play the latest version of the game you can get it from our [website](https://cortex-command-community.github.io), and you can get mods from our [mod portal](https://cccp.mod.io).
+If you just want to play the latest version of the game you can get it here on github in the releases secion.
+
+Right now, you can get mods from the cccp [mod portal](https://cccp.mod.io).
+
+In the future we will have our own site and mod portal.
 
 ***
 
