@@ -8,20 +8,28 @@ All notable changes to this continuation will be documented in this file.
 <b>Changed</b>
 
 <b>Fixed</b>
-	- CTD crash when pie menu is open on entity that's about to be destroy
-	- Fix Skirmish defense to spawn enemies
-	- Fix Tutorial enemies not having weapons (bandaid though - somethings up
-		with adding actors to scenes getting casted and losing inventory
-		somewhere)
-	- Fix Keepieuppie to let you spawn the rocklet
-
 
 <b>Removed</b>
 
 ***
 
-## [C4 Version 1][c4v1] - 2022/03/25
+## [C4 Version 1.1][c4v1.1] - 2022/04/04
 <b>Added</b>
+
+<b>Changed</b>
+
+<b>Fixed</b>
+
+- CTD crash when pie menu is open on entity that's about to be destroy
+- Fix Skirmish defense to spawn enemies
+- Fix Tutorial enemies not having weapons (bandaid though - somethings up with adding actors to scenes getting casted and losing inventory somewhere)
+- Fix Keepieuppie to let you spawn the rocklet
+
+
+<b>Removed</b>
+
+## [C4 Version 1][c4v1] - 2022/03/25
+<details><b>Added</b>
 
 - There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
 	make your heavy actors not sink into the ground so much. Note the following: this defaults to Mass if not defined, and changing MO.Mass through lua
@@ -55,7 +63,7 @@ All notable changes to this continuation will be documented in this file.
 
 - Added lua5.2 fallback for odd linux distros
 
-<b>Removed</b>
+<b>Removed</b></details>
 
 ***
 
