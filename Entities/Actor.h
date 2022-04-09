@@ -1359,102 +1359,102 @@ protected:
 
     int m_Status;
     float m_Health;
-    // Maximum health
+    /// Maximum health
     float m_MaxHealth;
-    // The health of the previous frame, so we can track damage
+    /// The health of the previous frame, so we can track damage
     float m_PrevHealth;
     // Not owned by this!
     const Icon *m_pTeamIcon;
 	// Not owned by this!
 	const Icon *m_pControllerIcon;
-    // Timing the last second to store the position each second so we can determine larger movement
+    /// Timing the last second to store the position each second so we can determine larger movement
     Timer m_LastSecondTimer;
-    // This' position up to a second ago
+    /// This' position up to a second ago
     Vector m_LastSecondPos;
-    // Movement since last whole second
+    /// Movement since last whole second
     Vector m_RecentMovement;
     float m_RecentMovementMag;
-    // Threshold for taking damage from travel impulses, in kg * m/s
+    /// Threshold for taking damage from travel impulses, in kg * m/s
     float m_TravelImpulseDamage;
-    // Timer for timing the delay before regaining stability after losing it
+    /// Timer for timing the delay before regaining stability after losing it
     Timer m_StableRecoverTimer;
-    // Thresholds in both x and y for how fast the actor can travel before losing stability. Meters per second (m/s).
+    /// Thresholds in both x and y for how fast the actor can travel before losing stability. Meters per second (m/s).
     Vector m_StableVel;
 	int m_StableRecoverDelay; //!< The delay before regaining stability after losing it, in MS
-    // Timer for the heartbeat of this Actor
+    /// Timer for the heartbeat of this Actor
     Timer m_HeartBeat;
-    // Timer for timing how long this has been under Control
+    /// Timer for timing how long this has been under Control
     Timer m_NewControlTmr;
-    // Death timing timer
+    /// Death timing timer
     Timer m_DeathTmr;
-    // Amount of Gold carried, in ounces.
+    /// Amount of Gold carried, in ounces.
     float m_GoldCarried;
-    // Whether or not any gold was picked up this frame.
+    /// Whether or not any gold was picked up this frame.
     bool m_GoldPicked;
-    // Aiming state
+    /// Aiming state
     char m_AimState;
-    // The arc range of the aiming angle, in each direction, in radians. Eg if HalfPI, it means full 180 degree range
+    /// The arc range of the aiming angle, in each direction, in radians. Eg if HalfPI, it means full 180 degree range
     float m_AimRange;
-    // Current Aim angle within the AimRange
+    /// Current Aim angle within the AimRange
     float m_AimAngle;
-    // How far the actor aims/looks by default
+    /// How far the actor aims/looks by default
     float m_AimDistance;
-    // Aiming timing timer
+    /// Aiming timing timer
     Timer m_AimTmr;
-    // For timing the transition from regular aim to sharp aim
+    /// For timing the transition from regular aim to sharp aim
     Timer m_SharpAimTimer;
-    // The time it takes to achieve complete full sharp aiming
+    /// The time it takes to achieve complete full sharp aiming
     int m_SharpAimDelay;
-    // The velocity
+    /// The velocity
     float m_SharpAimSpeed;
-    // Normalzied scalar showing storing much sharp aim progress has been made
+    /// Normalzied scalar showing storing much sharp aim progress has been made
     float m_SharpAimProgress;
-    // If sharp aim has been maxed out, ie it's either at its max, or being limited by some obstruction
+    /// If sharp aim has been maxed out, ie it's either at its max, or being limited by some obstruction
     bool m_SharpAimMaxedOut;
-    // Point at this target when devicestate is in POINTING mode
+    /// Point at this target when devicestate is in POINTING mode
     Vector m_PointingTarget;
-    // Last seen enemy target
+    /// Last seen enemy target
     Vector m_SeenTargetPos;
-    // Timer measuring how long this has been alarmed by a nearby gunshot etc.
+    /// Timer measuring how long this has been alarmed by a nearby gunshot etc.
     Timer m_AlarmTimer;
-    // Position of the last thing that alarmed us
+    /// Position of the last thing that alarmed us
     Vector m_LastAlarmPos;
-    // How far this guy's AI can see when he's just looking ahead
+    /// How far this guy's AI can see when he's just looking ahead
     float m_SightDistance;
-    // How perceptive this is of alarming events going on around him, 0.0 - 1.0
+    /// How perceptive this is of alarming events going on around him, 0.0 - 1.0
     float m_Perceptiveness;
-	// Whether or not this actor can reveal unseen areas by looking
+	/// Whether or not this actor can reveal unseen areas by looking
 	bool m_CanRevealUnseen;
-    // About How tall is the Actor, in pixels?
+    /// About How tall is the Actor, in pixels?
     float m_CharHeight;
-    // Speed at which the m_AimAngle will change, in radians/s.
-//    float
-    // The offset position of the holster where this Actor draws his devices from.
+    /// Speed at which the m_AimAngle will change, in radians/s.
+    /// float
+    /// The offset position of the holster where this Actor draws his devices from.
     Vector m_HolsterOffset;
-    // The point at which this actor is viewing, or the scene frame
-    // should be centered on if tracking this Actor's view.
-    // In absolute scene coordinates.
+    /// The point at which this actor is viewing, or the scene frame
+    /// should be centered on if tracking this Actor's view.
+    /// In absolute scene coordinates.
     Vector m_ViewPoint;
-    // The inventory of carried MovableObjects of this Actor. They are also Owned by this.
+    /// The inventory of carried MovableObjects of this Actor. They are also Owned by this.
     std::deque<MovableObject *> m_Inventory;
     float m_MaxInventoryMass; //!< The mass limit for this Actor's inventory. -1 means there's no limit.
-    // The device that can/will be picked up
+    /// The device that can/will be picked up
     HeldDevice *m_pItemInReach;
-    // Whether the pie menu associated with this needs updating
+    /// Whether the pie menu associated with this needs updating
     bool m_PieNeedsUpdate;
-    // HUD positioning aid
+    /// HUD positioning aid
     int m_HUDStack;
-    // For how much longer to draw this as white. 0 means don't draw as white
+    /// For how much longer to draw this as white. 0 means don't draw as white
     int m_FlashWhiteMS;
-    // The timer that measures and deducts past time from the remaining white flash time
+    /// The timer that measures and deducts past time from the remaining white flash time
     Timer m_WhiteFlashTimer;
-    // Extra pie menu options that this should add to any Pie Menu that focuses on this
+    /// Extra pie menu options that this should add to any Pie Menu that focuses on this
     std::list<PieSlice> m_PieSlices;
-    // What material strength this actor is capable of digging trough.
+    /// What material strength this actor is capable of digging trough.
     float m_DigStrength;
-	// ID of deployment which spawned this actor
+	/// ID of deployment which spawned this actor
 	unsigned int m_DeploymentID;
-    // How many passenger slots this actor will take in a craft
+    /// How many passenger slots this actor will take in a craft
     int m_PassengerSlots;
 
 
@@ -1484,57 +1484,57 @@ protected:
          IGNORINGBLOCK,
          FOLLOWWAIT
     };
-    // Unknown team icon
+    /// Unknown team icon
     static std::vector<BITMAP *> m_apNoTeamIcon;
-    // The AI mode icons
+    /// The AI mode icons
     static BITMAP *m_apAIIcons[AIMODE_COUNT];
-    // Selection arrow
+    /// Selection arrow
     static std::vector<BITMAP *> m_apSelectArrow;
-    // Selection arrow
+    /// Selection arrow
     static std::vector<BITMAP *> m_apAlarmExclamation;
-    // Whether the static icons have been loaded yet or not
+    /// Whether the static icons have been loaded yet or not
     static bool m_sIconsLoaded;
-    // Whether a Lua update AI function was provided in this' script file
+    /// Whether a Lua update AI function was provided in this' script file
     bool m_ScriptedAIUpdate;
-    // The current mode the AI is set to perform as
+    /// The current mode the AI is set to perform as
     AIMode m_AIMode;
-    // The list of waypoints remaining between which the paths are made. If this is empty, the last path is in teh MovePath
-    // The MO pointer in the pair is nonzero if the waypoint is tied to an MO in the scene, and gets updated each UpdateAI. This needs to be checked for validity/existence each UpdateAI
+    /// The list of waypoints remaining between which the paths are made. If this is empty, the last path is in teh MovePath
+    /// The MO pointer in the pair is nonzero if the waypoint is tied to an MO in the scene, and gets updated each UpdateAI. This needs to be checked for validity/existence each UpdateAI
     std::list<std::pair<Vector, const MovableObject *> > m_Waypoints;
-    // Whether to draw the waypoints or not in the HUD
+    /// Whether to draw the waypoints or not in the HUD
     bool m_DrawWaypoints;
-    // Absolute target to move to on the scene; this is usually the point at the front of the movepath list
+    /// Absolute target to move to on the scene; this is usually the point at the front of the movepath list
     Vector m_MoveTarget;
-    // The MO we're currently following, if any. If still valid, this' position will update the MoveTarget each UpdateAI.
+    /// The MO we're currently following, if any. If still valid, this' position will update the MoveTarget each UpdateAI.
     const MovableObject *m_pMOMoveTarget;
-    // The point previous on the path to the one currently assigned the move target
+    /// The point previous on the path to the one currently assigned the move target
     Vector m_PrevPathTarget;
-    // The relative, scene-wrapped difference between the current m_Pos and the m_MoveTarget.
+    /// The relative, scene-wrapped difference between the current m_Pos and the m_MoveTarget.
     Vector m_MoveVector;
-    // The calculated path to get to that move-to target
+    /// The calculated path to get to that move-to target
     std::list<Vector> m_MovePath;
-    // Whether it's time to update the path
+    /// Whether it's time to update the path
     bool m_UpdateMovePath;
-    // The minimum range to consider having reached a move target is considered
+    /// The minimum range to consider having reached a move target is considered
     float m_MoveProximityLimit;
-    // Whether the AI is trying to progress to the right, left, or stand still
+    /// Whether the AI is trying to progress to the right, left, or stand still
     LateralMoveState m_LateralMoveState;
-    // Timer for how long to keep going before switching directions when moving along a path
+    /// Timer for how long to keep going before switching directions when moving along a path
     Timer m_MoveOvershootTimer;
-    // Whether the AI is in the process of proceeding, backstepping to get out of being stuck, or jumping over stuff
+    /// Whether the AI is in the process of proceeding, backstepping to get out of being stuck, or jumping over stuff
     ObstacleState m_ObstacleState;
-    // Teammate is in the way of whatever we are doing; stop until he moves
+    /// Teammate is in the way of whatever we are doing; stop until he moves
     TeamBlockState m_TeamBlockState;
-    // Times how long after an obstruction is cleared to start proceeding again
+    /// Times how long after an obstruction is cleared to start proceeding again
     Timer m_BlockTimer;
-    // The closest the actor has ever come to the current waypoint it's going for. Used to checking if we shuold re-update the movepath
-    // It's useful for when the path seems to be broken or unreachable
+    /// The closest the actor has ever come to the current waypoint it's going for. Used to checking if we shuold re-update the movepath
+    /// It's useful for when the path seems to be broken or unreachable
     float m_BestTargetProximity;
-    // Timer used to check on larger movement progress toward the goal
+    /// Timer used to check on larger movement progress toward the goal
     Timer m_ProgressTimer;
-    // Timer used to time how long we've been stuck in the same spot.
+    /// Timer used to time how long we've been stuck in the same spot.
     Timer m_StuckTimer;
-    // Timer for measuring interval between height checks
+    /// Timer for measuring interval between height checks
     Timer m_FallTimer;
 
 //////////////////////////////////////////////////////////////////////////////////////////
