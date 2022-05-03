@@ -4,12 +4,12 @@
 [![Linux Build](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/meson.yml/badge.svg)](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/meson.yml) [![Windows Build](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/msbuild.yml/badge.svg)](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/msbuild.yml)
 
 This is a community-driven effort to continue the development of Cortex Command.
-Stay up to date in our [Discord channel](https://discord.gg/tTR6xcgYDE).
+Stay up to date in our [Discord channel](https://discord.gg/Fwyar4Uvx6).
 
 ***
 
 # How to Play the Game
-If you just want to play the latest version of the game you can get it here on github in the releases secion.
+If you just want to play the latest version of the game you can get it here on github in the [releases](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/releases) section.
 
 Right now, you can get mods from the cccp [mod portal](https://cccp.mod.io).
 
