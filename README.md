@@ -1,6 +1,5 @@
 # Cortex Command Community Continuation Source
 *The Cortex Command Community Continuation is Free/Libre and Open Source under GNU AGPL v3*
-(TESTING GIT STUFF IGNORE MEEEEEEEE AAAAAAAAAAAAAAAAAAAA)
 
 [![Linux Build](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/meson.yml/badge.svg)](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/meson.yml) [![Windows Build](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/msbuild.yml/badge.svg)](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/actions/workflows/msbuild.yml)
 
