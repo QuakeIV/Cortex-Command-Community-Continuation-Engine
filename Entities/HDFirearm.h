@@ -331,11 +331,24 @@ ClassInfoGetters;
 	/// <returns>A float with the scalar value.</returns>
 	float GetShellVelVariation() const { return m_ShellVelVariation; }
 
+
 	/// <summary>
 	/// Sets the random velocity variation scalar at which this HDFirearm's shell is to be ejected.
 	/// </summary>
 	/// <param name = newValue>The new velocity variation scalar.</param>
 	void SetShellVelVariation(float newVariation) { m_ShellVelVariation = newVariation; }
+
+	/// <summary>
+	/// Gets the recoil multiplier.
+	/// </summary>
+	/// <returns>A float with the scalar value.</returns>
+	float GetRecoilMultiplier() const { return m_RecoilMultiplier; }
+
+	/// <summary>
+	/// Sets the recoil multiplier.
+	/// </summary>
+	/// <param name = newRecoilMultiplier>The new recoil multiplier scalar.</param>
+	void SetRecoilMultiplier(float newRecoilMultiplier) { m_RecoilMultiplier = newRecoilMultiplier; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Method:          GetAIFireVel

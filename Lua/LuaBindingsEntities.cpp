@@ -631,6 +631,7 @@ namespace RTE {
 		.property("NoSupportFactor", &HDFirearm::GetNoSupportFactor, &HDFirearm::SetNoSupportFactor)
 		.property("ParticleSpreadRange", &HDFirearm::GetParticleSpreadRange, &HDFirearm::SetParticleSpreadRange)
 		.property("ShellVelVariation", &HDFirearm::GetShellVelVariation, &HDFirearm::SetShellVelVariation)
+		.property("RecoilMultiplier", &HDFirearm::GetRecoilMultiplier, &HDFirearm::SetRecoilMultiplier)
 		.property("FiredOnce", &HDFirearm::FiredOnce)
 		.property("FiredFrame", &HDFirearm::FiredFrame)
 		.property("RoundsFired", &HDFirearm::RoundsFired)
