@@ -10,6 +10,7 @@ New property for HDFirearms - RecoilMultiplier. Defaults to 1.0. Lower limit is 
 <b>Changed</b>
 New door sprites
 <b>Fixed</b>
+Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 <b>Removed</b>
 
