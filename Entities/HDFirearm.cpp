@@ -60,6 +60,7 @@ void HDFirearm::Clear()
     m_ShellSpreadRange = 0;
     m_ShellAngVelRange = 0;
 	m_ShellVelVariation = 0.1F;
+	m_RecoilMultiplier = 1.0F;
     m_AIFireVel = -1;
     m_AIBulletLifeTime = 0;
     m_AIBulletAccScalar = -1;
@@ -134,6 +135,7 @@ int HDFirearm::Create(const HDFirearm &reference) {
     m_ShellSpreadRange = reference.m_ShellSpreadRange;
     m_ShellAngVelRange = reference.m_ShellAngVelRange;
 	m_ShellVelVariation = reference.m_ShellVelVariation;
+	m_RecoilMultiplier = reference.m_RecoilMultiplier;
     m_MuzzleOff = reference.m_MuzzleOff;
     m_EjectOff = reference.m_EjectOff;
     m_MagOff = reference.m_MagOff;
@@ -221,6 +223,10 @@ int HDFirearm::ReadProperty(const std::string_view &propName, Reader &reader) {
         m_ShellAngVelRange /= 2;
 	} else if (propName == "ShellVelVariation") {
 		reader >> m_ShellVelVariation;
+	} else if (propName == "RecoilMultiplier") {
+		float temp;
+		reader >> temp;
+		m_RecoilMultiplier = std::clamp(temp, 0.0F, 1.0F);
     } else if (propName == "MuzzleOffset") {
         reader >> m_MuzzleOff;
     } else if (propName == "EjectionOffset") {
@@ -860,7 +866,7 @@ void HDFirearm::Update()
 						pParticle->SetLifetime(std::max(static_cast<int>(pParticle->GetLifetime() * (1.0F + (particleCountMax > 1 ? lifeVariation - (lifeVariation * 2.0F * (static_cast<float>(pRound->ParticleCount()) / static_cast<float>(particleCountMax - 1))) : lifeVariation * RandomNormalNum()))), 1));
 					}
                     // F = m * a
-                    totalFireForce += pParticle->GetMass() * pParticle->GetVel().GetMagnitude();
+                    totalFireForce += (pParticle->GetMass() * pParticle->GetVel().GetMagnitude()) * m_RecoilMultiplier;
 
                     // Remove from parent if it's an attachable
                     Attachable *pAttachable = dynamic_cast<Attachable *>(pParticle);

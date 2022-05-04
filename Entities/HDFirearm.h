@@ -866,6 +866,8 @@ protected:
     // Range of spread in ang vel of ejected shells, in one direction
     float m_ShellAngVelRange;
 	float m_ShellVelVariation; //!< The velocity variation scalar of ejected shells.
+	/// The multiplier for recoil totalFireForce
+	float m_RecoilMultiplier;
     // The muzzle velocity the AI use when aiming this weapon
     float m_AIFireVel;
     // The bullet life time the AI use when aiming this weapon
