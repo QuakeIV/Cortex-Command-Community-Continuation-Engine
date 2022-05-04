@@ -224,9 +224,8 @@ int HDFirearm::ReadProperty(const std::string_view &propName, Reader &reader) {
 	} else if (propName == "ShellVelVariation") {
 		reader >> m_ShellVelVariation;
 	} else if (propName == "RecoilMultiplier") {
-		float temp;
-		reader >> temp;
-		m_RecoilMultiplier = std::clamp(temp, 0.0F, 1.0F);
+		reader >> m_RecoilMultiplier;
+		if (m_RecoilMultiplier < 0.0F) m_RecoilMultiplier = 0.0F;
     } else if (propName == "MuzzleOffset") {
         reader >> m_MuzzleOff;
     } else if (propName == "EjectionOffset") {
