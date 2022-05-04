@@ -4,16 +4,18 @@ All notable changes to this continuation will be documented in this file.
 
 ## [Unreleased]
 <b>Added</b>
+New blast door
+New property for HDFirearms - RecoilMultiplier. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k
 
 <b>Changed</b>
-
+New door sprites
 <b>Fixed</b>
 
 <b>Removed</b>
 
 ***
 
-## [C4 Version 1.1][c4v1.1] - 2022/04/04
+## [C4 Version 1.1](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1){c4v1.1} - 2022/04/04
 <b>Added</b>
 
 <b>Changed</b>
@@ -28,7 +30,7 @@ All notable changes to this continuation will be documented in this file.
 
 <b>Removed</b>
 
-## [C4 Version 1][c4v1] - 2022/03/25
+## [C4 Version 1](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1){c4v1} - 2022/03/25
 <details><b>Added</b>
 
 - There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
