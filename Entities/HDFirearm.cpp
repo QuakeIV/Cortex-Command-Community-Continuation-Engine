@@ -865,7 +865,7 @@ void HDFirearm::Update()
 						pParticle->SetLifetime(std::max(static_cast<int>(pParticle->GetLifetime() * (1.0F + (particleCountMax > 1 ? lifeVariation - (lifeVariation * 2.0F * (static_cast<float>(pRound->ParticleCount()) / static_cast<float>(particleCountMax - 1))) : lifeVariation * RandomNormalNum()))), 1));
 					}
                     // F = m * a
-                    totalFireForce += (pParticle->GetMass() * pParticle->GetVel().GetMagnitude()) * m_RecoilMultiplier;
+                    totalFireForce += (pParticle->GetMass() * pParticle->GetVel().GetMagnitude());
 
                     // Remove from parent if it's an attachable
                     Attachable *pAttachable = dynamic_cast<Attachable *>(pParticle);

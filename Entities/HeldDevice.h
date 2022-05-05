@@ -607,6 +607,20 @@ ClassInfoGetters;
 #pragma endregion
 
 
+
+	/// <summary>
+	/// Gets the recoil multiplier.
+	/// </summary>
+	/// <returns>A float with the scalar value.</returns>
+	float GetRecoilMultiplier() const { return m_RecoilMultiplier; }
+
+	/// <summary>
+	/// Sets the recoil multiplier.
+	/// </summary>
+	/// <param name = newRecoilMultiplier>The new recoil multiplier scalar.</param>
+	void SetRecoilMultiplier(float newRecoilMultiplier) { m_RecoilMultiplier = newRecoilMultiplier; if (m_RecoilMultiplier < 0.0F) m_RecoilMultiplier = 0.0F; }
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
 
@@ -651,6 +665,8 @@ protected:
     float m_Loudness;
     // If this weapon belongs to the "Explosive Weapons" group or not
     bool m_IsExplosiveWeapon;
+	/// The multiplier for recoil totalFireForce
+	float m_RecoilMultiplier;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
