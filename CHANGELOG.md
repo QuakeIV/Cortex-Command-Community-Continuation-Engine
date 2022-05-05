@@ -5,7 +5,7 @@ All notable changes to this continuation will be documented in this file.
 ## [Unreleased]
 <b>Added</b>
 New blast door
-New property for HDFirearms - RecoilMultiplier. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k
+New property for HeldDevices - VisualRecoilMultiplier. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable recoil the animation for implementing their own.
 
 <b>Changed</b>
 New door sprites
