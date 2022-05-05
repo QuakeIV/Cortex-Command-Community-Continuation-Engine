@@ -45,6 +45,7 @@ void HeldDevice::Clear()
     m_StanceOffset.Reset();
     m_SharpStanceOffset.Reset();
     m_SharpAim = 0.0F;
+	m_VisualRecoilMultiplier = 1.0F;
     m_MaxSharpLength = 0;
     m_Supported = false;
     m_SupportOffset.Reset();
@@ -142,6 +143,7 @@ int HeldDevice::Create(const HeldDevice &reference)
 	m_DualWieldable = reference.m_DualWieldable;
     m_StanceOffset = reference.m_StanceOffset;
     m_SharpStanceOffset = reference.m_SharpStanceOffset;
+	m_VisualRecoilMultiplier = reference.m_VisualRecoilMultiplier;
     m_SupportOffset = reference.m_SupportOffset;
     m_IsUnPickupable = reference.m_IsUnPickupable;
     for (std::string referenceActorWhoCanPickThisUp : reference.m_PickupableByPresetNames) {
@@ -205,6 +207,9 @@ int HeldDevice::ReadProperty(const std::string_view &propName, Reader &reader)
         }
     } else if (propName == "GripStrengthMultiplier") {
         reader >> m_GripStrengthMultiplier;
+	} else if (propName == "VisualRecoilMultiplier") {
+		reader >> m_VisualRecoilMultiplier;
+		if (m_VisualRecoilMultiplier < 0.0F) m_VisualRecoilMultiplier = 0.0F;
     } else if (propName == "SharpLength")
         reader >> m_MaxSharpLength;
     else if (propName == "Loudness")
@@ -248,6 +253,8 @@ int HeldDevice::Save(Writer &writer) const
     writer << m_SupportOffset;
     writer.NewProperty("GripStrengthMultiplier");
     writer << m_GripStrengthMultiplier;
+	writer.NewProperty("VisualRecoilMultiplier");
+	writer << m_VisualRecoilMultiplier;
     writer.NewProperty("SharpLength");
     writer << m_MaxSharpLength;
     writer.NewProperty("Loudness");

@@ -395,7 +395,7 @@ void Arm::UpdateCurrentHandOffset() {
 			targetOffset = heldDevice->GetStanceOffset();
 			// Diminish recoil effect when body is horizontal so that the device doesn't get pushed into terrain when prone.
 			float rotAngleScalar = std::abs(std::cos(m_Parent->GetRotAngle()));
-			float recoilScalar = std::min((heldDevice->GetRecoilForce() * heldDevice->GetRecoilMultiplier() / totalGripStrength).GetMagnitude() * 0.4F, 0.8F) * rotAngleScalar;
+			float recoilScalar = std::min((heldDevice->GetRecoilForce() * heldDevice->GetVisualRecoilMultiplier() / totalGripStrength).GetMagnitude() * 0.4F, 0.8F) * rotAngleScalar;
 			targetOffset.SetX(targetOffset.GetX() * (1.0F - recoilScalar));
 			// Shift Y offset slightly so the device is more likely to go under the shoulder rather than over it. (otherwise it looks goofy)
 			if (targetOffset.GetY() <= 0) { targetOffset.SetY(targetOffset.GetY() * (1.0F - recoilScalar) + recoilScalar); }

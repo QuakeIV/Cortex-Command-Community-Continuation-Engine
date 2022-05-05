@@ -612,13 +612,13 @@ ClassInfoGetters;
 	/// Gets the recoil multiplier.
 	/// </summary>
 	/// <returns>A float with the scalar value.</returns>
-	float GetRecoilMultiplier() const { return m_RecoilMultiplier; }
+	float GetVisualRecoilMultiplier() const { return m_VisualRecoilMultiplier; }
 
 	/// <summary>
 	/// Sets the recoil multiplier.
 	/// </summary>
 	/// <param name = newRecoilMultiplier>The new recoil multiplier scalar.</param>
-	void SetRecoilMultiplier(float newRecoilMultiplier) { m_RecoilMultiplier = newRecoilMultiplier; if (m_RecoilMultiplier < 0.0F) m_RecoilMultiplier = 0.0F; }
+	void SetVisualRecoilMultiplier(float newRecoilMultiplier) { m_VisualRecoilMultiplier = newRecoilMultiplier; if (m_VisualRecoilMultiplier < 0.0F) m_VisualRecoilMultiplier = 0.0F; }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -666,7 +666,7 @@ protected:
     // If this weapon belongs to the "Explosive Weapons" group or not
     bool m_IsExplosiveWeapon;
 	/// The multiplier for recoil totalFireForce
-	float m_RecoilMultiplier;
+	float m_VisualRecoilMultiplier;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
