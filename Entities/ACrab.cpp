@@ -94,6 +94,7 @@ void ACrab::Clear()
     m_JumpTimer.Reset();
     m_AimRangeUpperLimit = -1;
     m_AimRangeLowerLimit = -1;
+	m_ControllableJetpack = false;
 }
 
 
@@ -237,6 +238,7 @@ int ACrab::Create(const ACrab &reference) {
     m_SweepRange = reference.m_SweepRange;
     m_AimRangeUpperLimit = reference.m_AimRangeUpperLimit;
     m_AimRangeLowerLimit = reference.m_AimRangeLowerLimit;
+	m_ControllableJetpack = reference.m_ControllableJetpack;
 
     return 0;
 }
@@ -314,6 +316,8 @@ int ACrab::ReadProperty(const std::string_view &propName, Reader &reader)
         reader >> m_AimRangeUpperLimit;
     } else if (propName == "AimRangeLowerLimit") {
         reader >> m_AimRangeLowerLimit;
+	} else if (propName == "AimControlsJetpack") {
+		reader >> m_ControllableJetpack;
     } else {
         return Actor::ReadProperty(propName, reader);
     }
@@ -379,6 +383,8 @@ int ACrab::Save(Writer &writer) const
     writer << m_AimRangeUpperLimit;
     writer.NewProperty("AimRangeLowerLimit");
     writer << m_AimRangeLowerLimit;
+	writer.NewProperty("AimControlsJetpack");
+	writer << m_ControllableJetpack;
 
     return 0;
 }
@@ -2181,9 +2187,17 @@ void ACrab::Update()
 				float flip = ((m_HFlipped && m_Controller.IsState(MOVE_RIGHT)) || (!m_HFlipped && m_Controller.IsState(MOVE_LEFT))) ? -1.0F : 1.0F;
 				// Halve the jet angle when looking downwards so the actor isn't forced to go sideways
                 // TODO: don't hardcode this ratio?
-				float jetAngle = (m_AimAngle > 0 ? m_AimAngle * m_JetAngleRange : -m_AimAngle * m_JetAngleRange * 0.5F) - maxAngle;
-				// FacingAngle isn't needed because it's already been applied to AimAngle since last update.
-				m_pJetpack->SetEmitAngle(jetAngle * flip - c_HalfPI);
+				if (m_ControllableJetpack)
+				{
+					float jetAngle = ((m_AimAngle * GetFlipFactor()) - m_Rotation.GetRadAngle()) * -0.35F;
+					m_pJetpack->SetEmitAngle(jetAngle - c_HalfPI);
+				} else
+				{
+					float jetAngle = (m_AimAngle > 0 ? m_AimAngle * m_JetAngleRange : -m_AimAngle * m_JetAngleRange * 0.5F) - maxAngle;
+					// FacingAngle isn't needed because it's already been applied to AimAngle since last update.
+					m_pJetpack->SetEmitAngle(jetAngle * flip - c_HalfPI);
+				}
+
 			}
 		}
     }

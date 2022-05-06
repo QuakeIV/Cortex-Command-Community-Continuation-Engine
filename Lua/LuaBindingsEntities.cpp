@@ -70,6 +70,7 @@ namespace RTE {
 		.property("FirearmIsSemiAuto", &ACrab::FirearmIsSemiAuto)
 		.property("FirearmActivationDelay", &ACrab::FirearmActivationDelay)
 		.property("LimbPathPushForce", &ACrab::GetLimbPathPushForce, &ACrab::SetLimbPathPushForce)
+		.property("AimControlsJetpack", &ACrab::GetControllableJetpack, &ACrab::SetControllableJetpack)
 
 		.def("ReloadFirearms", &ACrab::ReloadFirearms)
 		.def("IsWithinRange", &ACrab::IsWithinRange)

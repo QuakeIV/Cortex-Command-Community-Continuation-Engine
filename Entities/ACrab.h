@@ -566,6 +566,10 @@ int FirearmActivationDelay() const;
 	/// <param name="newSound">The new SoundContainer for this ACrab's stride sound.</param>
 	void SetStrideSound(SoundContainer *newSound) { m_StrideSound = newSound; }
 
+
+	void SetControllableJetpack(const bool state) { m_ControllableJetpack = state; }
+	bool GetControllableJetpack() const { return m_ControllableJetpack; }
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
 
@@ -625,6 +629,8 @@ protected:
 	float m_AimRangeUpperLimit;
 	// The maximum angle MountedMO can be aimed down, positive values only, in radians
 	float m_AimRangeLowerLimit;
+	// Toggle for mouse controllable jetpacks using the new system
+	bool m_ControllableJetpack;
 
 	////////////////
 	// AI States

@@ -6,9 +6,12 @@ All notable changes to this continuation will be documented in this file.
 <b>Added</b>
 New blast door
 New property for HeldDevices - VisualRecoilMultiplier. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable recoil the animation for implementing their own.
+New property for ACrabs - AimControlsJetpack. Defaults to 0 for compat reasons. Set to true to enable a mouse-aimable jetpack for them.
 
 <b>Changed</b>
 New door sprites
+
+
 <b>Fixed</b>
 Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
