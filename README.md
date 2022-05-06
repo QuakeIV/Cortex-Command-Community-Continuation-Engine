@@ -7,7 +7,7 @@ Stay up to date in our [Discord channel](https://discord.gg/Fwyar4Uvx6).
 ***
 
 # How to Play the Game
-If you just want to play the latest version of the game you can get it here on github in the [releases](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/releases) section.
+If you just want to play the latest version of the game you can get it here on github in the [releases](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases) section.
 
 Right now, you can get mods from the cccp [mod portal](https://cccp.mod.io).
 
@@ -21,9 +21,9 @@ First you need to download the necessary files:
 1. Install the necessary tools.
 You'll probably want [Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/) (build supports both 2017 and 2019 versions).
 You also need to have both x86 and x64 versions of the [Visual C++ Redistributable for Visual Studio 2017](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) installed in order to run the compiled builds.
-You may also want to check out the list of recommended Visual Studio plugins [here](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/wiki).
+You may also want to check out the list of recommended Visual Studio plugins [here](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/wiki).
 
-2. Clone this Source Repository and the [Data Repository](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Data) in neighboring folders.
+2. Clone this Source Repository and the [Data Repository](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Data) in neighboring folders.
 **Do Not** change the folder names unless you want to make trouble for yourself.
 
 3. Copy the following libraries from `Cortex-Command-Community-Continuation-Source\external\lib\` into the **Data Repository**:
@@ -69,7 +69,7 @@ You need to install the development (they may be suffixed with `-dev` or `-devel
 
 1. Install Dependencies (see [below](#installing-dependencies) for some distro-specific instructions).
 
-2. Clone this Source Repository and the [Data Respository](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Data).
+2. Clone this Source Repository and the [Data Respository](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Data).
 
 3. Open a terminal in the Source Repository.
 
@@ -79,7 +79,7 @@ You need to install the development (they may be suffixed with `-dev` or `-devel
 
 6. (optional) `sudo ninja install -C build` (To uninstall later, keep the build directory intact. The game can then be uninstalled by `sudo ninja uninstall -C build`)
 
-If you want to change the buildtype afterwards, you can use `meson configure --buildtype {release or debug}` in the build directory or create a secondary build directory as in Step 4. There are also additional build options documented in the [wiki](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/wiki) as well as through running `meson configure` in the build directory.
+If you want to change the buildtype afterwards, you can use `meson configure --buildtype {release or debug}` in the build directory or create a secondary build directory as in Step 4. There are also additional build options documented in the [wiki](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/wiki) as well as through running `meson configure` in the build directory.
 
 ## Running
 (If you installed the game in step 6 above, it should appear with your regular applications and will just run)
@@ -124,4 +124,4 @@ If you want to change the buildtype afterwards, you can use `meson configure --b
 
 # More Information
 
-See the [Information and Recommendations](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/wiki) page for more details and useful development tools.
+See the [Information and Recommendations](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/wiki) page for more details and useful development tools.

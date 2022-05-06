@@ -16,7 +16,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 ***
 
-## [C4 Version 1.1](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1){c4v1.1} - 2022/04/04
+## [C4 Version 1.1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1){c4v1.1} - 2022/04/04
 <b>Added</b>
 
 <b>Changed</b>
@@ -31,7 +31,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 <b>Removed</b>
 
-## [C4 Version 1](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1){c4v1} - 2022/03/25
+## [C4 Version 1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1){c4v1} - 2022/03/25
 <details><b>Added</b>
 
 - There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
@@ -443,7 +443,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 - Changed and cleaned up how gibbing works and how it affects `Attachables`. In particular, limbs will better inherit velocity during gibbing and things are more customizable. See `Attachable` properties for more details.
 	As an added bonus,  `Attachables` on `ACDropShips` and `ACRockets` can now be shot down when the craft gibs; fight back against the baleful dropship engines!
 
-- Improved native recoil handling! Guns transfer recoil to arms/turrets, which transfer it to AHumans/ACrabs, all of it properly accounts for joint strengths (or grip strengths) and offsets at every step. Future work will be done on this to improve it. ([Issue #7](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/7) and [Issue #8](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/8)).
+- Improved native recoil handling! Guns transfer recoil to arms/turrets, which transfer it to AHumans/ACrabs, all of it properly accounts for joint strengths (or grip strengths) and offsets at every step. Future work will be done on this to improve it. ([Issue #7](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/7) and [Issue #8](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/8)).
 
 - `Attachables` now use their `GibImpulseLimit` as well as their `JointStrength` when determining whether they should be detached by strong forces. To maintain backwards compatibility, if the `GibImpulseLimit` is less than the `JointStrength`, the `JointStrength` will be used instead for this purpose.
 
@@ -616,7 +616,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 - New `Settings.ini` property `MenuTransitionDuration = floatValue` to control how fast transitions between different menu screens happen (e.g main menu to activity selection screen and back).
 	This property is a multiplier, the default value is 1 (being the default hardcoded values), lower values decrease transition durations. 0 makes transitions instant.
 
-- New `ADoor` sound properties: ([Issue #106](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/106))
+- New `ADoor` sound properties: ([Issue #106](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/106))
 	```
 	// Played when the door starts moving from fully open/closed position towards the opposite end.
 	DoorMoveStartSound = SoundContainer
@@ -640,16 +640,16 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 			FilePath = pathToFile
 	```
 
-- Exposed `Actor.StableVelocityThreshold` to lua. New bindings are: ([Issue #101](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/101))
+- Exposed `Actor.StableVelocityThreshold` to lua. New bindings are: ([Issue #101](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/101))
 	`Actor:GetStableVelocityThreshold()` returns a `Vector` with the currently set stable velocity threshold.
 	`Actor:SetStableVelocityThreshold(xFloatValue, yFloatValue)` sets the stable velocity threshold to the passed in float values.
 	`Actor:SetStableVelocityThreshold(Vector)` sets the stable velocity threshold to the passed in `Vector`.
 
-- New `Attachable` and `AEmitter` property `DeleteWithParent = 0/1`. If enabled the attachable/emitter will be deleted along with the parent if parent is deleted/gibbed/destroyed. ([Issue #97](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/97))
+- New `Attachable` and `AEmitter` property `DeleteWithParent = 0/1`. If enabled the attachable/emitter will be deleted along with the parent if parent is deleted/gibbed/destroyed. ([Issue #97](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/97))
 
 - New `Settings.ini` property `LaunchIntoActivity = 0/1`. With `PlayIntro` functionality changed to actually skip the intro and load into main menu, this flag exists to skip both the intro and main menu and load directly into the set default activity.
 
-- Exposed `AHuman.ThrowPrepTime` to lua and ini: ([Issue #101](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/101))
+- Exposed `AHuman.ThrowPrepTime` to lua and ini: ([Issue #101](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/101))
 	`ThrowPrepTime = valueInMS` will set how long it takes the `AHuman` to fully charge a throw. Default value is 1000.
 	`AHuman.ThrowPrepTime` to get/set values via lua.
 
@@ -781,7 +781,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - Lua error reporting has been improved so script errors will always show filename and line number.
 
-- Ini error reporting has been improved so asset loading crash messages (image and audio files) will also display the ini file and line they are being referenced from and a better explanation why the crash occured. ([Issue #161](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/161))
+- Ini error reporting has been improved so asset loading crash messages (image and audio files) will also display the ini file and line they are being referenced from and a better explanation why the crash occured. ([Issue #161](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/161))
 
 - `Settings.ini` will now fully populate with all available settings (now also broken into sections) when being created (first time or after delete) rather than with just a limited set of defaults.
 
@@ -789,7 +789,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - `Settings.ini` property `PlayIntro` renamed to `SkipIntro` and functionality changed to actually skip the intro and load user directly into main menu, rather than into the set default activity.
 
-- Lua calls for `GetParent` and `GetRootParent` can now be called by any `MovableObject` rather than being limited to `Attachable` only. ([Issue #102](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/102))
+- Lua calls for `GetParent` and `GetRootParent` can now be called by any `MovableObject` rather than being limited to `Attachable` only. ([Issue #102](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/102))
 	In some cases a cast to the appropriate type (`ToWhateverType`, e.g `ToMOSRotating`) will be needed when attempting to manipulate the object returned, because it will be returned as `MovableObject` if it is the root parent.
 	In cases where you need to iterate over a parent's attachable list the parent must be cast to the appropriate type that actually has an attachable list to iterate over.
 	For example:
@@ -832,12 +832,12 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - `Activity:IsPlayerTeam` renamed to `Activity:IsHumanTeam`.
 
-- Screenshot functionality changed: ([Issue #162](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/162))
+- Screenshot functionality changed: ([Issue #162](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/162))
 	The `PrintScreen` button will now take a single screenshot on key release and will not take more until the key is pressed and released again.
 	The `Ctrl+S` key combination is unchanged and will take a single screenshot every frame while the keys are held.
 	The `Ctrl+W` and `Alt+W` key combinations will now take a single WorldDump/ScenePreview on `W` key release (while `Ctrl/Alt` are still held) and will not take more until the key is pressed and released again.
 
-	Additionally, all screenshots (excluding abortscreen) will now be saved into a `_Screenshots` folder (`_` so it's on top and not hiding between module folders) to avoid polluting the root directory. ([Issue #163](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/163))
+	Additionally, all screenshots (excluding abortscreen) will now be saved into a `_Screenshots` folder (`_` so it's on top and not hiding between module folders) to avoid polluting the root directory. ([Issue #163](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/163))
 	This folder will be created automatically after modules are loaded if it is missing.
 
 - `ScreenDumps` and `WorldDumps` are now saved as compressed PNGs.
@@ -884,13 +884,13 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - Fix crash when returning to `MetaGame` scenario screen after activity end.
 
-- Control schemes will no longer get deleted when being configured. Resetting the control scheme will load a preset instead of leaving it blank. ([Issue #121](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/121))
+- Control schemes will no longer get deleted when being configured. Resetting the control scheme will load a preset instead of leaving it blank. ([Issue #121](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/121))
 
-- Fix glow effects being drawn one frame past `EffectStartTime` making objects that exist for a single frame not draw glows. ([Issue #67](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/67))
+- Fix glow effects being drawn one frame past `EffectStartTime` making objects that exist for a single frame not draw glows. ([Issue #67](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/67))
 
 - Time scale can no longer be lowered to 0 through the performance stats interface.
 
-- Actors now support their held devices identically while facing to either side. ([Issue #31](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/31))
+- Actors now support their held devices identically while facing to either side. ([Issue #31](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/31))
 
 - Fixed issue where clicking a ComboBox's scrollbar would release the mouse, thus causing unexpected behavior like not being able to close the list by clicking outside of it.
 
@@ -1031,7 +1031,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 	```lua
 	soundContainer.AffectedByGlobalPitch -- Set or get whether the SoundContainer is affected by global pitch, as mentioned in the INI section above.
 	```
-- `MovableObjects` can now run multiple scripts by putting multiple `AddScript = FilePath.lua` lines in the INI definition. ([Issue #109](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/pull/109))
+- `MovableObjects` can now run multiple scripts by putting multiple `AddScript = FilePath.lua` lines in the INI definition. ([Issue #109](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/pull/109))
 	Scripts will have their appropriate functions run in the order they were added. Note that all scripts share the same `self`, so care must be taken when naming self variables.
 	Scripts can be checked for with `movableObject:HasScript(filePath);` and added and removed with `movableObject:AddScript(filePath);` and `movableObject:RemoveScript(filePath);`. They can also be enabled and disabled in Lua (preserving their ordering) with `movableObject:EnableScript(filePath);` and `movableObject:DisableScript(filePath);`.
 
@@ -1066,7 +1066,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - Major cleanup and reformatting in the `System` folder.
 
-- Upgraded to new, modern FMOD audio library. ([Issue #72](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/72)).
+- Upgraded to new, modern FMOD audio library. ([Issue #72](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/72)).
 	Sounds now play in 3D space, so they pan to the left and right, and attenuate automatically based on the player's viewpoint.
 
 - `Sounds` have been renamed to `SoundContainers`, and are able to handle multiple sounds playing at once. INI definitions have changed accordingly.
@@ -1083,7 +1083,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - Made `AHuman` show both weapon ammo states when 2 one-handed weapons are equipped.
 
-- Added support for multiple lines in item descriptions ([Issue#58](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/58)). This is done as follows:
+- Added support for multiple lines in item descriptions ([Issue#58](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/58)). This is done as follows:
 	```
 	Description = MultiLineText
 		AddLine = First line of text
@@ -1121,9 +1121,9 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - Fixed LuaBind being all sorts of messed up. All lua bindings now work properly like they were before updating to the v141 toolset.
 
-- Explosives (and other thrown devices) will no longer reset their explosion triggering timer when they're picked up. ([Issue #71](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/71))
+- Explosives (and other thrown devices) will no longer reset their explosion triggering timer when they're picked up. ([Issue #71](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/71))
 
-- Sprite Animation Mode `ALWAYSPINGPONG` now works properly. Sprite animation has also been moved to `MOSprite` instead of `MOSRotating`, they they'll be able to properly animate now. ([Issue#77](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/77))
+- Sprite Animation Mode `ALWAYSPINGPONG` now works properly. Sprite animation has also been moved to `MOSprite` instead of `MOSRotating`, they they'll be able to properly animate now. ([Issue#77](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/77))
 
 - Fixed `BG Arm` flailing when reloading one-handed weapon, so shields are no longer so useless.
 
@@ -1135,7 +1135,7 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 - The audio system now better supports wrapping maps so sounds handle the seam better. Additionally, the game should be able to function if the audio system fails to start up.
 
-- Scripts on attached attachables will only run if their parent exists in MovableMan. ([Issue #83](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/issues/83))
+- Scripts on attached attachables will only run if their parent exists in MovableMan. ([Issue #83](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/issues/83))
 
 </details>
 
@@ -1254,11 +1254,11 @@ Several sound files had incorrect names breaking mod compat with cccp. Fixed
 
 ***
 
-Note: For a log of changes made prior to the commencement of the open source community project, look [here.](https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/wiki/Previous-Closed-Source-Changelog)
+Note: For a log of changes made prior to the commencement of the open source community project, look [here.](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/wiki/Previous-Closed-Source-Changelog)
 
 
-[unreleased]: https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/compare/master...cortex-command-community:development
-[0.1.0-pre1]: https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Data/releases/tag/v0.1.0-pre1
-[0.1.0-pre2]: https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Data/releases/tag/v0.1.0-pre2
-[0.1.0-pre3.0]: https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/releases/tag/v0.1.0-pre3.0
-[0.1.0-pre4.0]: https://github.com/Filipawn-Industries/Cortex-Command-Community-Continuation-Source/releases/tag/v0.1.0-pre4.0
+[unreleased]: https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/compare/master...cortex-command-community:development
+[0.1.0-pre1]: https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Data/releases/tag/v0.1.0-pre1
+[0.1.0-pre2]: https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Data/releases/tag/v0.1.0-pre2
+[0.1.0-pre3.0]: https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/releases/tag/v0.1.0-pre3.0
+[0.1.0-pre4.0]: https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Source/releases/tag/v0.1.0-pre4.0

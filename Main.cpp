@@ -1,7 +1,7 @@
 /// <summary>
 /// Main driver implementation of the Retro Terrain Engine.
 /// Data Realms, LLC - http://www.datarealms.com
-/// Cortex Command Community Continuation - https://github.com/Filipawn-Industries
+/// Cortex Command Community Continuation - https://github.com/Cortex-Command-Center
 /// Cortex Command Community Continuation Discord - https://discord.gg/K9UsbW7u
 /// </summary>
 
