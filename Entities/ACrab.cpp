@@ -2189,7 +2189,7 @@ void ACrab::Update()
                 // TODO: don't hardcode this ratio?
 				if (m_ControllableJetpack)
 				{
-					float jetAngle = ((m_AimAngle * GetFlipFactor()) - m_Rotation.GetRadAngle()) * -0.35F;
+					float jetAngle = (m_AimAngle - m_Rotation.GetRadAngle()) * 0.35F;
 					m_pJetpack->SetEmitAngle(jetAngle - c_HalfPI);
 				} else
 				{
