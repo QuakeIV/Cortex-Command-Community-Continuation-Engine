@@ -3299,7 +3299,7 @@ void AHuman::Update()
 				m_SharpAimProgress = 0;
 				// Move BG hand accordingly
 				//if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->SetHandPos(m_Pos + m_HolsterOffset.GetXFlipped(m_HFlipped)); }
-				if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->SetHandPos(pFireArm->GetReloadSupportPos()); }
+//				if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->Reach(pFireArm->GetReloadSupportPos()); }
 			}
 			if (!pFireArm->IsFull() && m_Controller.IsState(WEAPON_RELOAD)) {
 				if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->SetHandPos(pFireArm->GetMagazinePos()); }
@@ -3853,10 +3853,11 @@ void AHuman::Update()
 		}
 		m_pFGArm->SetRotAngle(affectingBodyAngle + adjustedAimAngle);
 
+		HeldDevice *heldbgDevice = dynamic_cast<HeldDevice *>(GetEquippedBGItem());
         if (m_Status == STABLE) {
             if (m_ArmClimbing[FGROUND]) {
                 m_pFGArm->ReachToward(m_pFGHandGroup->GetLimbPos(m_HFlipped));
-            } else if (!m_pFGArm->IsReaching()) {
+			} else if (!m_pFGArm->IsReaching()) {
 				// Use an unreachable position to force this arm to idle, so it wont bug out where the AtomGroup was left off
 				m_pFGArm->Reach(Vector());
             }
@@ -3881,18 +3882,29 @@ void AHuman::Update()
 					float throwProgress = isSharpAiming ? 1.0F : GetThrowProgress();
 					m_pBGArm->ReachToward(m_pBGArm->GetJointPos() + (thrownDevice->GetEndThrowOffset().GetXFlipped(m_HFlipped) * throwProgress + (thrownDevice->GetStanceOffset() + thrownDevice->GetSupportOffset().GetXFlipped(m_HFlipped)) * (1.0F - throwProgress)).RadRotate(adjustedAimAngle));
 				} else if (heldDevice) {
+					if (heldDevice->IsReloading() && !GetEquippedBGItem())
+					{
+						m_pBGArm->ReachToward(heldDevice->GetReloadSupportPos());
+					} else
 					if (GetEquippedBGItem() && !heldDevice->IsOneHanded()) {
 						UnequipBGArm();
 					} else {
-						m_pBGArm->Reach(heldDevice->GetSupportPos());
-						if (m_pBGArm->DidReach()) {
-							heldDevice->SetSupported(true);
-							m_pBGArm->SetRecoil(heldDevice->GetRecoilForce(), heldDevice->GetRecoilOffset(), heldDevice->IsRecoiled());
-						} else {
-							// BGArm did not reach to support the device. Count device as supported anyway, if crouching.
-							heldDevice->SetSupported(m_MoveState == CROUCH || m_ProneState == PRONE);
-							m_pBGArm->SetRecoil(Vector(), Vector(), false);
-						}
+//						if (heldDevice->IsReloading())
+//						{
+//							m_pBGArm->ReachToward(heldDevice->GetReloadSupportPos());
+//						}
+//						else
+//						{
+							m_pBGArm->Reach(heldDevice->GetSupportPos());
+							if (m_pBGArm->DidReach()) {
+								heldDevice->SetSupported(true);
+								m_pBGArm->SetRecoil(heldDevice->GetRecoilForce(), heldDevice->GetRecoilOffset(), heldDevice->IsRecoiled());
+							} else {
+								// BGArm did not reach to support the device. Count device as supported anyway, if crouching.
+								heldDevice->SetSupported(m_MoveState == CROUCH || m_ProneState == PRONE);
+								m_pBGArm->SetRecoil(Vector(), Vector(), false);
+							}
+//						}
 					}
 				} else if (m_pFGLeg && m_MoveState == WALK && m_ArmSwingRate > 0) {
 					m_pBGArm->ReachToward(m_pBGArm->GetJointPos() + m_pBGArm->GetIdleOffset().GetXFlipped(m_HFlipped).RadRotate(std::sin(m_pFGLeg->GetRotAngle() + c_HalfPI * GetFlipFactor()) * m_ArmSwingRate));
