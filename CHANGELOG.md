@@ -7,6 +7,7 @@ All notable changes to this continuation will be documented in this file.
 New blast door
 New property for HeldDevices - VisualRecoilMultiplier. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable recoil the animation for implementing their own.
 New property for ACrabs - AimControlsJetpack. Defaults to 0 for compat reasons. Set to true to enable a mouse-aimable jetpack for them.
+New property for HDFirearms - ReloadSupportOffset. This defaults to whatever Vector.reset() gives back, so probably 0,0 on the gun. This will move the background hand during reload to this position on the gun, or at least try to reach it.
 
 <b>Changed</b>
 New door sprites

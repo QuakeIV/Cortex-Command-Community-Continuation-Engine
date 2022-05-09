@@ -74,6 +74,7 @@ void HDFirearm::Clear()
     m_AlreadyClicked = false;
 	m_RoundsFired = 0;
 	m_IsAnimatedManually = false;
+	m_ReloadSupportOffset.Reset();
 }
 
 
@@ -139,6 +140,7 @@ int HDFirearm::Create(const HDFirearm &reference) {
     m_MagOff = reference.m_MagOff;
 	m_RoundsFired = reference.m_RoundsFired;
 	m_IsAnimatedManually = reference.m_IsAnimatedManually;
+	m_ReloadSupportOffset = reference.m_ReloadSupportOffset;
 
     return 0;
 }
@@ -225,6 +227,8 @@ int HDFirearm::ReadProperty(const std::string_view &propName, Reader &reader) {
         reader >> m_MuzzleOff;
     } else if (propName == "EjectionOffset") {
         reader >> m_EjectOff;
+	} else if (propName == "ReloadSupportOffset") {
+		reader >> m_ReloadSupportOffset;
     } else {
         return HeldDevice::ReadProperty(propName, reader);
     }
@@ -301,7 +305,8 @@ int HDFirearm::Save(Writer &writer) const
     writer << m_MuzzleOff;
     writer.NewProperty("EjectionOffset");
     writer << m_EjectOff;
-
+	writer.NewProperty("ReloadSupportOffset");
+	writer << m_ReloadSupportOffset;
     return 0;
 }
 
@@ -1154,6 +1159,17 @@ void HDFirearm::DrawHUD(BITMAP *pTargetBitmap, const Vector &targetPos, int whic
 		putpixel(pTargetBitmap, aimPoint.GetFloorIntX(), aimPoint.GetFloorIntY(), g_YellowGlowColor);
 	}
 	//release_bitmap(pTargetBitmap);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:          GetReloadSupportPos
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets the absolute position of the reload support handhold that this HDFirearm
+//                  offers.
+
+Vector HDFirearm::GetReloadSupportPos() const
+{
+    return m_Pos + RotateOffset(m_ReloadSupportOffset);
 }
 
 } // namespace RTE

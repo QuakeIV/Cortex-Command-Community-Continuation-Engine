@@ -637,6 +637,7 @@ namespace RTE {
 		.property("RoundsFired", &HDFirearm::RoundsFired)
 		.property("IsAnimatedManually", &HDFirearm::IsAnimatedManually, &HDFirearm::SetAnimatedManually)
 		.property("RecoilTransmission", &HDFirearm::GetJointStiffness, &HDFirearm::SetJointStiffness)
+		.property("ReloadSupportOffset", &HDFirearm::GetReloadSupportOffset, &HDFirearm::SetReloadSupportOffset)
 
 		.def("GetAIFireVel", &HDFirearm::GetAIFireVel)
 		.def("GetAIBulletLifeTime", &HDFirearm::GetAIBulletLifeTime)
