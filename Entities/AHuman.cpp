@@ -3299,7 +3299,7 @@ void AHuman::Update()
 				m_SharpAimProgress = 0;
 				// Move BG hand accordingly
 				//if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->SetHandPos(m_Pos + m_HolsterOffset.GetXFlipped(m_HFlipped)); }
-				if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->SetHandPos(m_Pos + pFireArm->GetReloadSupportPos().GetXFlipped(m_HFlipped)); }
+				if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->SetHandPos(pFireArm->GetReloadSupportPos()); }
 			}
 			if (!pFireArm->IsFull() && m_Controller.IsState(WEAPON_RELOAD)) {
 				if (m_pBGArm && m_pBGArm->IsAttached() && !GetEquippedBGItem()) { m_pBGArm->SetHandPos(pFireArm->GetMagazinePos()); }

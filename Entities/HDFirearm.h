@@ -784,29 +784,6 @@ ClassInfoGetters;
 	void SetAnimatedManually(bool newValue)  { m_IsAnimatedManually = newValue; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Method:  GetAnimatedManually
-//////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Gets the offset to move the bg hand to for this HDFirearm.
-// Arguments:       None.
-// Return value:    Vector of the offset.
-	Vector GetReloadSupportOffset() const { return m_ReloadSupportOffset; }
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// Method:  SetAnimatedManually
-//////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Sets the offset to move the bg hand to for this HDFirearm.
-// Arguments:       New offset vector.
-// Return value:    None.
-	void SetReloadSupportOffset(Vector newvec) { m_ReloadSupportOffset = newvec; }
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// Method:          GetReloadSupportPos
-//////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Gets the absolute position of the reload support handhold that this HDFirearm
-//                  offers.
-	Vector GetReloadSupportPos() const;
-
-//////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
 
 protected:
@@ -914,8 +891,6 @@ protected:
 	// is done by external Lua code
 	bool m_IsAnimatedManually;
 
-	// Offset for the bg hand to move to on reload
-	Vector m_ReloadSupportOffset;
 
 /* TODO
     // Path the the script file that contains the ballistic solution function of this

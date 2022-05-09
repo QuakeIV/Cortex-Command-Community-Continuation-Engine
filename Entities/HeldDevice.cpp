@@ -49,6 +49,7 @@ void HeldDevice::Clear()
     m_MaxSharpLength = 0;
     m_Supported = false;
     m_SupportOffset.Reset();
+	m_ReloadSupportOffset.Reset();
 	m_SeenByPlayer.fill(false);
     m_IsUnPickupable = false;
     m_PickupableByPresetNames.clear();
@@ -145,6 +146,7 @@ int HeldDevice::Create(const HeldDevice &reference)
     m_SharpStanceOffset = reference.m_SharpStanceOffset;
 	m_VisualRecoilMultiplier = reference.m_VisualRecoilMultiplier;
     m_SupportOffset = reference.m_SupportOffset;
+	m_ReloadSupportOffset = reference.m_ReloadSupportOffset;
     m_IsUnPickupable = reference.m_IsUnPickupable;
     for (std::string referenceActorWhoCanPickThisUp : reference.m_PickupableByPresetNames) {
         m_PickupableByPresetNames.insert(referenceActorWhoCanPickThisUp);
@@ -185,6 +187,8 @@ int HeldDevice::ReadProperty(const std::string_view &propName, Reader &reader)
         reader >> m_SharpStanceOffset;
     else if (propName == "SupportOffset")
         reader >> m_SupportOffset;
+	else if (propName == "ReloadSupportOffset")
+		reader >> m_ReloadSupportOffset;
     else if (propName == "PickupableBy") {
         std::string pickupableByValue = reader.ReadPropValue();
         if (pickupableByValue == "PickupableByEntries") {
@@ -251,6 +255,8 @@ int HeldDevice::Save(Writer &writer) const
     writer << m_SharpStanceOffset;
     writer.NewProperty("SupportOffset");
     writer << m_SupportOffset;
+	writer.NewProperty("ReloadSupportOffset");
+	writer << m_ReloadSupportOffset;
     writer.NewProperty("GripStrengthMultiplier");
     writer << m_GripStrengthMultiplier;
 	writer.NewProperty("VisualRecoilMultiplier");
@@ -317,6 +323,17 @@ Vector HeldDevice::GetSupportPos() const
     return m_Pos + rotOff;
 */
     return m_Pos + RotateOffset(m_SupportOffset);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:          GetReloadSupportPos
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets the absolute position of the reload support handhold that this HDFirearm
+//                  offers.
+
+Vector HeldDevice::GetReloadSupportPos() const
+{
+    return m_Pos + RotateOffset(m_ReloadSupportOffset);
 }
 
 

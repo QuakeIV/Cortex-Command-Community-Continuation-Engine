@@ -637,7 +637,6 @@ namespace RTE {
 		.property("RoundsFired", &HDFirearm::RoundsFired)
 		.property("IsAnimatedManually", &HDFirearm::IsAnimatedManually, &HDFirearm::SetAnimatedManually)
 		.property("RecoilTransmission", &HDFirearm::GetJointStiffness, &HDFirearm::SetJointStiffness)
-		.property("ReloadSupportOffset", &HDFirearm::GetReloadSupportOffset, &HDFirearm::SetReloadSupportOffset)
 
 		.def("GetAIFireVel", &HDFirearm::GetAIFireVel)
 		.def("GetAIBulletLifeTime", &HDFirearm::GetAIBulletLifeTime)
@@ -662,6 +661,7 @@ namespace RTE {
 		.property("SharpLength", &HeldDevice::GetSharpLength, &HeldDevice::SetSharpLength)
 		.property("SharpLength", &HeldDevice::GetSharpLength, &HeldDevice::SetSharpLength)
 		.property("SupportOffset", &HeldDevice::GetSupportOffset, &HeldDevice::SetSupportOffset)
+		.property("ReloadSupportOffset", &HeldDevice::GetReloadSupportOffset, &HeldDevice::SetReloadSupportOffset)
 		.property("HasPickupLimitations", &HeldDevice::HasPickupLimitations)
 		.property("UnPickupable", &HeldDevice::IsUnPickupable, &HeldDevice::SetUnPickupable)
 		.property("GripStrengthMultiplier", &HeldDevice::GetGripStrengthMultiplier, &HeldDevice::SetGripStrengthMultiplier)
