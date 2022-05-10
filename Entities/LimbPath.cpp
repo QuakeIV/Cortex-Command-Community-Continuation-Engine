@@ -161,7 +161,7 @@ int LimbPath::ReadProperty(const std::string_view &propName, Reader &reader)
         m_TotalLength += segment.GetMagnitude();
         if (m_Segments.size() >= m_StartSegCount)
             m_RegularLength += segment.GetMagnitude();
-    } else if (propName == "EndSegCount") {
+    } else if (propName == "FootCollisionsDisabledSegment" || propName == "EndSegCount") {
         reader >> m_FootCollisionsDisabledSegment;
     }
 	else if (propName == "SlowTravelSpeed")

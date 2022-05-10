@@ -15,6 +15,8 @@ New door sprites
 
 <b>Fixed</b>
 Several sound files had incorrect names breaking mod compat with cccp. Fixed
+Add alternative param to EndSegCount for limb paths since the original name is unintuitive at best: FootCollisionsDisabledSegment. Original is retained for backwards compatibility.
+
 
 <b>Removed</b>
 
