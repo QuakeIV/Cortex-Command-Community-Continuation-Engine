@@ -3,42 +3,62 @@
 All notable changes to this continuation will be documented in this file.
 
 ## [Unreleased]
-<b>Added</b>
-New blast door
-New property for HeldDevices - VisualRecoilMultiplier. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable recoil the animation for implementing their own.
-New property for ACrabs - AimControlsJetpack. Defaults to 0 for compat reasons. Set to true to enable a mouse-aimable jetpack for them.
-New property for HDFirearms - ReloadSupportOffset. This defaults to whatever Vector.reset() gives back, so probably 0,0 on the gun. This will move the background hand during reload to this position on the gun, or at least try to reach it.
 
-<b>Changed</b>
-New door sprites
+<details><summary><b>Added</b></summary>
+
+- New blast door
+- New property for HeldDevices - `VisualRecoilMultiplier`. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable recoil the animation for implementing their own.
+- New property for ACrabs - `AimControlsJetpack`. Defaults to 0 for compat reasons. Set to true to enable a mouse-aimable jetpack for them.
+- New property for HDFirearms - `ReloadSupportOffset`. This defaults to whatever Vector.reset() gives back, so probably 0,0 on the gun. This will move the background hand during reload to this position on the gun, or at least try to reach it.
+- New property for Actors - `PainThreshold`. Defaults to 15. Disable mechanic with 0 or lower if you want to use PainSound in more custom ways. Damage above this value in a single frame will trigger PainSound. Terrain impacts do not inherently trigger PainSound anymore, since this takes over.
+
+</details>
+
+<details><summary><b>Changed</b></summary>
+- New door sprites
+
+</details>
+
+<details><summary><b>Fixed</b></summary>
+
+- Several sound files had incorrect names breaking mod compat with cccp. Fixed
+- Add alternative param to `EndSegCount` for limb paths since the original name is unintuitive at best: `FootCollisionsDisabledSegment`. Original is retained for backwards compatibility.
+
+</details>
 
 
-<b>Fixed</b>
-Several sound files had incorrect names breaking mod compat with cccp. Fixed
-Add alternative param to EndSegCount for limb paths since the original name is unintuitive at best: FootCollisionsDisabledSegment. Original is retained for backwards compatibility.
+<details><summary><b>Removed</b></summary>
 
-
-<b>Removed</b>
+</details>
 
 ***
 
 ## [C4 Version 1.1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1){c4v1.1} - 2022/04/04
-<b>Added</b>
 
-<b>Changed</b>
+<details><summary><b>Added</b></summary>
 
-<b>Fixed</b>
+</details>
+
+<details><summary><b>Changed</b></summary>
+
+</details>
+
+<details><summary><b>Fixed</b></summary>
 
 - CTD crash when pie menu is open on entity that's about to be destroy
 - Fix Skirmish defense to spawn enemies
 - Fix Tutorial enemies not having weapons (bandaid though - somethings up with adding actors to scenes getting casted and losing inventory somewhere)
 - Fix Keepieuppie to let you spawn the rocklet
 
+</details>
 
-<b>Removed</b>
+<details><summary><b>Removed</b></summary>
+
+</details>
 
 ## [C4 Version 1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1){c4v1} - 2022/03/25
-<details><b>Added</b>
+
+<details><summary><b>Added</b></summary>
 
 - There is now a `TerrainMass` property for all things that can have Mass. This is a mass value used for all terrain interactions, which you can use to
 	make your heavy actors not sink into the ground so much. Note the following: this defaults to Mass if not defined, and changing MO.Mass through lua
@@ -54,8 +74,10 @@ Add alternative param to EndSegCount for limb paths since the original name is u
 
 - All SoundSets and SubSoundSets can now have their own audio settings such as MinimumAudibleDistance, Volume etc. instead of just base SoundContainers.
 	If no specific setting is given for a SoundSet, it will use the SoundContainer's value, or a default if none at all was set. Offset works as before.
+	
+</details>
 
-<b>Changed</b>
+<details><summary><b>Changed</b></summary>
 
 - Buffed jetpacks to be actual jet packs. Added unused Jump Pack, which is stronger but shorter in usetime, for modders/future content to use.
 
@@ -67,12 +89,17 @@ Add alternative param to EndSegCount for limb paths since the original name is u
 
 - Replaced sound assets with older Pawnis versions
 
+</details>
 
-<b>Fixed</b>
+<details><summary><b>Fixed</b></summary>
 
 - Added lua5.2 fallback for odd linux distros
 
-<b>Removed</b></details>
+</details>
+
+<details><summary><b>Removed</b></summary>
+
+</details>
 
 ***
 
