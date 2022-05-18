@@ -99,6 +99,7 @@ void Actor::Clear() {
     m_LastAlarmPos.Reset();
     m_SightDistance = 450.0F;
     m_Perceptiveness = 0.5F;
+	m_PainThreshold = 15.0F;
 	m_CanRevealUnseen = true;
     m_CharHeight = 0;
     m_HolsterOffset.Reset();
@@ -219,6 +220,7 @@ int Actor::Create(const Actor &reference)
     m_SeenTargetPos = reference.m_SeenTargetPos;
     m_SightDistance = reference.m_SightDistance;
     m_Perceptiveness = reference.m_Perceptiveness;
+	m_PainThreshold = reference.m_PainThreshold;
 	m_CanRevealUnseen = reference.m_CanRevealUnseen;
     m_CharHeight = reference.m_CharHeight;
     m_HolsterOffset = reference.m_HolsterOffset;
@@ -355,6 +357,8 @@ int Actor::ReadProperty(const std::string_view &propName, Reader &reader)
         reader >> m_SightDistance;
     else if (propName == "Perceptiveness")
         reader >> m_Perceptiveness;
+	else if (propName == "PainThreshold")
+		reader >> m_PainThreshold;
 	else if (propName == "CanRevealUnseen")
 		reader >> m_CanRevealUnseen;
     else if (propName == "CharHeight")
@@ -438,6 +442,8 @@ int Actor::Save(Writer &writer) const
     writer << m_SightDistance;
     writer.NewProperty("Perceptiveness");
     writer << m_Perceptiveness;
+	writer.NewProperty("PainThreshold");
+	writer << m_PainThreshold;
 	writer.NewProperty("CanRevealUnseen");
 	writer << m_CanRevealUnseen;
     writer.NewProperty("CharHeight");
@@ -1583,6 +1589,8 @@ void Actor::Update()
         if (m_FlashWhiteMS < 0)
             m_FlashWhiteMS = 0;
     }
+
+	if (m_PrevHealth - m_Health > 15.0F && m_Health > 0 && m_PainSound) { m_PainSound->Play(m_Pos); }
 
 	int brainOfPlayer = g_ActivityMan.GetActivity()->IsBrainOfWhichPlayer(this);
 	if (brainOfPlayer != Players::NoPlayer && g_ActivityMan.GetActivity()->PlayerHuman(brainOfPlayer)) {
