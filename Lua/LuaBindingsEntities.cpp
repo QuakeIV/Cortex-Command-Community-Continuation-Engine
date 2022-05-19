@@ -237,6 +237,8 @@ namespace RTE {
 		.property("MovePathSize", &Actor::GetMovePathSize)
 		.property("AimDistance", &Actor::GetAimDistance, &Actor::SetAimDistance)
 		.property("SightDistance", &Actor::GetSightDistance, &Actor::SetSightDistance)
+		.property("IsRobotic", &Actor::GetIsRobotic, &Actor::SetIsRobotic)
+		.property("IsOrganic", &Actor::GetIsOrganic, &Actor::SetIsOrganic)
 
 		.def_readwrite("MOMoveTarget", &Actor::m_pMOMoveTarget)
 		.def_readwrite("MovePath", &Actor::m_MovePath, luabind::return_stl_iterator)

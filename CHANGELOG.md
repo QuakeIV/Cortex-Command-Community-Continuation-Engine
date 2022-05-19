@@ -5,7 +5,8 @@ All notable changes to this continuation will be documented in this file.
 ## [Unreleased]
 
 <details><summary><b>Added</b></summary>
-
+- New property for Actors - IsRobotic. Defaults to false. Intended mainly for scripts to use (ex: emp grenades)
+- New property for Actors - IsOrganic. Defaults to false. Intended mainly for scripts to use (ex: gas grenades)
 - New blast door
 - New property for HeldDevices - `VisualRecoilMultiplier`. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable recoil the animation for implementing their own.
 - New property for ACrabs - `AimControlsJetpack`. Defaults to 0 for compat reasons. Set to true to enable a mouse-aimable jetpack for them.

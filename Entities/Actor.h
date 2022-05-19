@@ -1341,6 +1341,29 @@ ClassInfoGetters;
 	/// <param name="newRecoverDelay">The recovery delay, in MS.</param>
 	void SetStableRecoverDelay(int newRecoverDelay) { m_StableRecoverDelay = newRecoverDelay; }
 
+
+	/// <summary>
+	/// Gets whether this actor is robotic
+	/// </summary>
+	bool GetIsRobotic() const { return m_IsRobotic; }
+
+	/// <summary>
+	/// Sets whether this actor is robotic
+	/// </summary>
+	/// <param name="roboticflag">The new setting for m_IsRobotic.</param>
+	void SetIsRobotic(bool roboticflag) { m_IsRobotic = roboticflag; }
+
+	/// <summary>
+	/// Gets whether this actor is organic
+	/// </summary>
+	bool GetIsOrganic() const { return m_IsOrganic; }
+
+	/// <summary>
+	/// Sets whether this actor is organic
+	/// </summary>
+	/// <param name="organicflag">The new setting for m_IsOrganic.</param>
+	void SetIsOrganic(bool organicflag) { m_IsOrganic = organicflag; }
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
 
@@ -1476,6 +1499,10 @@ protected:
 	unsigned int m_DeploymentID;
     /// How many passenger slots this actor will take in a craft
     int m_PassengerSlots;
+	/// Is this actor a wonderful child of the omnisiah
+	bool m_IsRobotic;
+	/// Is this actor exhibiting the weakness known as flesh
+	bool m_IsOrganic;
 
 
     ////////////////////
