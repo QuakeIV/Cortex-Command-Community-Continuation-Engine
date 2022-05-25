@@ -11,8 +11,8 @@ All notable changes to this continuation will be documented in this file.
 - New property for ACrabs - `AimControlsJetpack`. Defaults to 0 for compat reasons. Set to true to enable a mouse-aimable jetpack for them.
 - New property for HDFirearms - `ReloadSupportOffset`. This defaults to whatever Vector.reset() gives back, so probably 0,0 on the gun. This will move the background hand during reload to this position on the gun, or at least try to reach it.
 - New property for Actors - `PainThreshold`. Defaults to 15. Disable mechanic with 0 or lower if you want to use PainSound in more custom ways. Damage above this value in a single frame will trigger PainSound. Terrain impacts do not inherently trigger PainSound anymore, since this takes over.
-- New property for Actors - `IsRobotic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: emp grenades)
-- New property for Actors - `IsOrganic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: gas grenades)
+- New property for Actors - `Robotic`. Defaults to false/0 (lua: IsRobotic, ini: Robotic). Intended mainly for scripts to use (ex: emp grenades)
+- New property for Actors - `Organic`. Defaults to false/0 (lua: IsOrganic, ini: Organic). Intended mainly for scripts to use (ex: gas grenades)
 
 </details>
 
