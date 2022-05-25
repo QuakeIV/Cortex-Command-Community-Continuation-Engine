@@ -68,8 +68,8 @@ void Actor::Clear() {
     m_DeviceSwitchSound = nullptr;
     m_Status = STABLE;
     m_Health = m_PrevHealth = m_MaxHealth = 100.0F;
-	m_IsRobotic = false;
-	m_IsOrganic = false;
+	m_Robotic = false;
+	m_Organic = false;
 	m_pTeamIcon = nullptr;
 	m_pControllerIcon = nullptr;
     m_LastSecondTimer.Reset();
@@ -201,8 +201,8 @@ int Actor::Create(const Actor &reference)
 //    m_FacingRight = reference.m_FacingRight;
     m_Status = reference.m_Status;
     m_Health = m_PrevHealth = reference.m_Health;
-	m_IsRobotic = reference.m_IsRobotic;
-	m_IsOrganic = reference.m_IsOrganic;
+	m_Robotic = reference.m_Robotic;
+	m_Organic = reference.m_Organic;
 	m_MaxHealth = reference.m_MaxHealth;
     m_pTeamIcon = reference.m_pTeamIcon;
 //    m_LastSecondTimer.Reset();
@@ -343,10 +343,10 @@ int Actor::ReadProperty(const std::string_view &propName, Reader &reader)
 	        m_PrevHealth = m_Health;
 		}
 	}
-	else if (propName == "IsRobotic")
-		reader >> m_IsRobotic;
-	else if (propName == "IsOrganic")
-		reader >> m_IsOrganic;
+	else if (propName == "Robotic")
+		reader >> m_Robotic;
+	else if (propName == "Organic")
+		reader >> m_Organic;
     else if (propName == "ImpulseDamageThreshold")
         reader >> m_TravelImpulseDamage;
     else if (propName == "StableVelocityThreshold")
@@ -427,10 +427,10 @@ int Actor::Save(Writer &writer) const
     writer << m_Health;
     writer.NewProperty("MaxHealth");
     writer << m_MaxHealth;
-	writer.NewProperty("IsRobotic");
-	writer << m_IsRobotic;
-	writer.NewProperty("IsOrganic");
-	writer << m_IsOrganic;
+	writer.NewProperty("Robotic");
+	writer << m_Robotic;
+	writer.NewProperty("Organic");
+	writer << m_Organic;
 	if (m_DeploymentID)
 	{
 		writer.NewProperty("DeploymentID");

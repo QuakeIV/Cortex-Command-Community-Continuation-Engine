@@ -1345,24 +1345,24 @@ ClassInfoGetters;
 	/// <summary>
 	/// Gets whether this actor is robotic
 	/// </summary>
-	bool GetIsRobotic() const { return m_IsRobotic; }
+	bool GetRobotic() const { return m_Robotic; }
 
 	/// <summary>
 	/// Sets whether this actor is robotic
 	/// </summary>
 	/// <param name="roboticflag">The new setting for m_IsRobotic.</param>
-	void SetIsRobotic(bool roboticflag) { m_IsRobotic = roboticflag; }
+	void SetRobotic(bool roboticflag) { m_Robotic = roboticflag; }
 
 	/// <summary>
 	/// Gets whether this actor is organic
 	/// </summary>
-	bool GetIsOrganic() const { return m_IsOrganic; }
+	bool GetOrganic() const { return m_Organic; }
 
 	/// <summary>
 	/// Sets whether this actor is organic
 	/// </summary>
 	/// <param name="organicflag">The new setting for m_IsOrganic.</param>
-	void SetIsOrganic(bool organicflag) { m_IsOrganic = organicflag; }
+	void SetOrganic(bool organicflag) { m_Organic = organicflag; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
@@ -1500,9 +1500,9 @@ protected:
     /// How many passenger slots this actor will take in a craft
     int m_PassengerSlots;
 	/// Is this actor a wonderful child of the omnisiah
-	bool m_IsRobotic;
+	bool m_Robotic;
 	/// Is this actor exhibiting the weakness known as flesh
-	bool m_IsOrganic;
+	bool m_Organic;
 
 
     ////////////////////

@@ -237,14 +237,16 @@ namespace RTE {
 		.property("MovePathSize", &Actor::GetMovePathSize)
 		.property("AimDistance", &Actor::GetAimDistance, &Actor::SetAimDistance)
 		.property("SightDistance", &Actor::GetSightDistance, &Actor::SetSightDistance)
-		.property("IsRobotic", &Actor::GetIsRobotic, &Actor::SetIsRobotic)
-		.property("IsOrganic", &Actor::GetIsOrganic, &Actor::SetIsOrganic)
+		.property("IsRobotic", &Actor::GetRobotic, &Actor::SetRobotic)
+		.property("IsOrganic", &Actor::GetOrganic, &Actor::SetOrganic)
 
 		.def_readwrite("MOMoveTarget", &Actor::m_pMOMoveTarget)
 		.def_readwrite("MovePath", &Actor::m_MovePath, luabind::return_stl_iterator)
 		.def_readwrite("Inventory", &Actor::m_Inventory, luabind::return_stl_iterator)
 
 		.def("GetController", &Actor::GetController)
+		.def("IsRobotic", &Actor::GetRobotic)
+		.def("IsOrganic", &Actor::GetOrganic)
 		.def("IsPlayerControlled", &Actor::IsPlayerControlled)
 		.def("IsControllable", &Actor::IsControllable)
 		.def("SetControllerMode", &Actor::SetControllerMode)
