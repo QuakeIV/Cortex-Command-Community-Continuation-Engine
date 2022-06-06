@@ -788,6 +788,15 @@ ClassInfoGetters;
 	/// <param name="angle">The angle to set.</param>
 	void SetWalkAngle(AHuman::Layer whichLayer, float angle) { m_WalkAngle[whichLayer] = Matrix(angle); }
 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// Method:  StrideFrame
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// Description:     Whether the actor has performed a stride this frame.
+	// Arguments:       None.
+	// Return value:    Returns true if a stride was taken this frame.
+
+	bool StrideFrame() const { return m_StrideFrame; }
+
 	/// <summary>
 	/// Gets whether this AHuman is currently attempting to climb something, using arms.
 	/// </summary>
@@ -1030,6 +1039,8 @@ protected:
     bool m_Aiming;
     // Whether the BG Arm is helping with locomotion or not.
     bool m_ArmClimbing[2];
+	// Whether a stride was taken this frame or not.
+	bool m_StrideFrame = false;
     // Controls the start of leg synch.
     bool m_StrideStart;
     // Times the stride to see if it is taking too long and needs restart

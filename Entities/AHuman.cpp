@@ -8,7 +8,8 @@
 //                  http://www.datarealms.com
 
 
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
+/////////////////////////////////////////
 // Inclusions of header files
 
 #include "AHuman.h"
@@ -70,6 +71,7 @@ void AHuman::Clear()
     m_Aiming = false;
     m_ArmClimbing[FGROUND] = false;
     m_ArmClimbing[BGROUND] = false;
+	m_StrideFrame = false;
     m_StrideStart = false;
     m_JetTimeTotal = 0.0;
     m_JetTimeLeft = 0.0;
@@ -3613,6 +3615,8 @@ void AHuman::Update()
     ///////////////////////////////////////////////////
     // Travel the limb AtomGroup:s
 
+	m_StrideFrame = false;
+
     if (m_Status == STABLE && m_MoveState != NOMOVE)
     {
         // This exists to support disabling foot collisions if the limbpath has that flag set.
@@ -3664,6 +3668,7 @@ void AHuman::Update()
 				if (!climbing) {
 					if (m_StrideSound) { m_StrideSound->Play(m_Pos); }
 					RunScriptedFunctionInAppropriateScripts("OnStride");
+					m_StrideFrame = true;
 				} else {
 					m_WalkAngle[FGROUND] = Matrix();
 					m_WalkAngle[BGROUND] = Matrix();
