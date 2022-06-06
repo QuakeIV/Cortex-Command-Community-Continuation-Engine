@@ -21,6 +21,7 @@ All notable changes to this continuation will be documented in this file.
 </details>
 
 <details><summary><b>Changed</b></summary>
+
 - New door sprites
 - Restored filipex Mauler chain code
 - GripStrength for arms defaults to something on the low-end (120) rather than straight up 0 now. If you forget to set it, guns should be flying out of hands way less.
