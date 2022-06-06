@@ -7,17 +7,23 @@ All notable changes to this continuation will be documented in this file.
 <details><summary><b>Added</b></summary>
 
 - New blast door
-- New property for HeldDevices - `VisualRecoilMultiplier`. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable recoil the animation for implementing their own.
-- New property for ACrabs - `AimControlsJetpack`. Defaults to 0 for compat reasons. Set to true to enable a mouse-aimable jetpack for them.
-- New property for HDFirearms - `ReloadSupportOffset`. This defaults to whatever Vector.reset() gives back, so probably 0,0 on the gun. This will move the background hand during reload to this position on the gun, or at least try to reach it.
-- New property for Actors - `PainThreshold`. Defaults to 15. Disable mechanic with 0 or lower if you want to use PainSound in more custom ways. Damage above this value in a single frame will trigger PainSound. Terrain impacts do not inherently trigger PainSound anymore, since this takes over.
-- New property for Actors - `Robotic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: emp grenades)
-- New property for Actors - `Organic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: gas grenades)
+- New R/W property for HeldDevices - `VisualRecoilMultiplier`. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable the inbuilt SharpLength recoil animation for implementing their own.
+- New R/W property for ACrabs - `AimControlsJetpack`. Defaults to false/0 (lua, ini). Set to true to enable a mouse-aimable jetpack for them.
+- New R/W property for HDFirearms - `ReloadSupportOffset`. This defaults to whatever Vector.reset() gives back, so probably 0,0 on the gun. This will move the background hand during reload to this position on the gun, or at least try to reach it.
+- New R/W property for Actors - `PainThreshold`. Defaults to 15. Disable mechanic with 0 or lower if you want to use PainSound in more custom ways. Damage above this value in a single frame will trigger PainSound. Terrain impacts do not inherently trigger PainSound anymore, since this takes over.
+- New R/W property for Actors - `Robotic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: emp grenades). Use as a boolean property or as a bool-returning function, `Actor:IsRobotic()`
+- New R/W property for Actors - `Organic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: gas grenades). Use as a boolean property or as a bool-returning function, `Actor:IsOrganic()`
+- New read-only property for Actors - `StrideFrame`. Is true on the frame a stride is taken. This is an alternative to OnStride that other scripts can read, similar to FiredFrame for HDFirearms.
+- New R/W property for MOSRotatings - `GibAtEndOfLifetime`. Defaults to false/0 (lua, ini). Self-explanatory.
+- New lua function for HDFirearms - `OnFire(self)`. Runs when the gun fires that frame - an alternative to FiredFrame.
+- New lua function for HDFirearms - `OnReload(self, bool hadMagazineBeforeReload)`. Runs once at the start of a reload.
 
 </details>
 
 <details><summary><b>Changed</b></summary>
 - New door sprites
+- Restored filipex Mauler chain code
+- GripStrength for arms defaults to something on the low-end (120) rather than straight up 0 now. If you forget to set it, guns should be flying out of hands way less.
 
 </details>
 
