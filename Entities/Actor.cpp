@@ -1604,7 +1604,7 @@ void Actor::Update()
     }
 
 	// Play PainSound if damage this frame exceeded PainThreshold
-	if (m_PainThreshold > 0 && m_PrevHealth - m_Health > m_PainThreshold && m_Health > 0 && m_PainSound) { m_PainSound->Play(m_Pos); }
+	if (m_PainThreshold > 0 && m_PrevHealth - m_Health > m_PainThreshold && m_Health > 1 && m_PainSound) { m_PainSound->Play(m_Pos); }
 
 	int brainOfPlayer = g_ActivityMan.GetActivity()->IsBrainOfWhichPlayer(this);
 	if (brainOfPlayer != Players::NoPlayer && g_ActivityMan.GetActivity()->PlayerHuman(brainOfPlayer)) {
