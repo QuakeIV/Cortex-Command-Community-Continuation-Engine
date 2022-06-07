@@ -134,7 +134,7 @@ int ACDropShip::ReadProperty(const std::string_view &propName, Reader &reader) {
         reader >> m_MaxEngineAngle;
     } else if (propName == "LateralControlSpeed") {
         reader >> m_LateralControlSpeed;
-	} else if (propName == "GroundDeliveryDistance") {
+	} else if (propName == "GroundDeliveryDistance" || propName == "HoverHeightModifier") {
 		reader >> m_GroundDeliveryDistance;
     } else {
         return ACraft::ReadProperty(propName, reader);

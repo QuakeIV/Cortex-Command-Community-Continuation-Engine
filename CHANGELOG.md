@@ -17,6 +17,7 @@ All notable changes to this continuation will be documented in this file.
 - New R/W property for MOSRotatings - `GibAtEndOfLifetime`. Defaults to false/0 (lua, ini). Self-explanatory.
 - New lua function for HDFirearms - `OnFire(self)`. Runs when the gun fires that frame - an alternative to FiredFrame.
 - New lua function for HDFirearms - `OnReload(self, bool hadMagazineBeforeReload)`. Runs once at the start of a reload.
+- Alternative property for dropships - `HoverHeightModifier` which redirects to the `GroundDeliveryDistance` one. Recommend mods stick to `GroundDeliveryDistance` as this alternative property is just to maintain compat with cccp since they seem to be obsessed with breaking mods repeatedly.
 
 </details>
 
