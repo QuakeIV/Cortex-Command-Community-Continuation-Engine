@@ -550,13 +550,15 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload");
 // Arguments:       None.
 // Return value:    None.
 
-    void ResetAllTimers() override { HeldDevice::ResetAllTimers(); m_LastFireTmr.Reset(); m_ReloadTmr.Reset(); }
+    void ResetAllTimers() override { HeldDevice::ResetAllTimers(); m_LastFireTmr.Reset(); m_ReloadTmr.Reset(); m_ChamberingTmr.Reset(); }
 
 	/// <summary>
 	/// Gets this HDFirearm's reload progress as a scalar from 0 to 1.
 	/// </summary>
 	/// <returns>The reload progress as a scalar from 0 to 1.</returns>
 	float GetReloadProgress() const { return IsReloading() && m_ReloadTime > 0 ? std::min(static_cast<float>(m_ReloadTmr.GetElapsedSimTimeMS() / m_ReloadTime), 1.0F) : 1.0F; }
+
+	float GetChamberingProgress() const { return IsChambering() && m_ChamberingTime > 0 ? std::min(static_cast<float>(m_ChamberingTmr.GetElapsedSimTimeMS() / m_ChamberingTime), 1.0F) : 1.0F; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Virtual method:  RestDetection
@@ -612,6 +614,13 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload");
 
 	void Reload() override;
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// Virtual method:  Chamber
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Plays chambering sounds.
+// Arguments:       None.
+// Return value:    None.
+	void Chamber();
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Virtual method:  IsReloading
@@ -622,6 +631,13 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload");
 
 	bool IsReloading() const override { return m_Reloading; }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// Virtual method:  IsChambering
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Tells whether the device is curtrently being chambered.
+// Arguments:       None.
+// Return value:    Whetehr being chambered.
+	bool IsChambering() const { return m_Chambering; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Virtual method:  DoneReloading
@@ -632,6 +648,14 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload");
 
 	bool DoneReloading() const override { return m_DoneReloading; }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// Virtual method:  DoneChambering
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Tells whether the device just finished chambering this frame.
+// Arguments:       None.
+// Return value:    Whether just done chambering this frame.
+
+	bool DoneChambering() const { return m_DoneChambering; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Virtual method:  NeedsReloading
@@ -677,6 +701,17 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload");
 	/// <param name="isReloadable">Whether this HDFirearm is reloadable.</param>
 	void SetReloadable(bool isReloadable) { m_Reloadable = isReloadable; m_Reloading = m_Reloading && m_Reloadable; }
 
+	/// <summary>
+	/// Gets whether this HDFirearm is set to be chamberable or not.
+	/// </summary>
+	/// <returns>Whether this HDFirearm is chamberable.</returns>
+	bool IsChamberable() const { return m_Chamberable; }
+
+		/// <summary>
+	/// Sets whether this HDFirearm is chamberable or not and halts the chambering process.
+	/// </summary>
+	/// <param name="isChamberable">Whether this HDFirearm is chamberable.</param>
+	void SetChamberable(bool isChamberable) { m_Chamberable = isChamberable; m_Chambering = m_Chambering && m_Chamberable; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Method:  SetFullAuto
@@ -820,6 +855,9 @@ protected:
     // The audio of this FireArm being reloaded.
     SoundContainer *m_ReloadStartSound;
     SoundContainer *m_ReloadEndSound;
+	// The audio of this FireArm being chambered.
+	SoundContainer *m_ChamberingStartSound;
+	SoundContainer *m_ChamberingEndSound;
 
     // Rate of fire, in rounds per min.
     // If 0, firearm is semi-automatic (ie only one discharge per activation).
@@ -830,21 +868,30 @@ protected:
     int m_DeactivationDelay;
     // Reloading or not
     bool m_Reloading;
+	// Chambering or not
+	bool m_Chambering;
     // Just done reloading this frame
     bool m_DoneReloading;
+	// Just done chambering this frame
+    bool m_DoneChambering;
     // Reload time in millisecs.
     int m_ReloadTime;
+    // Chambering time in millisecs.
+    int m_ChamberingTime;
     // Whether this HDFirearm is full or semi-auto.
     bool m_FullAuto;
     // Whether particles fired from this HDFirearm will ignore hits with itself,
     // and the root parent of this HDFirearm, regardless if they are set to hit MOs.
     bool m_FireIgnoresThis;
 	bool m_Reloadable; //!< Whether this HDFirearm is reloadable by normal means.
+	bool m_Chamberable; //!< Whether this HDFirearm is chamberable by normal means.
 
     // Timer for timing how long ago the last round was fired.
     Timer m_LastFireTmr;
     // Timer for timing reload times.
     Timer m_ReloadTmr;
+	// Timer for timing chambering times.
+	Timer m_ChamberingTmr;
 
     // The point from where the projectiles appear.
     Vector m_MuzzleOff;
