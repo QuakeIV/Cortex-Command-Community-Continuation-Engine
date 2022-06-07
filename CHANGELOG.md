@@ -18,6 +18,25 @@ All notable changes to this continuation will be documented in this file.
 - New lua function for HDFirearms - `OnFire(self)`. Runs when the gun fires that frame - an alternative to FiredFrame.
 - New lua function for HDFirearms - `OnReload(self, bool hadMagazineBeforeReload)`. Runs once at the start of a reload.
 - Alternative property for dropships - `HoverHeightModifier` which redirects to the `GroundDeliveryDistance` one. Recommend mods stick to `GroundDeliveryDistance` as this alternative property is just to maintain compat with cccp since they seem to be obsessed with breaking mods repeatedly.
+- Chambering is here!
+
+	Chambering is a new stage for reloading after inserting a new magazine. It's optional and defaults to off, so don't worry. It should also be mostly seamless with regular reloading and thus not interfere with any scripts, but if you're doing particularly heavy lifting we recommend leaving this off.
+	
+	R/W `Chamberable` 1/0 true/false denotes whether the gun is to ever be chambered.
+	
+	R/W `ChamberStartSound` and `ChamberEndSound` are self-explanatory and will act similar to reload sounds. ChamberEndSound is most relevant here for the actual meat of the sound, since ChamberStartSound will overlap with ReloadEndSound.
+	If you want a delay after your chambering but don't want it to overlap with the reload sounds you will need to incorporate a small delay in your ChamberStartSound.
+	
+	R/W `ChamberTime` is the time it takes to chamber, similar to ReloadTime.
+	
+	`AlwaysChamber` 1/0 sets whether the gun should always chamber even if the magazine was not depleted. Get and set with `bool HDFirearm:AlwaysChambers()` and `HDFirearm:SetAlwaysChamber(bool)`
+	
+	`OnChamber(self)` runs once at the start of chambering similar to OnReload.
+	
+	`bool HDFirearm:IsChambering()` returns whether the firearm is currently chambering.
+	
+	`bool HDFirearm:DoneChambering()` will return true on the frame a firearm is done chambering, similar to DoneReloading.
+
 
 </details>
 
@@ -26,6 +45,7 @@ All notable changes to this continuation will be documented in this file.
 - New door sprites
 - Restored filipex Mauler chain code
 - GripStrength for arms defaults to something on the low-end (120) rather than straight up 0 now. If you forget to set it, guns should be flying out of hands way less.
+- ReloadStartSound will no longer play if magazine was already taken out.
 
 </details>
 

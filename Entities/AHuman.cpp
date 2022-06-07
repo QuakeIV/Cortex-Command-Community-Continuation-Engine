@@ -4345,18 +4345,13 @@ void AHuman::DrawHUD(BITMAP *pTargetBitmap, const Vector &targetPos, int whichSc
 
 				std::string fgWeaponString = "EMPTY";
 				if (fgHeldFirearm) {
-					if (fgHeldFirearm->IsReloading()) {
+					if (fgHeldFirearm->IsReloading() || fgHeldFirearm->IsChambering()) {
 						fgWeaponString = "Reloading";
 						rectfill(pTargetBitmap, drawPos.GetFloorIntX() + 1, drawPos.GetFloorIntY() + m_HUDStack + 13, drawPos.GetFloorIntX() + 29, drawPos.GetFloorIntY() + m_HUDStack + 14, 245);
-						rectfill(pTargetBitmap, drawPos.GetFloorIntX(), drawPos.GetFloorIntY() + m_HUDStack + 12, drawPos.GetFloorIntX() + static_cast<int>(28.0F * fgHeldFirearm->GetReloadProgress() + 0.5F), drawPos.GetFloorIntY() + m_HUDStack + 13, 77);
-					} 
-					if (fgHeldFirearm->IsChambering()) {
-						fgWeaponString = "Chambering";
-						rectfill(pTargetBitmap, drawPos.GetFloorIntX() + 1, drawPos.GetFloorIntY() + m_HUDStack + 13, drawPos.GetFloorIntX() + 29, drawPos.GetFloorIntY() + m_HUDStack + 14, 245);
-						rectfill(pTargetBitmap, drawPos.GetFloorIntX(), drawPos.GetFloorIntY() + m_HUDStack + 12, drawPos.GetFloorIntX() + static_cast<int>(28.0F * fgHeldFirearm->GetChamberingProgress() + 0.5F), drawPos.GetFloorIntY() + m_HUDStack + 13, 77);
+						rectfill(pTargetBitmap, drawPos.GetFloorIntX(), drawPos.GetFloorIntY() + m_HUDStack + 12, drawPos.GetFloorIntX() + static_cast<int>(28.0F * fgHeldFirearm->GetTotalReloadProgress() + 0.5F), drawPos.GetFloorIntY() + m_HUDStack + 13, 77);
 					} 
 					else {
-						fgWeaponString = fgHeldFirearm->GetRoundInMagCount() < 0 ? "Infinite" : std::to_string(fgHeldFirearm->GetRoundInMagCount());
+						fgWeaponString = fgHeldFirearm->GetRoundInMagCount() < 0 ? "Infinite" : (fgHeldFirearm->NeedsChamber() && fgHeldFirearm->HasMagazine()) ? "Empty Chamber" : std::to_string(fgHeldFirearm->GetRoundInMagCount());
 					}
 				}
 
@@ -4366,16 +4361,10 @@ void AHuman::DrawHUD(BITMAP *pTargetBitmap, const Vector &targetPos, int whichSc
 						bgWeaponString = "Reloading";
 						int totalTextWidth = pSmallFont->CalculateWidth(fgWeaponString) + 6;
 						rectfill(pTargetBitmap, drawPos.GetFloorIntX() + 1 + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 13, drawPos.GetFloorIntX() + 29 + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 14, 245);
-						rectfill(pTargetBitmap, drawPos.GetFloorIntX() + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 12, drawPos.GetFloorIntX() + static_cast<int>(28.0F * bgHeldFirearm->GetReloadProgress() + 0.5F) + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 13, 77);
+						rectfill(pTargetBitmap, drawPos.GetFloorIntX() + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 12, drawPos.GetFloorIntX() + static_cast<int>(28.0F * bgHeldFirearm->GetTotalReloadProgress() + 0.5F) + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 13, 77);
 					}
-					if (bgHeldFirearm->IsChambering()) {
-						bgWeaponString = "Chambering";
-						int totalTextWidth = pSmallFont->CalculateWidth(fgWeaponString) + 6;
-						rectfill(pTargetBitmap, drawPos.GetFloorIntX() + 1 + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 13, drawPos.GetFloorIntX() + 29 + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 14, 245);
-						rectfill(pTargetBitmap, drawPos.GetFloorIntX() + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 12, drawPos.GetFloorIntX() + static_cast<int>(28.0F * bgHeldFirearm->GetChamberingProgress() + 0.5F) + totalTextWidth, drawPos.GetFloorIntY() + m_HUDStack + 13, 77);
-					} 
 					 else {
-						bgWeaponString = bgHeldFirearm->GetRoundInMagCount() < 0 ? "Infinite" : std::to_string(bgHeldFirearm->GetRoundInMagCount());
+						bgWeaponString = bgHeldFirearm->GetRoundInMagCount() < 0 ? "Infinite" : (bgHeldFirearm->NeedsChamber() && bgHeldFirearm->HasMagazine()) ? "Empty Chamber" : std::to_string(bgHeldFirearm->GetRoundInMagCount());
 					}
 					std::snprintf(str, sizeof(str), "%s | %s", fgWeaponString.c_str(), bgWeaponString.c_str());
                 } else {
