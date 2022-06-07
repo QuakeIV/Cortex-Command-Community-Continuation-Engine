@@ -723,7 +723,7 @@ bool HDFirearm::IsFull() const
         if (m_pMagazine)
         {
             // If we've used over half the rounds, we can profitably go ahead and reload
-            return m_pMagazine->GetRoundCount() == m_pMagazine->GetCapacity() || m_pMagazine->GetCapacity() < 0;
+            return m_pMagazine->GetRoundCount() >= m_pMagazine->GetCapacity() || m_pMagazine->GetCapacity() < 0;
         }
         return false;
     }
