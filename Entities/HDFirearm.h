@@ -566,7 +566,7 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChambering");
 // Arguments:       None.
 // Return value:    None.
 
-    void ResetAllTimers() override { HeldDevice::ResetAllTimers(); m_LastFireTmr.Reset(); m_ReloadTmr.Reset(); m_ChamberingTmr.Reset(); }
+    void ResetAllTimers() override { HeldDevice::ResetAllTimers(); m_LastFireTmr.Reset(); m_ReloadTmr.Reset(); m_ChamberTmr.Reset(); }
 
 	/// <summary>
 	/// Gets this HDFirearm's reload progress as a scalar from 0 to 1.
@@ -574,7 +574,20 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChambering");
 	/// <returns>The reload progress as a scalar from 0 to 1.</returns>
 	float GetReloadProgress() const { return IsReloading() && m_ReloadTime > 0 ? std::min(static_cast<float>(m_ReloadTmr.GetElapsedSimTimeMS() / m_ReloadTime), 1.0F) : 1.0F; }
 
-	float GetChamberingProgress() const { return IsChambering() && m_ChamberingTime > 0 ? std::min(static_cast<float>(m_ChamberingTmr.GetElapsedSimTimeMS() / m_ChamberingTime), 1.0F) : 1.0F; }
+	/// <summary>
+	/// Gets this HDFirearm's chambering progress as a scalar from 0 to 1.
+	/// </summary>
+	/// <returns>The chambering progress as a scalar from 0 to 1.</returns>
+	float GetChamberingProgress() const { return IsChambering() && m_ChamberTime > 0 ? std::min(static_cast<float>(m_ChamberTmr.GetElapsedSimTimeMS() / m_ChamberTime), 1.0F) : 1.0F; }
+
+	/// <summary>
+	/// Gets this HDFirearm's total reload progress, including chambering, as a scalar from 0 to 1.
+	/// </summary>
+	/// <returns>The total reload progress as a scalar from 0 to 1.</returns>
+	float GetTotalReloadProgress() const {
+		float reloadTime = m_ReloadTime + (m_NeedsChamber ? m_ChamberTime: 0);
+		return (IsReloading() || IsChambering()) && reloadTime > 0 ? std::min(static_cast<float>(m_ReloadTmr.GetElapsedSimTimeMS() / reloadTime), 1.0F) : 1.0F;
+	}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Virtual method:  RestDetection
@@ -684,6 +697,15 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChambering");
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
+// Virtual method:  HasMagazine
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Tells whether the device currently has a magazine attached.
+// Arguments:       None.
+// Return value:    Whether a magazine is attached or not.
+
+	bool HasMagazine() const override;
+
+//////////////////////////////////////////////////////////////////////////////////////////
 // Virtual method:  IsFull
 //////////////////////////////////////////////////////////////////////////////////////////
 // Description:     Tells whether the device is curtrently full and reloading won't have
@@ -728,6 +750,24 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChambering");
 	/// </summary>
 	/// <param name="isChamberable">Whether this HDFirearm is chamberable.</param>
 	void SetChamberable(bool isChamberable) { m_Chamberable = isChamberable; m_Chambering = m_Chambering && m_Chamberable; }
+
+	/// <summary>
+	/// Gets whether this HDFirearm always chambers or not.
+	/// </summary>
+	/// <returns>Whether this HDFirearm always chambers, regardless of magazine status.</returns>
+	bool AlwaysChamber() const { return m_AlwaysChamber; }
+
+	/// <summary>
+	/// Sets whether this HDFirearm always chambers.
+	/// </summary>
+	/// <param name="AlwaysChamber">Whether this HDFirearm always chambers, regardless of magazine status.</param>
+	void SetAlwaysChamber(bool alwaysChamber) { m_AlwaysChamber = alwaysChamber; }
+
+	/// <summary>
+	/// Gets whether this HDFirearm needs chambering next reload or not. Does NOT account for AlwaysChamber!
+	/// </summary>
+	/// <returns>Whether this HDFirearm needs to chamber next reload.</returns>
+	bool NeedsChamber() const { return m_Chamberable && m_NeedsChamber; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Method:  SetFullAuto
@@ -842,10 +882,11 @@ protected:
 
     /// <summary>
     /// Sets this Attachable's parent MOSRotating, and also sets its Team based on its parent and, if the Attachable is set to collide, adds/removes Atoms to its new/old parent.
-    /// Additionally, sets this HDFirearm as not firing or reloading, and resets its reload timer.
+    /// Additionally, sets this HDFirearm as not firing, reloading, or chambering, and resets its reload timer.
     /// </summary>
     /// <param name="newParent">A pointer to the MOSRotating to set as the new parent. Ownership is NOT transferred!</param>
-    void SetParent(MOSRotating *newParent) override { HeldDevice::SetParent(newParent); Deactivate(); m_Reloading = false; m_ReloadTmr.Reset(); }
+    void SetParent(MOSRotating *newParent) override { HeldDevice::SetParent(newParent); Deactivate(); m_Reloading = false; m_ReloadTmr.Reset(); m_Chambering = false; m_ChamberTmr.Reset();
+	}
 
     // Member variables.
     static Entity::ClassInfo m_sClass;
@@ -893,7 +934,7 @@ protected:
     // Reload time in millisecs.
     int m_ReloadTime;
     // Chambering time in millisecs.
-    int m_ChamberingTime;
+    int m_ChamberTime;
     // Whether this HDFirearm is full or semi-auto.
     bool m_FullAuto;
     // Whether particles fired from this HDFirearm will ignore hits with itself,
@@ -901,13 +942,15 @@ protected:
     bool m_FireIgnoresThis;
 	bool m_Reloadable; //!< Whether this HDFirearm is reloadable by normal means.
 	bool m_Chamberable; //!< Whether this HDFirearm is chamberable by normal means.
+	bool m_AlwaysChamber; //!< Whether this HDFirearm always chambers, regardless of magazine status.
+	bool m_NeedsChamber; //!< Whether this HDFirearm needs to chamber next reload.
 
     // Timer for timing how long ago the last round was fired.
     Timer m_LastFireTmr;
     // Timer for timing reload times.
     Timer m_ReloadTmr;
 	// Timer for timing chambering times.
-	Timer m_ChamberingTmr;
+	Timer m_ChamberTmr;
 
     // The point from where the projectiles appear.
     Vector m_MuzzleOff;
