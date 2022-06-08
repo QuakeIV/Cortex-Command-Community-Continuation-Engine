@@ -720,7 +720,7 @@ void HDFirearm::Chamber()
 
 		m_ChamberingTmr.Reset();
 
-		RunScriptedFunctionInAppropriateScripts("OnChamber", false, false, {}, {});
+		RunScriptedFunctionInAppropriateScripts("OnChambering", false, false, {}, {});
 
 		m_Chambering = true;
     }
@@ -1018,7 +1018,6 @@ void HDFirearm::Update()
 
 		m_Chambering = false;
 		m_DoneReloading = true;
-//		m_DoneChambering = true;
 	}
 
     // Do stuff to deactivate after being activated
