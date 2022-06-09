@@ -635,7 +635,7 @@ namespace RTE {
 		.property("DeactivationDelay", &HDFirearm::GetDeactivationDelay, &HDFirearm::SetDeactivationDelay)
 		.property("ReloadTime", &HDFirearm::GetReloadTime, &HDFirearm::SetReloadTime)
 		.property("ReloadProgress", &HDFirearm::GetReloadProgress)
-		.property("ChamberingTime", &HDFirearm::GetChamberingTime, &HDFirearm::SetChamberingTime)
+		.property("ChamberTime", &HDFirearm::GetChamberTime, &HDFirearm::SetChamberTime)
 		.property("ChamberingProgress", &HDFirearm::GetChamberingProgress)
 		.property("ShakeRange", &HDFirearm::GetShakeRange, &HDFirearm::SetShakeRange)
 		.property("SharpShakeRange", &HDFirearm::GetSharpShakeRange, &HDFirearm::SetSharpShakeRange)
