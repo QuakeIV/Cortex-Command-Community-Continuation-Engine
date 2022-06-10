@@ -722,7 +722,7 @@ void HDFirearm::Reload()
 			// TODO CHAMBERING: better way to detect this chambering stuff, this is just ugly
 			// if our mag is in, and it's the correct one, check if we need to chamber
 			else if (m_Chamberable && m_NeedsChamber) {
-				m_ReloadTmr.SetElapsedSimTimeMS(static_cast<double>(m_ReloadTime));
+				m_ReloadTmr.SetElapsedSimTimeMS(m_ReloadTime);
 				Chamber();
 			}
 		}
