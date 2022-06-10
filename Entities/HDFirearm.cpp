@@ -704,9 +704,10 @@ void HDFirearm::Reload()
 		RunScriptedFunctionInAppropriateScripts("OnReload", false, false, {}, { hadMagazineBeforeReloading ? "true" : "false" });
 
 		if (hadMagazineBeforeReloading) {
-			if (!m_pMagazine->IsFull()) {
+			if (!(m_pMagazine->GetModuleAndPresetName() == m_pMagazineReference->GetModuleAndPresetName()) || !(m_Chamberable && m_NeedsChamber)) {
 				if (m_ReloadStartSound) { m_ReloadStartSound->Play(m_Pos); }
-				m_NeedsChamber = m_Chamberable && (m_pMagazine->IsEmpty() || m_AlwaysChamber);
+				// if we needed chamber before this reload we're probably doing some weird mag switching stuff, so keep needing it
+				m_NeedsChamber = m_Chamberable && (m_NeedsChamber || (m_pMagazine->IsEmpty() || m_AlwaysChamber));
 				m_Reloading = true;
 				m_ReloadTmr.Reset();
 				Vector constrainedMagazineOffset = g_SceneMan.ShortestDistance(m_Pos, m_pMagazine->GetPos(), g_SceneMan.SceneWrapsX()).SetMagnitude(2.0F);
@@ -718,8 +719,8 @@ void HDFirearm::Reload()
 				RemoveAttachable(m_pMagazine, m_pMagazine->IsDiscardable(), false);
 				m_pMagazine = 0;
 			}
-			// TODO CHAMBERING: better detection for interrupted chambers
-			// If our magazine is full, maybe we interrupted our chambering?
+			// TODO CHAMBERING: better way to detect this chambering stuff, this is just ugly
+			// if our mag is in, and it's the correct one, check if we need to chamber
 			else if (m_Chamberable && m_NeedsChamber) {
 				m_ReloadTmr.SetElapsedSimTimeMS(static_cast<double>(m_ReloadTime));
 				Chamber();
@@ -729,7 +730,13 @@ void HDFirearm::Reload()
 			m_Reloading = true;
 			m_ReloadTmr.Reset();
 		}
-    }
+	}
+	else if (m_Chambering && !(m_pMagazine->GetModuleAndPresetName() == m_pMagazineReference->GetModuleAndPresetName())) {
+		// mag switching shenanigans. we turn this stuff off here so the above code can run, mag can be removed, and it'll all be turned back properly after.
+		m_Chambering = false;
+		m_Reloading = false;
+		Reload();
+	}
 }
 
 void HDFirearm::Chamber()

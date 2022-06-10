@@ -246,13 +246,12 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChamber");
     void SetReloadTime(int delay) { m_ReloadTime = delay; };
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Method:          GetChamberingTime
+// Method:          GetChamberTime
 //////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Gets the chambering time in ms.
+// Description:     Gets the chamber time in ms.
 // Arguments:       None.
 // Return value:    An int in ms.
-
-	int GetChamberingTime() const { return m_ChamberTime; }
+	int GetChamberTime() const { return m_ChamberTime; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Method:          SetChamberingTime
@@ -260,8 +259,7 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChamber");
 // Description:     Sets the chambering time in ms.
 // Arguments:       An int in ms.
 // Return value:    None.
-
-	void SetChamberingTime(int delay) { m_ChamberTime = delay; }
+	void SetChamberTime(int delay) { m_ChamberTime = delay; }	
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
