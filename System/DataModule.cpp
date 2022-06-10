@@ -121,6 +121,8 @@ namespace RTE {
 		} else if (propName == "ScriptPath") {
 			reader >> m_ScriptPath;
 			LoadScripts();
+		} else if (propName == "SupportedGameVersion") {
+			// do nothing - neither we nor cccp have enough modders combined to warrant this
 		} else if (propName == "Require") {
 			// Check for required dependencies if we're not load properties
 			std::string requiredModule;
