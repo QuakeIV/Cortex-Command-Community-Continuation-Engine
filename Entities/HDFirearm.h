@@ -42,7 +42,7 @@ public:
 EntityAllocation(HDFirearm);
 SerializableOverrideMethods;
 ClassInfoGetters;
-AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChambering");
+AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChamber");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Constructor:     HDFirearm
@@ -235,10 +235,11 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChambering");
     int GetReloadTime() const { return m_ReloadTime; };
 
 
+
 //////////////////////////////////////////////////////////////////////////////////////////
-// Method:          SetChamberingTime
+// Method:          SetReloadTime
 //////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Sets the chambering time in ms.
+// Description:     Sets the reload time in ms.
 // Arguments:       An int in ms.
 // Return value:    None.
 
@@ -250,15 +251,17 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChambering");
 // Description:     Gets the chambering time in ms.
 // Arguments:       None.
 // Return value:    An int in ms.
-	int GetChamberingTime() const { return m_ChamberingTime; }
+
+	int GetChamberingTime() const { return m_ChamberTime; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Method:          SetReloadTime
+// Method:          SetChamberingTime
 //////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Sets the reload time in ms.
+// Description:     Sets the chambering time in ms.
 // Arguments:       An int in ms.
 // Return value:    None.
-	void SetChamberingTime(int delay) { m_ChamberingTime = delay; }	
+
+	void SetChamberingTime(int delay) { m_ChamberTime = delay; }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////

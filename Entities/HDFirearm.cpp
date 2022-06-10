@@ -739,7 +739,7 @@ void HDFirearm::Chamber()
 
 		m_ChamberTmr.Reset();
 
-		RunScriptedFunctionInAppropriateScripts("OnChambering", false, false, {}, {});
+		RunScriptedFunctionInAppropriateScripts("OnChamber", false, false, {}, {});
 
 		m_Chambering = true;
     }
