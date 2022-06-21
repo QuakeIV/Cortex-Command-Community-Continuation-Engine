@@ -245,22 +245,6 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChamber");
 
     void SetReloadTime(int delay) { m_ReloadTime = delay; };
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// Method:          GetChamberTime
-//////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Gets the chamber time in ms.
-// Arguments:       None.
-// Return value:    An int in ms.
-	int GetChamberTime() const { return m_ChamberTime; }
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// Method:          SetChamberingTime
-//////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Sets the chambering time in ms.
-// Arguments:       An int in ms.
-// Return value:    None.
-	void SetChamberTime(int delay) { m_ChamberTime = delay; }	
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Method:          GetShakeRange
@@ -741,30 +725,6 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChamber");
 	void SetReloadable(bool isReloadable) { m_Reloadable = isReloadable; m_Reloading = m_Reloading && m_Reloadable; }
 
 	/// <summary>
-	/// Gets whether this HDFirearm is set to be chamberable or not.
-	/// </summary>
-	/// <returns>Whether this HDFirearm is chamberable.</returns>
-	bool IsChamberable() const { return m_Chamberable; }
-
-		/// <summary>
-	/// Sets whether this HDFirearm is chamberable or not and halts the chambering process.
-	/// </summary>
-	/// <param name="isChamberable">Whether this HDFirearm is chamberable.</param>
-	void SetChamberable(bool isChamberable) { m_Chamberable = isChamberable; m_Chambering = m_Chambering && m_Chamberable; }
-
-	/// <summary>
-	/// Gets whether this HDFirearm always chambers or not.
-	/// </summary>
-	/// <returns>Whether this HDFirearm always chambers, regardless of magazine status.</returns>
-	bool AlwaysChamber() const { return m_AlwaysChamber; }
-
-	/// <summary>
-	/// Sets whether this HDFirearm always chambers.
-	/// </summary>
-	/// <param name="AlwaysChamber">Whether this HDFirearm always chambers, regardless of magazine status.</param>
-	void SetAlwaysChamber(bool alwaysChamber) { m_AlwaysChamber = alwaysChamber; }
-
-	/// <summary>
 	/// Gets whether this HDFirearm needs chambering next reload or not. Does NOT account for AlwaysChamber!
 	/// </summary>
 	/// <returns>Whether this HDFirearm needs to chamber next reload.</returns>
@@ -877,7 +837,98 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChamber");
 	void SetAnimatedManually(bool newValue)  { m_IsAnimatedManually = newValue; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
+// Method:  SetChamberingStartSound
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Sets the SoundContainer for when chambering begins.
+// Arguments:       SoundContainer to play.
+// Return value:    None.
+
+	void SetChamberingStartSound(SoundContainer *  newValue) { m_ChamberingStartSound = newValue; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  GetChamberingStartSound
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets the SoundContainer for when chambering begins.
+// Return value:    Associated SoundContainer.
+
+	SoundContainer * GetChamberingStartSound() const { return m_ChamberingStartSound; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  SetChamberingEndSound
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Sets the SoundContainer for when chambering ends.
+// Arguments:       SoundContainer to play.
+// Return value:    None.
+
+	void SetChamberingEndSound(SoundContainer *  newValue) { m_ChamberingEndSound = newValue; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  GetChamberingEndSound
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets the SoundContainer for when chambering ends.
+// Arguments:       None.
+// Return value:    Associated SoundContainer.
+
+	SoundContainer * GetChamberingEndSound() const { return m_ChamberingEndSound; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  SetChamberTime
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Sets the amount of time chambering takes.
+// Arguments:       How long chambering takes in ms.
+// Return value:    None.
+
+	void SetChamberTime(int newValue) { m_ChamberTime = newValue; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  GetChamberTime
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets the amount of time chambering takes.
+// Arguments:       None.
+// Return value:    How long chambering takes in ms.
+
+	int GetChamberTime() const { return m_ChamberTime; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  SetChamberable
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Sets whether the weapon can chamber.
+// Arguments:       Flag specify whether or not it chambers.
+// Return value:    None.
+
+	void SetChamberable(bool newValue) { m_Chamberable = newValue; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  GetChamberable
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets whether the weapon can chamber.
+// Arguments:       None.
+// Return value:    Flag specify whether or not it chambers.
+
+	bool GetChamberable() const { return m_Chamberable; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  SetAlwaysChamber
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets whether the weapon chambers.
+// Arguments:       Flag specify whether or not it chambers.
+// Return value:    None.
+
+	void SetAlwaysChamber(bool newValue) { m_AlwaysChamber = newValue; }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Method:  GetAlwaysChamber
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Gets whether the weapon chambers.
+// Arguments:       None.
+// Return value:    Flag specify whether or not it chambers.
+
+	bool GetAlwaysChamber() const { return m_AlwaysChamber; }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
+
 
 protected:
 
