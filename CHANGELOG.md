@@ -5,6 +5,7 @@ All notable changes to this continuation will be documented in this file.
 ## [Unreleased]
 
 <details><summary><b>Added</b></summary>
+
 - New dummy ini property: `SupportedGameVersion`. This is soley for compat with cccp mods and does nothing, as neither we nor they have enough modders combined to even warrant this breakage and steam mods are already known to be broken and ancient to begin with.
 - New blast door
 - New R/W property for HeldDevices - `VisualRecoilMultiplier`. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable the inbuilt SharpLength recoil animation for implementing their own.
