@@ -649,7 +649,7 @@ namespace RTE {
 		.property("ChamberingProgress", &HDFirearm::GetChamberingProgress)
 		.property("ChamberingStartSound", &HDFirearm::GetChamberingStartSound, &HDFirearm::SetChamberingStartSound)
 		.property("ChamberingEndSound", &HDFirearm::GetChamberingEndSound, &HDFirearm::SetChamberingEndSound)
-		.property("AlwaysChamber", &HDFirearm::GetAlwaysChamber, &HDFirearm::SetAlwaysChamber)
+		.property("OnlyChamberOnEmpty", &HDFirearm::GetOnlyChamberOnEmpty, &HDFirearm::SetOnlyChamberOnEmpty)
 		.property("NeedsChamber", &HDFirearm::NeedsChamber)
 
 

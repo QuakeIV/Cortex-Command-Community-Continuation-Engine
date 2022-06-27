@@ -908,22 +908,22 @@ AddScriptFunctionNames(MOSRotating, "OnFire", "OnReload", "OnChamber");
 	bool GetChamberable() const { return m_Chamberable; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Method:  SetAlwaysChamber
+// Method:  SetOnlyChamberOnEmpty
 //////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Gets whether the weapon chambers.
-// Arguments:       Flag specify whether or not it chambers.
+// Description:     Gets whether the weapon chambers on empty mag change.
+// Arguments:       Flag specify whether or not it chambers on empty mag change.
 // Return value:    None.
 
-	void SetAlwaysChamber(bool newValue) { m_AlwaysChamber = newValue; }
+	void SetOnlyChamberOnEmpty(bool newValue) { m_OnlyChamberOnEmpty = newValue; }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Method:  GetAlwaysChamber
+// Method:  GetOnlyChamberOnEmpty
 //////////////////////////////////////////////////////////////////////////////////////////
-// Description:     Gets whether the weapon chambers.
+// Description:     Gets whether the weapon chambers only on empty mag change.
 // Arguments:       None.
-// Return value:    Flag specify whether or not it chambers.
+// Return value:    Flag specify whether or not it chambers on empty mag change.
 
-	bool GetAlwaysChamber() const { return m_AlwaysChamber; }
+	bool GetOnlyChamberOnEmpty() const { return m_OnlyChamberOnEmpty; }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -994,7 +994,7 @@ protected:
     bool m_FireIgnoresThis;
 	bool m_Reloadable; //!< Whether this HDFirearm is reloadable by normal means.
 	bool m_Chamberable; //!< Whether this HDFirearm is chamberable by normal means.
-	bool m_AlwaysChamber; //!< Whether this HDFirearm always chambers, regardless of magazine status.
+	bool m_OnlyChamberOnEmpty; //!< Whether this HDFirearm always chambers, regardless of rounds remaining in magazine status.
 	bool m_NeedsChamber; //!< Whether this HDFirearm needs to chamber next reload.
 
     // Timer for timing how long ago the last round was fired.

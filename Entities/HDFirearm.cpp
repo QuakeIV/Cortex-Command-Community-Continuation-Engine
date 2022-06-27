@@ -58,7 +58,7 @@ void HDFirearm::Clear()
     m_FireIgnoresThis = true;
 	m_Reloadable = true;
 	m_Chamberable = false;
-	m_AlwaysChamber = false;
+	m_OnlyChamberOnEmpty = true;
 	m_NeedsChamber = false;
     m_ShakeRange = 0;
     m_SharpShakeRange = 0;
@@ -140,7 +140,7 @@ int HDFirearm::Create(const HDFirearm &reference) {
     m_FireIgnoresThis = reference.m_FireIgnoresThis;
     m_Reloadable = reference.m_Reloadable;
 	m_Chamberable = reference.m_Chamberable;
-	m_AlwaysChamber = reference.m_AlwaysChamber;
+	m_OnlyChamberOnEmpty = reference.m_OnlyChamberOnEmpty;
 	m_NeedsChamber = reference.m_NeedsChamber;
     m_ShakeRange = reference.m_ShakeRange;
     m_SharpShakeRange = reference.m_SharpShakeRange;
@@ -222,8 +222,8 @@ int HDFirearm::ReadProperty(const std::string_view &propName, Reader &reader) {
         reader >> m_Reloadable;
     } else if (propName == "Chamberable") {
         reader >> m_Chamberable;
-	} else if (propName == "AlwaysChamber") {
-		reader >> m_AlwaysChamber;
+	} else if (propName == "OnlyChamberOnEmpty") {
+		reader >> m_OnlyChamberOnEmpty;
     } else if (propName == "RecoilTransmission") {
         reader >> m_JointStiffness;
     } else if (propName == "IsAnimatedManually") {
@@ -707,7 +707,7 @@ void HDFirearm::Reload()
 			if (!(m_pMagazine->GetModuleAndPresetName() == m_pMagazineReference->GetModuleAndPresetName()) || !(m_Chamberable && m_NeedsChamber)) {
 				if (m_ReloadStartSound) { m_ReloadStartSound->Play(m_Pos); }
 				// if we needed chamber before this reload we're probably doing some weird mag switching stuff, so keep needing it
-				m_NeedsChamber = m_Chamberable && (m_NeedsChamber || (m_pMagazine->IsEmpty() || m_AlwaysChamber));
+				m_NeedsChamber = m_Chamberable && (m_NeedsChamber || (m_pMagazine->IsEmpty() || !m_OnlyChamberOnEmpty));
 				m_Reloading = true;
 				m_ReloadTmr.Reset();
 				Vector constrainedMagazineOffset = g_SceneMan.ShortestDistance(m_Pos, m_pMagazine->GetPos(), g_SceneMan.SceneWrapsX()).SetMagnitude(2.0F);

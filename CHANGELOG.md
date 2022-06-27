@@ -29,7 +29,7 @@ All notable changes to this continuation will be documented in this file.
 	
 	R/W `ChamberTime` is the time it takes to chamber, similar to ReloadTime.
 	
-	`AlwaysChamber` 1/0 sets whether the gun should always chamber even if the magazine was not depleted. Get and set with `bool HDFirearm:AlwaysChambers()` and `HDFirearm:SetAlwaysChamber(bool)`
+	`OnlyChamberOnEmpty` 1/0 sets whether the gun should always chamber even if the magazine was not depleted. Defaults to 1. Get and set with `bool HDFirearm:OnlyChamberOnEmpty`
 	
 	`OnChamber(self)` runs once at the start of chambering similar to OnReload.
 	
