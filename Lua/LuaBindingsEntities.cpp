@@ -644,6 +644,14 @@ namespace RTE {
 		.property("RoundsFired", &HDFirearm::RoundsFired)
 		.property("IsAnimatedManually", &HDFirearm::IsAnimatedManually, &HDFirearm::SetAnimatedManually)
 		.property("RecoilTransmission", &HDFirearm::GetJointStiffness, &HDFirearm::SetJointStiffness)
+		.property("Chamberable", &HDFirearm::GetChamberable, &HDFirearm::SetChamberable)
+		.property("ChamberTime", &HDFirearm::GetChamberTime, &HDFirearm::SetChamberTime)
+		.property("ChamberingProgress", &HDFirearm::GetChamberingProgress)
+		.property("ChamberingStartSound", &HDFirearm::GetChamberingStartSound, &HDFirearm::SetChamberingStartSound)
+		.property("ChamberingEndSound", &HDFirearm::GetChamberingEndSound, &HDFirearm::SetChamberingEndSound)
+		.property("OnlyChamberOnEmpty", &HDFirearm::GetOnlyChamberOnEmpty, &HDFirearm::SetOnlyChamberOnEmpty)
+		.property("NeedsChamber", &HDFirearm::NeedsChamber)
+
 
 		.def("GetAIFireVel", &HDFirearm::GetAIFireVel)
 		.def("GetAIBulletLifeTime", &HDFirearm::GetAIBulletLifeTime)

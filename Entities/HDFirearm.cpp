@@ -43,15 +43,23 @@ void HDFirearm::Clear()
     m_EmptySound = nullptr;
 	m_ReloadStartSound = nullptr;
     m_ReloadEndSound = nullptr;
+	m_ChamberingStartSound = nullptr;
+	m_ChamberingEndSound = nullptr;
     m_RateOfFire = 0;
     m_ActivationDelay = 0;
     m_DeactivationDelay = 0;
     m_Reloading = false;
+	m_Chambering = false;
     m_DoneReloading = false;
+	m_DoneChambering = false;
     m_ReloadTime = 0;
+	m_ChamberTime = 0;
     m_FullAuto = false;
     m_FireIgnoresThis = true;
 	m_Reloadable = true;
+	m_Chamberable = false;
+	m_OnlyChamberOnEmpty = true;
+	m_NeedsChamber = false;
     m_ShakeRange = 0;
     m_SharpShakeRange = 0;
     m_NoSupportFactor = 0;
@@ -65,6 +73,7 @@ void HDFirearm::Clear()
     m_AIBulletAccScalar = -1;
     m_LastFireTmr.Reset();
     m_ReloadTmr.Reset();
+	m_ChamberTmr.Reset();
     m_MuzzleOff.Reset();
     m_EjectOff.Reset();
     m_MagOff.Reset();
@@ -117,15 +126,22 @@ int HDFirearm::Create(const HDFirearm &reference) {
 	if (reference.m_EmptySound) { m_EmptySound = dynamic_cast<SoundContainer *>(reference.m_EmptySound->Clone()); }
 	if (reference.m_ReloadStartSound) { m_ReloadStartSound = dynamic_cast<SoundContainer *>(reference.m_ReloadStartSound->Clone()); }
 	if (reference.m_ReloadEndSound) { m_ReloadEndSound = dynamic_cast<SoundContainer *>(reference.m_ReloadEndSound->Clone()); }
+	if (reference.m_ChamberingStartSound) { m_ChamberingStartSound = dynamic_cast<SoundContainer *>(reference.m_ChamberingStartSound->Clone()); }
+	if (reference.m_ChamberingEndSound) { m_ChamberingEndSound = dynamic_cast<SoundContainer *>(reference.m_ChamberingEndSound->Clone()); }
 	m_RateOfFire = reference.m_RateOfFire;
     m_ActivationDelay = reference.m_ActivationDelay;
     m_DeactivationDelay = reference.m_DeactivationDelay;
     m_Reloading = reference.m_Reloading;
+	m_Chambering = reference.m_Chambering;
     m_DoneReloading = reference.m_DoneReloading;
     m_ReloadTime = reference.m_ReloadTime;
+    m_ChamberTime = reference.m_ChamberTime;
     m_FullAuto = reference.m_FullAuto;
     m_FireIgnoresThis = reference.m_FireIgnoresThis;
     m_Reloadable = reference.m_Reloadable;
+	m_Chamberable = reference.m_Chamberable;
+	m_OnlyChamberOnEmpty = reference.m_OnlyChamberOnEmpty;
+	m_NeedsChamber = reference.m_NeedsChamber;
     m_ShakeRange = reference.m_ShakeRange;
     m_SharpShakeRange = reference.m_SharpShakeRange;
     m_NoSupportFactor = reference.m_NoSupportFactor;
@@ -182,6 +198,12 @@ int HDFirearm::ReadProperty(const std::string_view &propName, Reader &reader) {
 	} else if (propName == "ReloadEndSound") {
 		m_ReloadEndSound = new SoundContainer;
 		reader >> m_ReloadEndSound;
+	} else if (propName == "ChamberingStartSound") {
+		m_ChamberingStartSound = new SoundContainer;
+		reader >> m_ChamberingStartSound;
+	} else if (propName == "ChamberingEndSound") {
+		m_ChamberingEndSound = new SoundContainer;
+		reader >> m_ChamberingEndSound;
 	} else if (propName == "RateOfFire") {
         reader >> m_RateOfFire;
     } else if (propName == "ActivationDelay") {
@@ -190,12 +212,18 @@ int HDFirearm::ReadProperty(const std::string_view &propName, Reader &reader) {
         reader >> m_DeactivationDelay;
     } else if (propName == "ReloadTime") {
         reader >> m_ReloadTime;
+    } else if (propName == "ChamberTime") {
+        reader >> m_ChamberTime;
     } else if (propName == "FullAuto") {
         reader >> m_FullAuto;
     } else if (propName == "FireIgnoresThis") {
         reader >> m_FireIgnoresThis;
     } else if (propName == "Reloadable") {
         reader >> m_Reloadable;
+    } else if (propName == "Chamberable") {
+        reader >> m_Chamberable;
+	} else if (propName == "OnlyChamberOnEmpty") {
+		reader >> m_OnlyChamberOnEmpty;
     } else if (propName == "RecoilTransmission") {
         reader >> m_JointStiffness;
     } else if (propName == "IsAnimatedManually") {
@@ -614,11 +642,11 @@ void HDFirearm::Activate() {
     bool wasActivated = m_Activated;
     HeldDevice::Activate();
 
-    if (!IsReloading()) {
+    if (!IsReloading() && !IsChambering()) {
 		if (m_DeactivationSound && m_DeactivationSound->IsBeingPlayed()) { m_DeactivationSound->FadeOut(); }
         if (m_ActiveSound && !m_ActiveSound->IsBeingPlayed()) { m_ActiveSound->Play(this->m_Pos); }
         if (m_PreFireSound && !wasActivated && !m_PreFireSound->IsBeingPlayed()) { m_PreFireSound->Play(this->m_Pos); }
-		if (IsEmpty()) { Reload(); }
+		if (IsEmpty() || m_NeedsChamber) { Reload(); }
     }
 }
 
@@ -665,31 +693,78 @@ void HDFirearm::StopActivationSound()
 //                  after the reload delay is up.
 
 void HDFirearm::Reload()
-{
-	if (!m_Reloading && m_Reloadable) {
-		bool hadMagazineBeforeReloading = m_pMagazine != nullptr;
-        if (hadMagazineBeforeReloading) {
-			Vector constrainedMagazineOffset = g_SceneMan.ShortestDistance(m_Pos, m_pMagazine->GetPos(), g_SceneMan.SceneWrapsX()).SetMagnitude(2.0F);
-			Vector ejectVector = Vector(2.0F * GetFlipFactor(), 0.0F) + constrainedMagazineOffset.RadRotate(RandomNum(-0.2F, 0.2F));
-			m_pMagazine->SetVel(m_Vel + ejectVector);
-			m_pMagazine->SetAngularVel(RandomNum(-3.0F, 3.0F));
 
-            if (!m_pMagazine->IsDiscardable()) { m_pMagazine->SetToDelete(); }
-            RemoveAttachable(m_pMagazine, m_pMagazine->IsDiscardable(), false);
-            m_pMagazine = 0;
-        }
+{
+	if (!m_Reloading && !m_Chambering && (m_Reloadable || (m_Chamberable && m_NeedsChamber))) {
 
 		Deactivate();
-		if (m_ReloadStartSound) { m_ReloadStartSound->Play(m_Pos); }
 
-		m_ReloadTmr.Reset();
+		bool hadMagazineBeforeReloading = m_pMagazine != nullptr;
 
 		RunScriptedFunctionInAppropriateScripts("OnReload", false, false, {}, { hadMagazineBeforeReloading ? "true" : "false" });
 
-		m_Reloading = true;
+		if (hadMagazineBeforeReloading) {
+			if (!(m_pMagazine->GetModuleAndPresetName() == m_pMagazineReference->GetModuleAndPresetName()) || !(m_Chamberable && m_NeedsChamber)) {
+				if (m_ReloadStartSound) { m_ReloadStartSound->Play(m_Pos); }
+				// if we needed chamber before this reload we're probably doing some weird mag switching stuff, so keep needing it
+				m_NeedsChamber = m_Chamberable && (m_NeedsChamber || (m_pMagazine->IsEmpty() || !m_OnlyChamberOnEmpty));
+				m_Reloading = true;
+				m_ReloadTmr.Reset();
+				Vector constrainedMagazineOffset = g_SceneMan.ShortestDistance(m_Pos, m_pMagazine->GetPos(), g_SceneMan.SceneWrapsX()).SetMagnitude(2.0F);
+				Vector ejectVector = Vector(2.0F * GetFlipFactor(), 0.0F) + constrainedMagazineOffset.RadRotate(RandomNum(-0.2F, 0.2F));
+				m_pMagazine->SetVel(m_Vel + ejectVector);
+				m_pMagazine->SetAngularVel(RandomNum(-3.0F, 3.0F));
+
+				if (!m_pMagazine->IsDiscardable()) { m_pMagazine->SetToDelete(); }
+				RemoveAttachable(m_pMagazine, m_pMagazine->IsDiscardable(), false);
+				m_pMagazine = 0;
+			}
+			// TODO CHAMBERING: better way to detect this chambering stuff, this is just ugly
+			// if our mag is in, and it's the correct one, check if we need to chamber
+			else if (m_Chamberable && m_NeedsChamber) {
+				m_ReloadTmr.SetElapsedSimTimeMS(m_ReloadTime);
+				Chamber();
+			}
+		}
+		else {
+			m_Reloading = true;
+			m_ReloadTmr.Reset();
+		}
+	}
+	else if (m_Chambering && !(m_pMagazine->GetModuleAndPresetName() == m_pMagazineReference->GetModuleAndPresetName())) {
+		// mag switching shenanigans. we turn this stuff off here so the above code can run, mag can be removed, and it'll all be turned back properly after.
+		m_Chambering = false;
+		m_Reloading = false;
+		Reload();
+	}
+}
+
+void HDFirearm::Chamber()
+{
+	if (!m_Chambering && m_Chamberable) {
+		if (m_ChamberingStartSound) { m_ChamberingStartSound->Play(m_Pos); }
+
+		m_ChamberTmr.Reset();
+
+		RunScriptedFunctionInAppropriateScripts("OnChamber", false, false, {}, {});
+
+		m_Chambering = true;
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// Virtual method:  HasMagazine
+//////////////////////////////////////////////////////////////////////////////////////////
+// Description:     Tells whether the device has a magazine attached.
+
+bool HDFirearm::HasMagazine() const
+{
+	if (m_pMagazine)
+	{
+		return true;
+	}
+	return false;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Virtual method:  NeedsReloading
@@ -715,7 +790,7 @@ bool HDFirearm::NeedsReloading() const
 // Virtual method:  IsFull
 //////////////////////////////////////////////////////////////////////////////////////////
 // Description:     Tells whether the device is curtrently full and reloading won't have
-//                  any effect.
+//                  any effect. Not considered full if needing to chamber.
 
 bool HDFirearm::IsFull() const
 {
@@ -723,7 +798,7 @@ bool HDFirearm::IsFull() const
         if (m_pMagazine)
         {
             // If we've used over half the rounds, we can profitably go ahead and reload
-            return m_pMagazine->GetRoundCount() >= m_pMagazine->GetCapacity() || m_pMagazine->GetCapacity() < 0;
+            return (m_pMagazine->GetRoundCount() >= m_pMagazine->GetCapacity() || m_pMagazine->GetCapacity() < 0) && !m_NeedsChamber;
         }
         return false;
     }
@@ -735,7 +810,7 @@ bool HDFirearm::IsFull() const
 
 bool HDFirearm::IsEmpty() const {
 	if (m_pMagazine) {
-		return m_pMagazine->IsEmpty();
+		return m_pMagazine->IsEmpty() || m_NeedsChamber;
 	}
     return true;
 }
@@ -764,9 +839,10 @@ void HDFirearm::Update()
     float totalFireForce = 0;
     m_FireFrame = false;
     m_DoneReloading = false;
+	m_DoneChambering = false;
     bool playedRoundFireSound = false;
 
-    if (m_pMagazine && !m_pMagazine->IsEmpty())
+    if (m_pMagazine && !m_pMagazine->IsEmpty() && !m_NeedsChamber)
     {
         if (m_Activated && !(m_PreFireSound && m_PreFireSound->IsBeingPlayed())) {
 
@@ -949,17 +1025,45 @@ void HDFirearm::Update()
 		if (m_Parent) { Reload(); }
     }
 
+	// If done reloading
 	if (m_Reloading && !m_pMagazine && m_pMagazineReference && m_ReloadTmr.IsPastSimMS(m_ReloadTime)) {
 		SetMagazine(dynamic_cast<Magazine *>(m_pMagazineReference->Clone()));
 		if (m_ReloadEndSound) { m_ReloadEndSound->Play(m_Pos); }
+
+		m_Reloading = false;
+
+		// Do normal reload if we don't need chambering, or aren't chamberable
+		if (!m_Chamberable || !NeedsChamber())
+		{
+			m_ActivationTimer.Reset();
+			m_LastFireTmr.Reset();
+
+			if (m_PreFireSound && m_Activated) { m_PreFireSound->Play(); }
+
+			m_DoneReloading = true;
+			m_NeedsChamber = false;
+
+		}
+		else
+		{
+			Chamber();
+			Deactivate();
+		}
+	}
+
+	// If done chambering
+	if (m_Chambering && m_ChamberTmr.IsPastSimMS(m_ChamberTime)) {
+		if (m_ChamberingEndSound) { m_ChamberingEndSound->Play(m_Pos); }
 
 		m_ActivationTimer.Reset();
 		m_LastFireTmr.Reset();
 
 		if (m_PreFireSound && m_Activated) { m_PreFireSound->Play(); }
 
-		m_Reloading = false;
+		m_Chambering = false;
+		m_NeedsChamber = false;
 		m_DoneReloading = true;
+		m_DoneChambering = true;
 	}
 
     // Do stuff to deactivate after being activated
