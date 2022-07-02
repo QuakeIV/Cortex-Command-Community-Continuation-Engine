@@ -3,8 +3,7 @@
 All notable changes to this continuation will be documented in this file.
 
 ## [Unreleased]
-
-<details><summary><b>Added</b></summary>
+<summary><b>Added</b></summary>
 
 - New dummy ini property: `SupportedGameVersion`. This is soley for compat with cccp mods and does nothing, as neither we nor they have enough modders combined to even warrant this breakage and steam mods are already known to be broken and ancient to begin with.
 - New blast door
@@ -23,23 +22,20 @@ All notable changes to this continuation will be documented in this file.
 
 	Chambering is a new stage for reloading after inserting a new magazine. It's optional and defaults to off, so don't worry. It should also be mostly seamless with regular reloading and thus not interfere with any scripts, but if you're doing particularly heavy lifting we recommend leaving this off.
 	
-	R/W `Chamberable` 1/0 true/false denotes whether the gun is to ever be chambered.
-	
-	R/W `ChamberStartSound` and `ChamberEndSound` are self-explanatory and will act similar to reload sounds. ChamberEndSound is most relevant here for the actual meat of the sound, since ChamberStartSound will overlap with ReloadEndSound.
-	If you want a delay after your chambering but don't want it to overlap with the reload sounds you will need to incorporate a small delay in your ChamberStartSound.
-	
-	R/W `ChamberTime` is the time it takes to chamber, similar to ReloadTime.
-	
-	`OnlyChamberOnEmpty` 1/0 sets whether the gun should always chamber even if the magazine was not depleted. Defaults to 1. Get and set with `bool HDFirearm:OnlyChamberOnEmpty`
-	
-	`OnChamber(self)` runs once at the start of chambering similar to OnReload.
-	
-	`bool HDFirearm:IsChambering()` returns whether the firearm is currently chambering.
-	
-	`bool HDFirearm:DoneChambering()` will return true on the frame a firearm is done chambering, similar to DoneReloading.
+	##### Properties
+	-	[R/W] **Chamberable** (default: 0/false): Denotes whether the gun is to ever be chambered.
+	-	[R/W] **ChamberingStartSound** (default: nil): Sound played on chamber start. Currently ChamberStartSound will overlap with ReloadEndSound a bit.If you want a delay after your chambering but don't want it to overlap with the reload sounds you will need to incorporate a small delay in your ChamberStartSound.
+	-	[R/W] **ChamberingEndSound** (default: nil): Sound played on chamber end.
+	-	[R/W] **ChamberTime** (default: 0): The time it takes to chamber in milliseconds, similar to ReloadTime.
+	-	[R/W] **OnlyChamberOnEmpty** (default: 0/false): Whether the gun should always chamber even if the magazine was not depleted.
 
+	##### Lua Callbacks
+	-	**OnChamber(self)**: Runs once at the start of chambering similar to OnReload.
 
-</details>
+	##### Lua Functions
+	-	**bool HDFirearm:IsChambering()**: Returns whether the firearm is currently chambering.
+	-	**bool HDFirearm:DoneChambering()**: Will return true on the frame a firearm is done chambering, similar to DoneReloading.
+
 
 <details><summary><b>Changed</b></summary>
 
