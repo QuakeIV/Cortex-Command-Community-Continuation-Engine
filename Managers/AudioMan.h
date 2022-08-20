@@ -339,6 +339,14 @@ namespace RTE {
 		void PauseAllMobileSounds(bool pause = true) { if (m_AudioEnabled) { m_MobileSoundChannelGroup->setPaused(pause); } }
 #pragma endregion
 
+#pragma region Immobile Sound Playback and Handling
+		/// <summary>
+		/// Pauses all sound playback.
+		/// <param name="pause">Whether to pause sounds or resume them.</param>
+		/// </summary>
+		void PauseAllImmobileSounds(bool pause = true) { if (m_AudioEnabled) { m_ImmobileSoundChannelGroup->setPaused(pause); } }
+#pragma endregion
+
 #pragma region Lua Sound File Playing
 		/// <summary>
 		/// Starts playing a certain sound file.
