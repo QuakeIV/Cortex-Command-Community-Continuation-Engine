@@ -201,7 +201,7 @@ int Actor::Create(const Actor &reference)
 //    m_FacingRight = reference.m_FacingRight;
     m_Status = reference.m_Status;
     m_Health = m_PrevHealth = reference.m_Health;
-	m_ = reference.m_Mechanical;
+	m_Mechanical = reference.m_Mechanical;
 	m_Organic = reference.m_Organic;
 	m_MaxHealth = reference.m_MaxHealth;
     m_pTeamIcon = reference.m_pTeamIcon;

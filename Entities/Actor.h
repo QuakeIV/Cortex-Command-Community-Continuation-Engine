@@ -1500,7 +1500,7 @@ protected:
     /// How many passenger slots this actor will take in a craft
     int m_PassengerSlots;
 	/// Is this actor a wonderful child of the omnisiah
-	bool m_;
+	bool m_Mechanical;
 	/// Is this actor exhibiting the weakness known as flesh
 	bool m_Organic;
 
