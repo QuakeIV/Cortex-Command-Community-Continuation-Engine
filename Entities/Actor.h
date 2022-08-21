@@ -1343,15 +1343,15 @@ ClassInfoGetters;
 
 
 	/// <summary>
-	/// Gets whether this actor is robotic
+	/// Gets whether this actor is mechanical
 	/// </summary>
-	bool GetRobotic() const { return m_Robotic; }
+	bool GetMechanical() const { return m_Mechanical; }
 
 	/// <summary>
-	/// Sets whether this actor is robotic
+	/// Sets whether this actor is mechanical
 	/// </summary>
-	/// <param name="roboticflag">The new setting for m_IsRobotic.</param>
-	void SetRobotic(bool roboticflag) { m_Robotic = roboticflag; }
+	/// <param name="mechanicalflag">The new setting for m_IsMechanical.</param>
+	void SetMechanical(bool mechanicalflag) { m_Mechanical = mechanicalflag; }
 
 	/// <summary>
 	/// Gets whether this actor is organic
@@ -1500,7 +1500,7 @@ protected:
     /// How many passenger slots this actor will take in a craft
     int m_PassengerSlots;
 	/// Is this actor a wonderful child of the omnisiah
-	bool m_Robotic;
+	bool m_;
 	/// Is this actor exhibiting the weakness known as flesh
 	bool m_Organic;
 

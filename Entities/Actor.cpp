@@ -68,7 +68,7 @@ void Actor::Clear() {
     m_DeviceSwitchSound = nullptr;
     m_Status = STABLE;
     m_Health = m_PrevHealth = m_MaxHealth = 100.0F;
-	m_Robotic = false;
+	m_Mechanical = false;
 	m_Organic = false;
 	m_pTeamIcon = nullptr;
 	m_pControllerIcon = nullptr;
@@ -201,7 +201,7 @@ int Actor::Create(const Actor &reference)
 //    m_FacingRight = reference.m_FacingRight;
     m_Status = reference.m_Status;
     m_Health = m_PrevHealth = reference.m_Health;
-	m_Robotic = reference.m_Robotic;
+	m_ = reference.m_Mechanical;
 	m_Organic = reference.m_Organic;
 	m_MaxHealth = reference.m_MaxHealth;
     m_pTeamIcon = reference.m_pTeamIcon;
@@ -343,8 +343,8 @@ int Actor::ReadProperty(const std::string_view &propName, Reader &reader)
 	        m_PrevHealth = m_Health;
 		}
 	}
-	else if (propName == "Robotic")
-		reader >> m_Robotic;
+	else if (propName == "Mechanical")
+		reader >> m_Mechanical;
 	else if (propName == "Organic")
 		reader >> m_Organic;
     else if (propName == "ImpulseDamageThreshold")
@@ -427,8 +427,8 @@ int Actor::Save(Writer &writer) const
     writer << m_Health;
     writer.NewProperty("MaxHealth");
     writer << m_MaxHealth;
-	writer.NewProperty("Robotic");
-	writer << m_Robotic;
+	writer.NewProperty("Mechanical");
+	writer << m_Mechanical;
 	writer.NewProperty("Organic");
 	writer << m_Organic;
 	if (m_DeploymentID)
