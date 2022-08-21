@@ -5,13 +5,13 @@ All notable changes to this continuation will be documented in this file.
 ## [Unreleased]
 <summary><b>Added</b></summary>
 
-- New dummy ini property: `SupportedGameVersion`. This is soley for compat with cccp mods and does nothing, as neither we nor they have enough modders combined to even warrant this breakage and steam mods are already known to be broken and ancient to begin with.
+- New dummy ini property: `SupportedGameVersion`. This is solely for compat with cccp mods and does nothing, as neither we nor they have enough modders combined to even warrant this breakage and steam mods are already known to be broken and ancient to begin with.
 - New blast door
 - New R/W property for HeldDevices - `VisualRecoilMultiplier`. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable the inbuilt SharpLength recoil animation for implementing their own.
 - New R/W property for ACrabs - `AimControlsJetpack`. Defaults to false/0 (lua, ini). Set to true to enable a mouse-aimable jetpack for them.
 - New R/W property for HDFirearms - `ReloadSupportOffset`. This defaults to whatever Vector.reset() gives back, so probably 0,0 on the gun. This will move the background hand during reload to this position on the gun, or at least try to reach it.
 - New R/W property for Actors - `PainThreshold`. Defaults to 15. Disable mechanic with 0 or lower if you want to use PainSound in more custom ways. Damage above this value in a single frame will trigger PainSound. Terrain impacts do not inherently trigger PainSound anymore, since this takes over.
-- New R/W property for Actors - `Robotic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: emp grenades). Use as a boolean property or as a bool-returning function, `Actor:IsRobotic()`
+- New R/W property for Actors - `Mechanical`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: emp grenades). Use as a boolean property or as a bool-returning function, `Actor:IsMechanical()`
 - New R/W property for Actors - `Organic`. Defaults to false/0 (lua, ini). Intended mainly for scripts to use (ex: gas grenades). Use as a boolean property or as a bool-returning function, `Actor:IsOrganic()`
 - New read-only property for Actors - `StrideFrame`. Is true on the frame a stride is taken. This is an alternative to OnStride that other scripts can read, similar to FiredFrame for HDFirearms.
 - New R/W property for MOSRotatings - `GibAtEndOfLifetime`. Defaults to false/0 (lua, ini). Self-explanatory.
