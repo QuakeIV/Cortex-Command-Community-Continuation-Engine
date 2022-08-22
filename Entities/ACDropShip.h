@@ -300,6 +300,9 @@ ClassInfoGetters;
 	float GetGroundDeliveryDistance() const { return m_GroundDeliveryDistance; }
 	void SetGroundDeliveryDistance(const float newGroundDeliveryDistance) { m_GroundDeliveryDistance = newGroundDeliveryDistance; }
 
+	float GetHoverHeightModifier() const { return m_HoverHeightModifier; }
+	void SetHoverHeightModifier(const float newHoverHeightModifier) { m_HoverHeightModifier = newHoverHeightModifier; }
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Protected member variable and method declarations
 
@@ -319,6 +322,9 @@ protected:
 
 	// Drop height for the lua ai
 	float m_GroundDeliveryDistance;
+
+	// Extra modifier on top of GroundDeliveryDistance - CCCP compat :(
+	float m_HoverHeightModifier;
 
     // Hatch doors
     Attachable *m_pRHatch;

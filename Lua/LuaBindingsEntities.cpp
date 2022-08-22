@@ -41,7 +41,7 @@ namespace RTE {
 		.property("LateralControlSpeed", &ACDropShip::GetLateralControlSpeed, &ACDropShip::SetLateralControlSpeed)
 		.property("LateralControl", &ACDropShip::GetLateralControl)
 		.property("GroundDeliveryDistance", &ACDropShip::GetGroundDeliveryDistance, &ACDropShip::SetGroundDeliveryDistance)
-		.property("HoverHeightModifier", &ACDropShip::GetGroundDeliveryDistance, &ACDropShip::SetGroundDeliveryDistance)
+		.property("HoverHeightModifier", &ACDropShip::GetHoverHeightModifier, &ACDropShip::SetHoverHeightModifier)
 
 		.def("DetectObstacle", &ACDropShip::DetectObstacle)
 		.def("GetAltitude", &ACDropShip::GetAltitude);

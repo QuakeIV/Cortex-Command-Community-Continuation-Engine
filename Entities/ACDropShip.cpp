@@ -45,6 +45,7 @@ void ACDropShip::Clear()
 	m_AutoStabilize = 1;
 	m_MaxEngineAngle = 20.0f;
 	m_GroundDeliveryDistance = -1;
+	m_HoverHeightModifier = 0;
 }
 
 
@@ -99,7 +100,8 @@ int ACDropShip::Create(const ACDropShip &reference) {
 
 	m_MaxEngineAngle = reference.m_MaxEngineAngle;
 
-	m_GroundDeliveryDistance = reference.m_MaxEngineAngle;
+	m_GroundDeliveryDistance = reference.m_GroundDeliveryDistance;
+	m_HoverHeightModifier = reference.m_HoverHeightModifier;
 
 	return 0;
 }
@@ -134,8 +136,10 @@ int ACDropShip::ReadProperty(const std::string_view &propName, Reader &reader) {
         reader >> m_MaxEngineAngle;
     } else if (propName == "LateralControlSpeed") {
         reader >> m_LateralControlSpeed;
-	} else if (propName == "GroundDeliveryDistance" || propName == "HoverHeightModifier") {
+	} else if (propName == "GroundDeliveryDistance") {
 		reader >> m_GroundDeliveryDistance;
+	} else if (propName == "HoverHeightModifier") {
+		reader >> m_HoverHeightModifier;
     } else {
         return ACraft::ReadProperty(propName, reader);
     }
