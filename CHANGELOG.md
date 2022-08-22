@@ -43,6 +43,8 @@ All notable changes to this continuation will be documented in this file.
 - Restored filipex Mauler chain code
 - GripStrength for arms defaults to something on the low-end (120) rather than straight up 0 now. If you forget to set it, guns should be flying out of hands way less.
 - ReloadStartSound will no longer play if magazine was already taken out.
+- Marauder recoil changed so it hopefully flies out of hands less readily now
+- Sounds are now paused and resumed properly on game pause
 
 </details>
 
