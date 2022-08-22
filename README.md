@@ -9,9 +9,9 @@ Stay up to date in our [Discord channel](https://discord.gg/Fwyar4Uvx6).
 # How to Play the Game
 If you just want to play the latest version of the game you can get it here on github in the [releases](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases) section.
 
-Right now, you can get mods from the cccp [mod portal](https://cccp.mod.io).
+You can get mods specifically for C4 at [the C4 mod io](https://c4.old.mod.io)
 
-In the future we will have our own site and mod portal.
+However, all CCCP mods from their [mod portal](https://cccp.mod.io) should also work.
 
 ***
 
