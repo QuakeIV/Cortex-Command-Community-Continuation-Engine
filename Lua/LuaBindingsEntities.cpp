@@ -653,6 +653,8 @@ namespace RTE {
 		.property("NeedsChamber", &HDFirearm::NeedsChamber)
 
 
+		.def("IsChambering", &HDFirearm::IsChambering)
+		.def("DoneChambering", &HDFirearm::DoneChambering)
 		.def("GetAIFireVel", &HDFirearm::GetAIFireVel)
 		.def("GetAIBulletLifeTime", &HDFirearm::GetAIBulletLifeTime)
 		.def("GetBulletAccScalar", &HDFirearm::GetBulletAccScalar)

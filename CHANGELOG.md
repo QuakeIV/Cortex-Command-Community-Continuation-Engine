@@ -27,7 +27,7 @@ All notable changes to this continuation will be documented in this file.
 	-	[R/W] **ChamberingStartSound** (default: nil): Sound played on chamber start. Currently ChamberStartSound will overlap with ReloadEndSound a bit.If you want a delay after your chambering but don't want it to overlap with the reload sounds you will need to incorporate a small delay in your ChamberStartSound.
 	-	[R/W] **ChamberingEndSound** (default: nil): Sound played on chamber end.
 	-	[R/W] **ChamberTime** (default: 0): The time it takes to chamber in milliseconds, similar to ReloadTime.
-	-	[R/W] **OnlyChamberOnEmpty** (default: 0/false): Whether the gun should only chamber when the magazine was depleted.
+	-	[R/W] **OnlyChamberOnEmpty** (default: 1/true): Whether the gun should only chamber when the magazine was depleted.
 
 	##### Lua Callbacks
 	-	**OnChamber(self)**: Runs once at the start of chambering similar to OnReload.
