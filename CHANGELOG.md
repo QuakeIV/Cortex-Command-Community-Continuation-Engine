@@ -5,6 +5,23 @@ All notable changes to this continuation will be documented in this file.
 ## [Unreleased]
 <summary><b>Added</b></summary>
 
+<details><summary><b>Changed</b></summary>
+
+</details>
+
+<details><summary><b>Fixed</b></summary>
+
+</details>
+
+<details><summary><b>Removed</b></summary>
+
+</details>
+
+***
+
+## [C4 Version 2.0][c4v2.0] - 2022/08/23
+<summary><b>Added</b></summary>
+
 - New dummy ini property: `SupportedGameVersion`. This is solely for compat with cccp mods and does nothing, as neither we nor they have enough modders combined to even warrant this breakage and steam mods are already known to be broken and ancient to begin with.
 - New blast door
 - New R/W property for HeldDevices - `VisualRecoilMultiplier`. Defaults to 1.0. Lower limit is 0, upper try to keep below 1k. It lets one disable the inbuilt SharpLength recoil animation for implementing their own.
@@ -62,7 +79,7 @@ All notable changes to this continuation will be documented in this file.
 
 ***
 
-## [C4 Version 1.1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1){c4v1.1} - 2022/04/04
+## [C4 Version 1.1][c4v1.1] - 2022/04/04
 
 <details><summary><b>Added</b></summary>
 
@@ -85,7 +102,7 @@ All notable changes to this continuation will be documented in this file.
 
 </details>
 
-## [C4 Version 1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1){c4v1} - 2022/03/25
+## [C4 Version 1][c4v1] - 2022/03/25
 
 <details><summary><b>Added</b></summary>
 
