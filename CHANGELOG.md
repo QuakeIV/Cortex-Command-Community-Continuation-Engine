@@ -19,7 +19,7 @@ All notable changes to this continuation will be documented in this file.
 
 ***
 
-## [C4 Version 2.0][c4v2.0.1] - 2022/08/23
+## [C4 Version 2.0](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v2.0.1) - 2022/08/23
 <summary><b>Added</b></summary>
 
 - New dummy ini property: `SupportedGameVersion`. This is solely for compat with cccp mods and does nothing, as neither we nor they have enough modders combined to even warrant this breakage and steam mods are already known to be broken and ancient to begin with.
@@ -79,7 +79,7 @@ All notable changes to this continuation will be documented in this file.
 
 ***
 
-## [C4 Version 1.1][c4v1.1] - 2022/04/04
+## [C4 Version 1.1(https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1) - 2022/04/04
 
 <details><summary><b>Added</b></summary>
 
