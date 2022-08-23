@@ -79,7 +79,7 @@ All notable changes to this continuation will be documented in this file.
 
 ***
 
-## [C4 Version 1.1(https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1) - 2022/04/04
+## [C4 Version 1.1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1.1) - 2022/04/04
 
 <details><summary><b>Added</b></summary>
 
@@ -102,7 +102,7 @@ All notable changes to this continuation will be documented in this file.
 
 </details>
 
-## [C4 Version 1][c4v1] - 2022/03/25
+## [C4 Version 1](https://github.com/Cortex-Command-Center/Cortex-Command-Community-Continuation-Engine/releases/tag/c4v1) - 2022/03/25
 
 <details><summary><b>Added</b></summary>
 
